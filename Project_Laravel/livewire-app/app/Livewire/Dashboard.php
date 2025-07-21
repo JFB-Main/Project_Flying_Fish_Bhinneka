@@ -9,6 +9,7 @@ use App\Models\UsersModel;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
 use Illuminate\Database\Eloquent\Collection;
 
 class Dashboard extends Component
@@ -32,11 +33,13 @@ class Dashboard extends Component
     public $statusDDL;
     public $createByDDL;
 
-    // #[On('crud-done')]
-    // public function updateList($sl = null)
-    // {
-    //     // $sl = Service_logsModel::all();
-    // }
+    public $statusCounts;
+
+    #[On('crud-done')]
+    public function updateList($sl = null)
+    {
+        // $sl = Service_logsModel::all();
+    }
     // public function showStatusCounts()
     // {
     //     $statusCounts = Service_logsModel::select('status_id', Service_logsModel::raw('count(*) as total'))
@@ -70,7 +73,7 @@ class Dashboard extends Component
         }
     }
 
-
+#[Layout('welcome')]
     public function render()
     {
         $statusCountsFromDb = Service_logsModel::select('status_id', Service_logsModel::raw('count(*) as total'))
@@ -117,6 +120,6 @@ class Dashboard extends Component
             'service_log' => $sl,
             'cardOnOpen' => $Open,
             'statusCount' => $this->statusCounts
-        ])->layout('welcome');
+        ]);
     }
 }

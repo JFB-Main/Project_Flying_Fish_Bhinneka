@@ -79,4 +79,45 @@
 
         @livewireScripts
     </body>
+    <script>
+    function toggleScroll() {
+    const dashboardElement = document.getElementById('dashboard');
+
+    if (dashboardElement) {
+        // Check the current value of the inline 'overflow' style
+        // If it's currently 'hidden', change it to 'auto' (or 'scroll' if you prefer)
+        // If current overflow is hidden, set it to 'auto'
+        if (dashboardElement.style.overflow === 'hidden') {
+            dashboardElement.style.overflow = 'auto'; // Or 'scroll', depending on preference
+        }
+        // If current overflow is 'scroll' or 'auto', set it to 'hidden'
+        else if (dashboardElement.style.overflow === 'scroll' || dashboardElement.style.overflow === 'auto') {
+            dashboardElement.style.overflow = 'hidden';
+        }
+        // Handle cases where the inline style might be empty or 'visible' initially
+        // You might want a default behavior if it's not explicitly 'hidden', 'scroll', or 'auto'
+        else {
+            dashboardElement.style.overflow = 'hidden'; // Default to hiding overflow
+        }
+    } else {
+        console.warn("Element with ID 'dashboard' not found.");
+    }
+
+    }
+
+    function toggleKeydownScroll() {
+        const popUpElement = document.getElementById('pop-up');
+        const dashboardElement = document.getElementById('dashboard');
+
+        if (popUpElement) {
+
+            if (popUpElement.style.display !== 'none') {
+                dashboardElement.style.overflow = 'auto'; // Or 'scroll', depending on preference
+            }
+        } else {
+            console.warn("Element with ID 'pop-up' not found.");
+        }
+
+    }
+</script>
 </html>

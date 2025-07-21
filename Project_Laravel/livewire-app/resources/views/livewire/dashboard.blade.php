@@ -11,48 +11,6 @@
     ];
 @endphp
 
-<script>
-    function toggleScroll() {
-    const dashboardElement = document.getElementById('dashboard');
-
-    if (dashboardElement) {
-        // Check the current value of the inline 'overflow' style
-        // If it's currently 'hidden', change it to 'auto' (or 'scroll' if you prefer)
-        // If current overflow is hidden, set it to 'auto'
-        if (dashboardElement.style.overflow === 'hidden') {
-            dashboardElement.style.overflow = 'auto'; // Or 'scroll', depending on preference
-        }
-        // If current overflow is 'scroll' or 'auto', set it to 'hidden'
-        else if (dashboardElement.style.overflow === 'scroll' || dashboardElement.style.overflow === 'auto') {
-            dashboardElement.style.overflow = 'hidden';
-        }
-        // Handle cases where the inline style might be empty or 'visible' initially
-        // You might want a default behavior if it's not explicitly 'hidden', 'scroll', or 'auto'
-        else {
-            dashboardElement.style.overflow = 'hidden'; // Default to hiding overflow
-        }
-    } else {
-        console.warn("Element with ID 'dashboard' not found.");
-    }
-
-    }
-
-    function toggleKeydownScroll() {
-        const popUpElement = document.getElementById('pop-up');
-        const dashboardElement = document.getElementById('dashboard');
-
-        if (popUpElement) {
-
-            if (popUpElement.style.display !== 'none') {
-                dashboardElement.style.overflow = 'auto'; // Or 'scroll', depending on preference
-            }
-        } else {
-            console.warn("Element with ID 'pop-up' not found.");
-        }
-
-    }
-</script>
-
 <div class="flex flex-col w-auto pl-10 pr-10 gap-15">
     <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 pl-5 pr-5"
         x-data
@@ -367,20 +325,20 @@
                             <td class="p-2">{{ $sl->contact_person }}</td>
                             <td class="p-2">{{ $sl->mobile_number }}</td>
                             <td class="p-2">{{ $sl->serial_number }}</td>
-                            <td class="flex justify-center gap-4 p-6">
+                            <td class="flex justify-end gap-4 p-6">
                                 <!-- Update Button Form updateId=""-->
                                     {{-- <input type="hidden" name="id" value="{{ $u->id }}"> --}}
-                                    @if ($sl->status_id < 8)
+                                    @if ($sl->status_id < 7)
                                         <button  x-data x-on:click="$dispatch('open-modal', { name: 'test', slId_For_UpdateStatusId: {{ $sl->id }} })" type="submit" class="text-white cursor-pointer px-4 py-2 rounded-2xl hover:opacity-60 bg-indigo-600" style="">
                                             Update
-                                        </button>
-                                    @elseif($sl->status_id = 7)
-                                        <button  x-data x-on:click="" type="submit" class="text-[#302714] px-4 py-2 rounded-2xl border border-red-600 " style="opacity: 0.6; cursor: not-allowed;">
-                                            Cancelled
                                         </button>
                                     @elseif($sl->status_id >= 8)
                                         <button  x-data x-on:click="" type="submit" class="text-[#302714] px-4 py-2 rounded-2xl border border-indigo-600 " style="opacity: 0.6; cursor: not-allowed;">
                                             Closed
+                                        </button>
+                                    @elseif($sl->status_id = 7)
+                                        <button  x-data x-on:click="" type="submit" class="text-[#302714] px-4 py-2 rounded-2xl border border-red-600 " style="opacity: 0.6; cursor: not-allowed;">
+                                            Cancelled
                                         </button>
                                     @endif
 
@@ -403,6 +361,19 @@
             </table>
 
         </div>
+        @if (session()->has('success'))
+            <div class="w-full pl-10 pr-10" role="alert">
+                <p class="bg-gray-100 font-semibold text-xl text-gray-400 w-full p-2 pl-5 rounded-2xl border border-amber-200">
+                Success: <span class="text-green-500 text-lg font-medium">{{ session('success') }}</span>
+                </p>
+            </div>
+        @else
+            <div class="w-full pl-10 pr-10" role="alert">
+                <p class="bg-gray-100 font-semibold text-xl text-gray-400 w-full p-2 pl-5 rounded-2xl border border-amber-200">
+                    <span class="text-red-500 text-lg font-medium">{{ session('error') }}</span>
+                </p>
+            </div>
+        @endif
         <div class="p-10">
             {{$service_log->links('vendor.livewire.tailwind')}}
         </div>

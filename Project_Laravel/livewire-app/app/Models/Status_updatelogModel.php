@@ -31,14 +31,14 @@ class Status_updatelogModel extends Model
      * @var array
      */
     protected $casts = [
-        'created_at' => 'datetime',
+        'created_at' => 'datetime'
     ];
     /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
      */
-    public $timestamps = true;
+    public $timestamps = false;
     /**
      * Get the service log associated with this update log.
      */
