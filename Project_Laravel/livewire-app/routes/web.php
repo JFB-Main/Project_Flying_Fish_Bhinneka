@@ -2,6 +2,7 @@
 
 use App\Livewire\Auth\Logout;
 use App\Livewire\Dashboard;
+use App\Livewire\TicketPage;
 use Illuminate\Support\Facades\Route;
 
 
@@ -35,6 +36,12 @@ Route::group(['middleware' => 'guest'], function(){
     // Route::get('/', Dashboard::class)->name('dashboard');
 
     Route::get('/', Dashboard::class)->name('dashboard');
+    
+    // Route::get('/ticketPage', TicketPage::class)->name('TicketPage');
+    Route::get('/ticketPage/{id}', TicketPage::class)->name('TicketPage');
+
+    // Route::get('/ticketPage/{id_selected}', TicketPage::class($id_selected))->name('TicketPage');
+    // Route::get('/', Dashboard::class)->name('dashboard');
 
     Route::get('/logout', Logout::class)->name('auth.logout');
 

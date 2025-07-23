@@ -192,9 +192,10 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <label for="">
+                    <label for="datetime">
                         Datetime
                     </label>
+                    <input type="datetime-local" name="datetime" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     {{-- <x-datepicker>
                     </x-datepicker> --}}
                 </div>
@@ -255,7 +256,12 @@
                 <tbody>
                     @forelse($service_log as $sl)
                         <tr class="border-t">
-                            <td class="p-2">{{ $sl->techlog_id }}</td>
+                            <td class="p-2">
+                                {{-- x-on:click="$dispatch('open-ticketPage', {id_selected: {{ $sl->id }} })"  --}}
+                                <a wire:click="ticketPageLink({{$sl->id}})" class="cursor-pointer text-indigo-500 underline hover:text-indigo-700">
+                                {{ $sl->techlog_id }}
+                                </a>
+                            </td>
                             {{-- <td class="p-2">{{ $sl->status ? $sl->status->status_type : 'N/A' }}</td> --}}
                             <td class="p-2">
                                 @php
@@ -341,13 +347,12 @@
                                             Cancelled
                                         </button>
                                     @endif
-
                                 <!-- Delete Button Form -->
                                 <form method="POST" action="">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this Category?')" class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-[#F8971A] hover:opacity-60">
-                                        Receipt Form
+                                        Print Receipt
                                     </button>
                                 </form>
                             </td>
@@ -387,6 +392,8 @@
             <livewire:modal-update/>
         @endslot
     </x-modal-UpdatePopUp>
+
+
     {{-- @if (session('success'))
         <span>
             {{session('success')}}

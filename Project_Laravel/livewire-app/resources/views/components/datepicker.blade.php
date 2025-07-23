@@ -1,10 +1,15 @@
-<style>
-    @source "../node_modules/flowbite-datepicker";
-    @import "tailwindcss";
-</style>
+    {{-- <style>
+        @source "../node_modules/flowbite-datepicker";
+        @import "tailwindcss";
+        @plugin "flowbite/plugin";
+        @import "flowbite/src/themes/default";
+        @source "../node_modules/flowbite";
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 
-<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-<script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script> --}}
 
 <div>
     <div class="relative max-w-sm">

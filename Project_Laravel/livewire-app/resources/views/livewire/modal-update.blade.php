@@ -66,7 +66,7 @@
                 break;
             case 4:
                 $statusNewCol = 'bg-[#C547F6]'; // Darker Red for RMA
-                $statusNewLabel = 'RMA';
+                $statusNewLabel = 'RMA To Vendor';
                 $toNewCol = 'text-[#C547F6]';
                 break;
             case 5:

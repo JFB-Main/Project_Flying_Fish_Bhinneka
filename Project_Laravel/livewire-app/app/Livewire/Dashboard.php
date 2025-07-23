@@ -40,6 +40,8 @@ class Dashboard extends Component
     {
         // $sl = Service_logsModel::all();
     }
+
+
     // public function showStatusCounts()
     // {
     //     $statusCounts = Service_logsModel::select('status_id', Service_logsModel::raw('count(*) as total'))
@@ -65,6 +67,14 @@ class Dashboard extends Component
     //     // Redirect to login
     //     return $this->redirect('/login', navigate: true);
     // }
+
+    public function ticketPageLink($id_selected){
+        // dd($id_selected);
+        $this->dispatch('open-ticketPage', $id_selected);
+
+        return redirect()->route('TicketPage', ['id' => $id_selected]);
+    }
+
     public function mount()
     {
         // Redirect if not logged in
