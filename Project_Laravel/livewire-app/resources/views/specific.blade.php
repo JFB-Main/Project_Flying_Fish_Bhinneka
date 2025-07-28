@@ -46,13 +46,17 @@
 
         {{-- <script src="https://cdn.tailwind.css"></script> --}}
     </head>
-    <body id="dashboard"  class="antialiased flex flex-row bg-[#FFFAF3]">
+    {{-- class="antialiased flex flex-row bg-gradient-to-tl from-amber-100 via-[#F8971A]/70 to-purple-400 --}}
+    {{-- bg-[#FFFAF3] --}}
+    <body id="dashboard"  class="antialiased flex flex-row bg-gradient-to-tl from-amber-200 via-[#ff8c00]/70 to-purple-500">
         <x-sidebar>
         </x-sidebar>
         <div class="ml-64 flex flex-col overflow-y-auto gap-10" style="width: 100%;">
             @livewire('clicker', ['message' => "fff"])
             {{-- @livewire('dashboard') --}}
             @yield('ticketContent')
+            @yield('createContent')
+            @yield('dataReportContent')
         </div>
 
         {{-- @if (Route::has('login'))

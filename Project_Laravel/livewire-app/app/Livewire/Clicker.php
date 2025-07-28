@@ -70,7 +70,7 @@ class Clicker extends Component
 
         $this->pageTitle = match($routeName) {
             'dashboard' => 'Dashboard',
-            'service' => 'Service',
+            'dataReport' => 'Data Report',
             null => 'N/A', // <- if route has no name
             default => 'Dashboard'
         };

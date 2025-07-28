@@ -11,7 +11,7 @@
     ];
 @endphp
 
-<div class="flex flex-col w-auto pl-10 pr-10 gap-15">
+<div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-15">
     <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 pl-5 pr-5"
         x-data
         x-on:open-modal.window = "toggleScroll()"    
@@ -183,7 +183,7 @@
                 TECHLOG PROPERTY SEARCH
             </h1>
             <div class="flex flex-wrap items-end pl-15 pr-15 gap-15 w-full">
-                <div class="flex flex-col justify-center w-5/12 gap-15 [&>*]:max-h-fit">
+                <div class="flex flex-col justify-center w-4/12 gap-15 [&>*]:max-h-fit">
                     <div class="flex flex-col">
                         <label for="searchTL">
                             Techlog ID 
@@ -191,11 +191,35 @@
                         <input wire:model.live.debounce.200ms="TechlogIDSearch" type="text" name="" id="searchTL" placeholder="Search..." class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     </div>
                 </div>
-                <div class="flex flex-col">
-                    <label for="datetime">
-                        Datetime
+                <div class="flex flex-col justify-center w-3/12">
+                    <label for="datetimeFrom">
+                        Datetime From
                     </label>
-                    <input type="datetime-local" name="datetime" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <input wire:model.live.debounce.200ms="searchFromDateIn" type="date" name="datetimeFrom" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    {{-- <x-datepicker>
+                    </x-datepicker> --}}
+                </div>
+                <div class="flex flex-col justify-center w-3/12">
+                    <label for="datetimeTo">
+                        Datetime To
+                    </label>
+                    <input wire:model.live.debounce.200ms="searchToDateIn" type="date" name="datetimeTo" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    {{-- <x-datepicker>
+                    </x-datepicker> --}}
+                </div>
+                <div class="flex flex-col justify-center w-3/12">
+                    <label for="datetimeFrom">
+                        Completed From
+                    </label>
+                    <input wire:model.live.debounce.200ms="searchFromCompleted" type="date" name="datetimeFrom" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    {{-- <x-datepicker>
+                    </x-datepicker> --}}
+                </div>
+                <div class="flex flex-col justify-center w-3/12">
+                    <label for="datetimeTo">
+                        Completed To
+                    </label>
+                    <input wire:model.live.debounce.200ms="searchToCompleted" type="date" name="datetimeTo" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     {{-- <x-datepicker>
                     </x-datepicker> --}}
                 </div>
@@ -250,7 +274,7 @@
                         <th class="text-left p-2">Contact</th>
                         <th class="text-left p-2">Phone</th>
                         <th class="text-left p-2">SN</th>
-                        <th class="text-center p-2">Action</th>
+                        <th class="text-center p-2">Action | Print</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -331,30 +355,35 @@
                             <td class="p-2">{{ $sl->contact_person }}</td>
                             <td class="p-2">{{ $sl->mobile_number }}</td>
                             <td class="p-2">{{ $sl->serial_number }}</td>
-                            <td class="flex justify-end gap-4 p-6">
+                            <td class="flex items-start justify-end gap-4 p-6">
                                 <!-- Update Button Form updateId=""-->
                                     {{-- <input type="hidden" name="id" value="{{ $u->id }}"> --}}
                                     @if ($sl->status_id < 7)
-                                        <button  x-data x-on:click="$dispatch('open-modal', { name: 'test', slId_For_UpdateStatusId: {{ $sl->id }} })" type="submit" class="text-white cursor-pointer px-4 py-2 rounded-2xl hover:opacity-60 bg-indigo-600" style="">
+                                        <button  x-data x-on:click="$dispatch('open-modal', { name: 'test', slId_For_UpdateStatusId: {{ $sl->id }} })" type="submit" class="max-w-fit text-white cursor-pointer px-4 py-2 rounded-2xl hover:opacity-60 bg-indigo-600" style="">
                                             Update
                                         </button>
                                     @elseif($sl->status_id >= 8)
-                                        <button  x-data x-on:click="" type="submit" class="text-[#302714] px-4 py-2 rounded-2xl border border-indigo-600 " style="opacity: 0.6; cursor: not-allowed;">
+                                        <button  x-data x-on:click="" type="submit" class="max-w-fit text-[#302714] px-4 py-2 rounded-2xl border border-indigo-600 " style="opacity: 0.6; cursor: not-allowed;">
                                             Closed
                                         </button>
                                     @elseif($sl->status_id = 7)
-                                        <button  x-data x-on:click="" type="submit" class="text-[#302714] px-4 py-2 rounded-2xl border border-red-600 " style="opacity: 0.6; cursor: not-allowed;">
+                                        <button  x-data x-on:click="" type="submit" class="max-w-fit text-[#302714] px-4 py-2 rounded-2xl border border-red-600 " style="opacity: 0.6; cursor: not-allowed;">
                                             Cancelled
                                         </button>
                                     @endif
                                 <!-- Delete Button Form -->
-                                <form method="POST" action="">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Are you sure you want to delete this Category?')" class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-[#F8971A] hover:opacity-60">
-                                        Print Receipt
-                                    </button>
-                                </form>
+                                <div class="flex flex-col gap-3">
+                                        <button type="submit" onclick="return confirm('Are you sure you want to delete this Category?')" class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-[#F8971A] hover:opacity-60">
+                                            Receipt Form
+                                        </button>
+                                        <button type="submit" onclick="return confirm('Are you sure you want to delete this Category?')" class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-amber-400 hover:opacity-60">
+                                            Job Order
+                                        </button>
+                                    {{-- <form method="POST" action="">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form> --}}
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -386,9 +415,6 @@
 
     <x-modal-UpdatePopUp name="test" title="Test">
         @slot('body')
-            {{-- <p>
-                adigy
-            </p> --}}
             <livewire:modal-update/>
         @endslot
     </x-modal-UpdatePopUp>

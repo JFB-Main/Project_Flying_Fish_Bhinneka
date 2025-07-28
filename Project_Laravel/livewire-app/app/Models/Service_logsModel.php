@@ -55,5 +55,17 @@ class Service_logsModel extends Model
     {
         return $this->belongsTo(StatusModel::class, 'status_id');
     }
+    
+    public function warranty_bind()
+    {
+        return $this->belongsTo(WarrantyModel::class, 'warranty_status');
+    }
+
+    public function statusUpdateLog_bind()
+    {
+        // Relationship: A service log has many status updates
+        // 'service_logs_id' is the FK in status_updatelog, 'techlog_id' is the local key in service_logs
+        return $this->hasMany(Status_updatelogModel::class, 'service_logs_id', 'techlog_id');
+    }
 
 }

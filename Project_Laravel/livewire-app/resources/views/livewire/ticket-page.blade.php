@@ -54,8 +54,13 @@
     }
 @endphp
 
-<div class="flex flex-col w-auto pl-10 pr-10 gap-15">
-    adad {{$id}}
+<div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-10">
+    {{-- @forelse ($notes as $n)
+    {{$n->id}}     {{$n->note_conte}}
+    @empty
+    no data
+    @endforelse --}}
+    {{-- adad {{$id}} --}}
     <div class="flex flex-col border justify-center border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 pl-5 pr-5 w-full">
         @if ($sl)
             <div class="flex flex-row gap-1">
@@ -298,7 +303,7 @@
                                 </p>
                             </div>
                             <div class="w-full">
-                                {{$sl->received_from}}
+                                {{$sl->SKU}}
                             </div>
                         </div>
                         <div class="gap-3 flex flex-row">
@@ -311,7 +316,7 @@
                                 </p>
                             </div>
                             <div class="w-full">
-                                {{$sl->email}}
+                                {{$sl->brand_type}}
                             </div>
                         </div>
                         <div class="gap-3 flex flex-row">
@@ -324,7 +329,7 @@
                                 </p>
                             </div>
                             <div class="w-full">
-                                {{$sl->contact_person}}
+                                {{$sl->part_number}}
                             </div>
                         </div>
                         <div class="gap-3 flex flex-row">
@@ -337,7 +342,33 @@
                                 </p>
                             </div>
                             <div class="w-full">
-                                {{$sl->mobile_number}}
+                                {{$sl->serial_number}}
+                            </div>
+                        </div>
+                        <div class="gap-3 flex flex-row">
+                            <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                <p class="" style=>
+                                    Warranty Status
+                                </p>
+                                <p>
+                                    :
+                                </p>
+                            </div>
+                            <div class="w-full">
+                                {{$sl->warranty_bind ? $sl->warranty_bind->warranty_status: 'N/A'}}
+                            </div>
+                        </div>
+                        <div class="gap-3 flex flex-row">
+                            <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                <p class="" style=>
+                                    Part Ready
+                                </p>
+                                <p>
+                                    :
+                                </p>
+                            </div>
+                            <div class="w-full">
+                                {{$sl->part_ready}}
                             </div>
                         </div>
                     </div>
@@ -405,7 +436,6 @@
         @endif
     </div>
     <div>
-
     </div>
     {{-- <table class="w-full table-auto min-w-screen max-w-full">
         <thead class="bg-gray-100 ">
@@ -463,5 +493,127 @@
             @endif
         </tbody>
     </table>     --}}
+    <div class="flex flex-col border justify-center border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 w-full pl-5 pr-5">
+        <div class="flex flex-row w-full gap-1 pl-5">
+            <div class="bg-[#F8971A]" style="width: 4px"></div>
+            <div class="flex flex-row gap-2">
+                <h1 class="text-2xl text-[#302714] font-bold">
+                    Status Update Log
+                </h1>
+            </div>
+        </div>
+        <div class="flex flex-col overflow-x-scroll rounded-b-2xl">
+            <table class="w-full table-auto min-w-screen max-w-full">
+                <thead class="bg-gray-200 border-t border-gray-200 pl-3">
+                    <tr class="gap-3">
+                        <th class="text-left p-2" style="width: 50px;">ID</th>
+                        {{-- <th class="text-left p-2" style="width: 10%;">Techlog ID</th> --}}
+                        <th class="text-left p-2" style="width: 200px;">Status</th>
+                        <th class="text-left p-2" style="width: 10%;">Created By</th>
+                        <th class="text-left p-2" style="width: 10%;">Created At</th>
+                        <th class="text-left p-2" style="max-width: 100px">Note Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($statusLog as $s)
+                        <tr class="border-t">
+                            <td class="p-2 pt-5 pb-5 ">{{ $s->id }}</td>
+                            {{-- <td class="p-2 ">{{ $s->service_logs_id }}</td> --}}
+                            <td class="p-2 pt-5 pb-5 ">
+                                @php
+                                    $statusType = $s->status ? $s->status->status_type : 'N/A';
+                                    $statusClass = ''; // Default empty class
+                                    $color_map = [
+                                        'Open' => 'bg-[#AEAAAA]',
+                                        'On Progress' => 'bg-[#FFB55B]',
+                                        'Pending' => 'bg-[#DA56B8]',
+                                        'RMA to Vendor' => 'bg-[#D094F6]',
+                                        'On-QC' => 'bg-[#68B0FF]',
+                                        'Completed' => 'bg-[#6EBA5C]',
+                                        'Canceled' => 'bg-[#DA5658]',
+                                        'Returned to Client' => 'bg-[#5993FF]',
+                                        
+                                        //....
+                                        ];
 
+                                    $statusClass = $color_map[$statusType] ?? 'bg-gray-500-italic';
+                                @endphp
+                                
+                                <span class="{{ $statusClass }} text-white p-1 pl-2 pr-2 rounded-4xl">
+                                     {{ $s->status_id  ? $s->status->status_type : 'N/A'}}
+                                </span>
+                            </td>
+                            <td class="p-2 ">{{ $s->teknisi_id ? $s->technician->username : 'N/A' }}</td>
+                            <td class="p-2 ">{{ $s->created_at }}</td>
+                            <td class="p-2 ">{{ $s->status_note }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="p-4 text-center text-gray-500">No notes found.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="p-10">
+            {{$notes->links('vendor.livewire.tailwind')}}
+        </div>
+    </div>
+
+
+    <div class="flex flex-col border justify-center border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 w-full pl-5 pr-5">
+        <div class="flex flex-row w-full gap-3 pl-5">
+            <div class="flex flex-row w-fit gap-1">
+                <div class="bg-[#F8971A]" style="width: 4px"></div>
+                <div class="flex flex-row gap-2">
+                    <h1 class="text-2xl text-[#302714] font-bold">
+                        Notes
+                    </h1>
+                </div>
+            </div>
+            <button x-on:click="$dispatch('open-modal', {name: 'note+'})" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-1 pl-3 pr-3 rounded-4xl">
+                New Notes +
+            </button>
+            <div>
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+        <div class="flex flex-col overflow-x-scroll rounded-b-2xl">
+            <table class="w-full table-auto min-w-screen max-w-full">
+                <thead class="bg-gray-200 border-t border-gray-200 pl-3">
+                    <tr class="gap-3">
+                        <th class="text-left p-2" style="width: 50px;">ID</th>
+                        {{-- <th class="text-left p-2" style="width: 10%;">Techlog ID</th> --}}
+                        <th class="text-left p-2" style="width: 10%;">Created By</th>
+                        <th class="text-left p-2" style="width: 10%;">Created At</th>
+                        <th class="text-left p-2" style="max-width: 100px">Note Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($notes as $n)
+                        <tr class="border-t">
+                            <td class="p-2 pt-5 pb-5 ">{{ $n->id }}</td>
+                            {{-- <td class="p-2 ">{{ $n->service_logs_id }}</td> --}}
+                            <td class="p-2 ">{{ $n->teknisi_id ? $n->technician->username : 'N/A' }}</td>
+                            <td class="p-2 ">{{ $n->created_at }}</td>
+                            <td class="p-2 ">{{ $n->note_content }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="p-4 text-center text-gray-500">No notes found.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <x-modal-NoteCreate name="note+" title="Test">
+        </x-modal-NoteCreate>
+        <div class="p-10">
+            {{$notes->links('vendor.livewire.tailwind')}}
+        </div>
+    </div>
 </div>

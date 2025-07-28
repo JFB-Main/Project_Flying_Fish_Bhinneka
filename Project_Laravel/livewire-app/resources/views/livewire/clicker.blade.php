@@ -3,10 +3,11 @@
         <div class="flex flex-row max-w-fit gap-1">
             <div class="bg-[#F8971A]" style="width: 4px"></div>
             <h1 class="text-2xl font-semibold self-center">
-            {{ $pageTitle }} {{$message}}
+            {{ $pageTitle }} 
+            {{-- {{$message}} --}}
             </h1>
         </div>
-        <a href="" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-1 pl-3 pr-3 rounded-4xl">
+        <a href="{{route('create-techlog')}}" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-1 pl-3 pr-3 rounded-4xl">
             New Techlog +
         </a>
     </div>

@@ -27,17 +27,30 @@ class ModalUpdate extends Component
     #[On('open-modal')]
     public function receiveDataAndOpen($name, $slId_For_UpdateStatusId)
     {
+        $this->selectedId = $slId_For_UpdateStatusId;
+        
+        // Always fetch the LATEST data from the database when opening the modal
+        $this->techlogIdSelector = Service_logsModel::with('status', 'serviceId')->where('id', $slId_For_UpdateStatusId)->first();
+
+        if ($this->techlogIdSelector) {
+            $this->id_for_status_update = $this->techlogIdSelector->id;
+            $this->status_id = $this->techlogIdSelector->status_id; // THIS IS CRITICAL: Always get fresh status_id
+            $this->techlogIdString = $this->techlogIdSelector->techlog_id; 
+            
+            $this->note_update = ''; // Clear note for new update action
+        } else {
+            Session::flash('error', 'Error: Service Log with ID ' . $slId_For_UpdateStatusId . ' not found. Cannot open modal.');
+            $this->dispatch('close-modal');
+        }
+
         
         // For this specific modal, we don't need to check $name here
         // as the x-modalUpdateShow component already filters by name.
         // However, if ModalUpdate itself controls its visibility, you'd check $name here.
 
-        $this->selectedId = $slId_For_UpdateStatusId;
-        
-        // $this->techlogIdSelector = "gg";
+        // $this->selectedId = $slId_For_UpdateStatusId;
+        // $this->techlogIdSelector = Service_logsModel::with('status', 'serviceId')->where('id', '=', "{$slId_For_UpdateStatusId}")->first();
 
-        $this->techlogIdSelector = Service_logsModel::with('status', 'serviceId')->where('id', '=', "{$slId_For_UpdateStatusId}")->first();
-        // dd($this->techlogIdSelector);
 
         
         // Assign the received status_id
@@ -50,8 +63,60 @@ class ModalUpdate extends Component
         $this->dispatch('log-message', message: "dhgfvwhbjak");
     }
     public function cancelStatus(){
-        dd($this->id_for_status_update, "saklek kabean");
+        // dd($this->id_for_status_update, now()->toDateString(), $this->note_update, $this->status_id);
+
+        $coba = Service_logsModel::where('id', '=', $this->id_for_status_update)->first();
+
+        $statusUpdated = Service_logsModel::where('id', '=', $this->id_for_status_update)->update([
+            'status_id' => 7
+        ]);
+
+        $statusLogCreate = Status_updatelogModel::create([
+            'service_logs_id' => $coba->techlog_id,
+            'status_id' => 7,
+            'teknisi_id' => session('user_id'),
+            'status_note' => $this->note_update
+        ]);
+
+        if($statusLogCreate && $statusUpdated) {
+            session()->flash('success', 'Techlog ' . $coba->techlog_id . ' has been succesfully reverted');
+        } else {
+
+            session()->flash('error', 'Error: Failed to update Techlog or log the status change.');
+        }
+
+        $sl = Service_logsModel::all();
+
+        $this->dispatch('crud-done', $sl);
     }
+
+    public function revertStatus(){
+        // dd($this->id_for_status_update, now()->toDateString(), $this->note_update, $this->status_id);
+        $coba = Service_logsModel::where('id', '=', $this->id_for_status_update)->first();
+
+        $statusUpdated = Service_logsModel::where('id', '=', $this->id_for_status_update)->update([
+            'status_id' => 3
+        ]);
+
+        $statusLogCreate = Status_updatelogModel::create([
+            'service_logs_id' => $coba->techlog_id,
+            'status_id' => 3,
+            'teknisi_id' => session('user_id'),
+            'status_note' => $this->note_update
+        ]);
+
+        if($statusLogCreate && $statusUpdated) {
+            session()->flash('success', 'Techlog ' . $coba->techlog_id . ' has been succesfully reverted');
+        } else {
+
+            session()->flash('error', 'Error: Failed to update Techlog or log the status change.');
+        }
+        $sl = Service_logsModel::all();
+
+        $this->dispatch('crud-done', $sl);
+    }
+
+    
     // #[On('update-data')]
     public function updateStatus(){
 
@@ -77,6 +142,24 @@ class ModalUpdate extends Component
         $statusUpdated = Service_logsModel::where('id', '=', $this->id_for_status_update)->update([
             'status_id' => ($this->finalizeStatusId)
         ]);
+
+        if($this->finalizeStatusId == 5){
+            $statusUpdated = Service_logsModel::where('id', '=', $this->id_for_status_update)->update([
+                'part_ready' => (now()->toDateString())
+            ]);
+        }
+
+        if($this->finalizeStatusId == 6){
+            $statusUpdated = Service_logsModel::where('id', '=', $this->id_for_status_update)->update([
+                'completed_date' => (now()->toDateString())
+            ]);
+        }
+
+        if($this->finalizeStatusId == 8){
+            $statusUpdated = Service_logsModel::where('id', '=', $this->id_for_status_update)->update([
+                'return_date' => (now()->toDateString())
+            ]);
+        }
 
         $sl = Service_logsModel::all();
 

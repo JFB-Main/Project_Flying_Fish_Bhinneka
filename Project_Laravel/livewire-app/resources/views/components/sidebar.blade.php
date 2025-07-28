@@ -1,5 +1,7 @@
 <nav class="fixed top-0 left-0 w-64 flex flex-col h-screen outline outline-solid outline-[#E6D08E] " style="">
-    <div class="bg-[#F8971A] w-full h-min pt-3 pb-3">
+    {{-- bg-gradient-to-br from-amber-400 to-purple-700 --}}
+    {{-- <div class="bg-gradient-to-br from-amber-400 to-purple-700 w-full h-min pt-3 pb-3"> --}}
+    <div class="bg-gradient-to-b from-amber-400 via-[#F8971A] to-[#f88d1a] to-[90%] w-full h-min pt-3 pb-3">
         <div class="flex flex-row gap-2 items-center justify-baseline pl-5">
             <img src="{{ asset('icon_nav/flyingfish-icon.png') }}" alt="" style="width: 20%; height: 20%;">
             <h1 class="text-[#FFF8DE] font-bold text-xl">
@@ -12,7 +14,7 @@
             <div class="flex flex-row items-start">
                 <img src="{{ asset('icon_nav/dashboard_icon.svg') }}" alt="" style="width: 30px;">
                 <form action="{{ url('/') }}">
-                    <button x-data x-on:click="$Livewire.emit('setPageTitle', 'dd')" class="text-xl ">
+                    <button x-data class="text-xl ">
                         <span>
                             Dashboard
                         </span>
@@ -21,11 +23,11 @@
             </div>
             <div class="flex flex-row items-start">
                 <img src="{{ asset('icon_nav/service_icon.svg') }}" alt="" style="width: 30px;">
-                <button class="text-xl">
+                <a class="text-xl" href="{{route('dataReport')}}" target="_blank">
                     <span>
-                        Service
+                        Data Report
                     </span>
-                </button>
+                </a>
             </div>
             <div class="flex flex-row items-start">
                 <img src="{{ asset('icon_nav/logout_icon.svg') }}" alt="" style="width: 30px;">

@@ -38,7 +38,7 @@ class NotesModel extends Model
      *
      * @var bool
      */
-    public $timestamps = true;
+    public $timestamps = false;
     /**
      * Get the service log associated with this note.
      */

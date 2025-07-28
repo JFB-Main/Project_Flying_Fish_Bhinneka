@@ -35,6 +35,14 @@ class Dashboard extends Component
 
     public $statusCounts;
 
+    public $searchFromDateIn;
+
+    public $searchToDateIn;
+
+    public $searchFromCompleted;
+
+    public $searchToCompleted;
+
     #[On('crud-done')]
     public function updateList($sl = null)
     {
@@ -120,8 +128,38 @@ class Dashboard extends Component
         ->where('techlog_id', 'like', "%{$this->TechlogIDSearch}%")
         ->where('status_id', 'like', "%{$this->statusDDL}%")
         ->where('service_type', 'like', "%{$this->serviceTypeDDL}%")
-        ->where('create_by', 'like', "%{$this->createByDDL}%")
-        ->paginate(10);
+        ->where('create_by', 'like', "%{$this->createByDDL}%");
+
+        if ($this->searchFromDateIn && $this->searchToDateIn) {
+
+            $toDateForQuery = $this->searchToDateIn . ' 23:59:59'; 
+
+            $sl->whereBetween('date_in', [$this->searchFromDateIn, $toDateForQuery]);
+        }
+        // conditions for when only one date is provided
+        elseif ($this->searchFromDateIn) {
+            $sl->where('date_in', '>=', $this->searchFromDateIn);
+        }
+        elseif ($this->searchToDateIn) {
+            $sl->where('date_in', '<=', $this->searchToDateIn . ' 23:59:59');
+        }
+
+        
+        if ($this->searchFromCompleted && $this->searchToCompleted) {
+
+            $toCompletedForQuery = $this->searchToCompleted . ' 23:59:59'; 
+
+            $sl->whereBetween('completed_date', [$this->searchFromCompleted, $toCompletedForQuery]);
+        }
+        elseif ($this->searchFromCompleted) {
+            $sl->where('completed_date', '>=', $this->searchFromCompleted);
+        }
+        elseif ($this->searchToCompleted) {
+            $sl->where('completed_date', '<=', $this->toCompletedForQuery . ' 23:59:59');
+        }
+
+
+        $sl = $sl->paginate(10);
 
         return view('livewire.dashboard', [
             'Users_DDL_ArrayContain' => $Users_ListDDL,
