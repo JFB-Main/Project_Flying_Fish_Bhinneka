@@ -12,7 +12,7 @@
 @endphp
 
 <div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-15">
-    <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 pl-5 pr-5"
+    <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 pl-5 pr-5 shadow-lg"
         x-data
         x-on:open-modal.window = "toggleScroll()"    
         x-on:close-modal.window = "toggleScroll()"
@@ -31,6 +31,7 @@
                     @php
                         $statusMainCol= ''; // Default empty class
                         $statusLabelCol= ''; // Default empty class
+                        $statusIcon= ''; // Default empty class
 
                         $color_map = [
                             1=> 'bg-[#AEAAAA]',
@@ -58,8 +59,22 @@
                             //....
                             ];
 
+                        $icon_map = [
+                            1 => 'icon_SLOverview/icon_Open.svg',
+                            2 => 'icon_SLOverview/icon_On_Progrss.svg',
+                            3 => 'icon_SLOverview/icon_Pending.svg',
+                            4 => 'icon_SLOverview/icon_RMA_to_Vendor.svg',
+                            5 => 'icon_SLOverview/icon_QC.svg',
+                            6 => 'icon_SLOverview/icon_completed.svg',
+                            7 => 'icon_SLOverview/icon_Cancel.svg',
+                            8 => 'icon_SLOverview/icon_Returned_to_client.svg',
+                            
+                            //....
+                            ];
+
                         $statusMainCol = $color_map[$statusId] ?? 'bg-gray-300';
                         $statusLabelCol = $label_map[$statusId] ?? 'bg-gray-400';
+                        $statusIcon = $icon_map[$statusId] ?? 'N/A';
                         // switch ($statusId) {
                         //     case '1':
                         //         $statusMainCol = 'bg-[#AEAAAA]'; // Grey for Open
@@ -101,10 +116,10 @@
                     @endphp
                     <div class="flex flex-col [&>*]:text-white" style="width: 23%">
                         <div class=" {{$statusMainCol}} rounded-t-3xl p-7">
-                            <img src="" alt="">
                             <div class="flex flex-col">
-                                <span class="badge bg-primary font-bold text-2xl">{{ $count }}</span>
-                                <p>{{ $statusNames[$statusId] ?? 'Unknown Status' }}</p>
+                                <img src="{{$statusIcon}}" alt="" class="absolute self-end" style="width: 64px;">
+                                <span class="badge bg-primary font-bold text-2xl" style="z-index: 1">{{ $count }}</span>
+                                <p style="z-index: 1">{{ $statusNames[$statusId] ?? 'Unknown Status' }}</p>
                             </div>
                         </div>
                         <div class="flex justify-center {{$statusLabelCol}}  rounded-b-3xl p-5 pt-3 pb-3">
@@ -117,7 +132,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10">
+    <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 shadow-lg">
         <div class="flex flex-col gap-10">
             <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
                 CUSTOMER RELATED SEARCH
@@ -263,7 +278,7 @@
         </div>
         <div class="bg-[#F8971A]" style="height: 64px"></div>
         <div class="flex flex-col ml-10 mr-10 overflow-x-scroll rounded-2xl">
-            <table class="w-full table-auto min-w-screen max-w-full">
+            <table class="w-full table-auto max-w-full">
                 <thead class="bg-gray-100 ">
                     <tr class="">
                         <th class="text-left p-2">Techlog ID</th>
@@ -274,12 +289,12 @@
                         <th class="text-left p-2">Contact</th>
                         <th class="text-left p-2">Phone</th>
                         <th class="text-left p-2">SN</th>
-                        <th class="text-center p-2">Action | Print</th>
+                        <th class="text-center p-2 max-w-fit">Action | Print</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($service_log as $sl)
-                        <tr class="border-t">
+                        <tr class="border-t hover:bg-blue-50">
                             <td class="p-2">
                                 {{-- x-on:click="$dispatch('open-ticketPage', {id_selected: {{ $sl->id }} })"  --}}
                                 <a wire:click="ticketPageLink({{$sl->id}})" class="cursor-pointer text-indigo-500 underline hover:text-indigo-700">
@@ -287,7 +302,7 @@
                                 </a>
                             </td>
                             {{-- <td class="p-2">{{ $sl->status ? $sl->status->status_type : 'N/A' }}</td> --}}
-                            <td class="p-2">
+                            <td class="p-2 min-w-50">
                                 @php
                                     $statusType = $sl->status ? $sl->status->status_type : 'N/A';
                                     $statusClass = ''; // Default empty class
@@ -339,8 +354,8 @@
                                     {{ $statusType }}
                                 </span>
                             </td>
-                            <td class="p-2">{{ $sl->date_in }}</td>
-                            <td class="p-2">{{ $sl->serviceId ? $sl->serviceId->service_type_name : 'N/A' }}</td>
+                            <td class="min-w-25 p-2">{{ $sl->date_in }}</td>
+                            <td class="min-w-25 p-2">{{ $sl->serviceId ? $sl->serviceId->service_type_name : 'N/A' }}</td>
                             {{-- <td class="p-2">{{$sl->serviceId === 1 ? 'a' : ($sl->serviceId === 2 ? 'b' : 'N/A') }}</td> --}}
                             {{-- <td class="p-2">
                                 @if (($p = $sl->service_id) == 1)  
@@ -355,7 +370,7 @@
                             <td class="p-2">{{ $sl->contact_person }}</td>
                             <td class="p-2">{{ $sl->mobile_number }}</td>
                             <td class="p-2">{{ $sl->serial_number }}</td>
-                            <td class="flex items-start justify-end gap-4 p-6">
+                            <td class="flex items-start justify-end gap-4 p-6 min-w-80">
                                 <!-- Update Button Form updateId=""-->
                                     {{-- <input type="hidden" name="id" value="{{ $u->id }}"> --}}
                                     @if ($sl->status_id < 7)

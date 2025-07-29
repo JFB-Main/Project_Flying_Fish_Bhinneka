@@ -186,28 +186,43 @@
                             }
                         "
                     class="hover:text-white text-[#302714] px-4 py-2 rounded-2xl border border-red-300 hover:bg-red-600 cursor-pointer" style="">
-                Cancel order
+                Cancel Order
                 </button>   
-                <button type="button" 
-                    x-data 
-                    @if($this->techlogIdSelector->status_id == 5)
+                @if (($this->techlogIdSelector->status_id == 2))
+                    <button type="button" 
+                        x-data 
                         x-on:click="
-                            if (confirm('Are you sure you want to revert this order to -> Pending?')) {
-                                $wire.revertStatus();
+                            if (confirm('Are you sure you want to Finish this order to -> Completed?')) {
+                                $wire.skipStatus();
                                 $dispatch('close-modal');
                             }
                         "
-                    @endif
-                    class="hover:text-white text-[#302714] px-4 py-2 rounded-2xl border border-amber-500 hover:bg-amber-500 cursor-pointer"
-                    style="@if($this->techlogIdSelector->status_id !== 5)
-                                cursor: not-allowed;
-                                background-color: transparent;
-                                color: rgb(48, 39, 20);
-                                border-color: rgb(255, 193, 7);
-                            @endif "
-                >
-                Revert to Pending
-                </button>   
+                        class="hover:text-white text-[#302714] px-4 py-2 rounded-2xl border border-amber-500 hover:bg-amber-500 cursor-pointer"
+                    >
+                    Finish Order
+                    </button>   
+                @else
+                    <button type="button" 
+                        x-data 
+                        @if($this->techlogIdSelector->status_id == 5)
+                            x-on:click="
+                                if (confirm('Are you sure you want to revert this order to -> Pending?')) {
+                                    $wire.revertStatus();
+                                    $dispatch('close-modal');
+                                }
+                            "
+                        @endif
+                        class="hover:text-white text-[#302714] px-4 py-2 rounded-2xl border border-amber-500 hover:bg-amber-500 cursor-pointer"
+                        style="@if($this->techlogIdSelector->status_id !== 5)
+                                    cursor: not-allowed;
+                                    background-color: transparent;
+                                    color: rgb(48, 39, 20);
+                                    border-color: rgb(255, 193, 7);
+                                @endif "
+                    >
+                    Revert to Pending
+                    </button>   
+                @endif
             </div>
             <div class="flex flex-row justify-between gap-5">
                 <button wire:click="$dispatch('close-modal')" class="cursor-pointer px-4 py-2 border rounded-2xl bg-amber-500 border-gray-200 hover:opacity-60 text-white">

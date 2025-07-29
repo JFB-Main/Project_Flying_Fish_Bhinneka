@@ -159,6 +159,13 @@ class DataReport extends Component
 
     //     return $reportData;
     // }
+    
+    // public function copyTableContent()
+    // {
+    //     $this->dispatch('copy-table-content', tableId: 'myTableContent');
+    // }
+
+
     public function render()
     {
 

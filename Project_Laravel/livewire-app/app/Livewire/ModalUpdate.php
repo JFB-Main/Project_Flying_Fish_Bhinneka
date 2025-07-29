@@ -116,6 +116,32 @@ class ModalUpdate extends Component
         $this->dispatch('crud-done', $sl);
     }
 
+        public function skipStatus(){
+        // dd($this->id_for_status_update, now()->toDateString(), $this->note_update, $this->status_id);
+        $coba = Service_logsModel::where('id', '=', $this->id_for_status_update)->first();
+
+        $statusUpdated = Service_logsModel::where('id', '=', $this->id_for_status_update)->update([
+            'status_id' => 6
+        ]);
+
+        $statusLogCreate = Status_updatelogModel::create([
+            'service_logs_id' => $coba->techlog_id,
+            'status_id' => 6,
+            'teknisi_id' => session('user_id'),
+            'status_note' => $this->note_update
+        ]);
+
+        if($statusLogCreate && $statusUpdated) {
+            session()->flash('success', 'Techlog ' . $coba->techlog_id . ' has been succesfully finished');
+        } else {
+
+            session()->flash('error', 'Error: Failed to update Techlog or log the status change.');
+        }
+        $sl = Service_logsModel::all();
+
+        $this->dispatch('crud-done', $sl);
+    }
+
     
     // #[On('update-data')]
     public function updateStatus(){

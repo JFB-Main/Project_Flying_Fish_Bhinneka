@@ -556,7 +556,7 @@
             </table>
         </div>
         <div class="p-10">
-            {{$notes->links('vendor.livewire.tailwind')}}
+            {{$statusLog->links('vendor.livewire.tailwind')}}
         </div>
     </div>
 

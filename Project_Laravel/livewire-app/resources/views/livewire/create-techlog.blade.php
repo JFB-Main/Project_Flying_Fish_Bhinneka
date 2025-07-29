@@ -6,7 +6,7 @@
                 <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
                     TECHLOG PROPERTY DATA
                 </h1>
-                <div class="flex flex-wrap justify-around w-full gap-15  pl-5 pr-5  [&>*]:w-5/12 [&>*]:max-h-fit">
+                <div class="flex flex-wrap justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-5/12 [&>*]:max-h-fit">
                     <div class="flex flex-col ">
                         <label for="dateIn">
                             Date In
@@ -155,38 +155,41 @@
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
+                </div>
+                <div class="bg-gray-400 pl-5 pr-5 w-11/12 self-center" style="height: 1px"></div>
+                <div class="flex flex-col justify-around w-full gap-15 pl-10 pr-10">
                     <div class="flex flex-col">
-                        <label for="problem">
-                            Problem 
+                        <label for="problem" class="font-bold">
+                            Problem:
                         </label>
-                        <textarea wire:model="input_problem" name="problem" id="problem" placeholder="Describe the problem..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_problem') border-red-500 @enderror"></textarea>
+                        <textarea wire:model="input_problem" name="problem" id="problem" placeholder="Describe the problem..." class="min-h-32 bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_problem') border-red-500 @enderror"></textarea>
                         @error('input_problem')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="flex flex-col">
-                        <label for="descriptionProduct">
-                            Description Product 
+                        <label for="descriptionProduct" class="font-bold">
+                            Description Product: 
                         </label>
-                        <textarea wire:model="input_descriptionProduct" name="descriptionProduct" id="descriptionProduct" placeholder="Describe the product..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_descriptionProduct') border-red-500 @enderror"></textarea>
+                        <textarea wire:model="input_descriptionProduct" name="descriptionProduct" id="descriptionProduct" placeholder="Describe the product..." class="min-h-32 bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_descriptionProduct') border-red-500 @enderror"></textarea>
                         @error('input_descriptionProduct')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="flex flex-col">
-                        <label for="preDiagnostic">
-                            Pre Diagnostic 
+                        <label for="preDiagnostic" class="font-bold">
+                            Pre Diagnostic: 
                         </label>
-                        <textarea wire:model="input_preDiagnostic" name="preDiagnostic" id="preDiagnostic" placeholder="Enter pre-diagnostic notes..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_preDiagnostic') border-red-500 @enderror"></textarea>
+                        <textarea wire:model="input_preDiagnostic" name="preDiagnostic" id="preDiagnostic" placeholder="Enter pre-diagnostic notes..." class="min-h-32 bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_preDiagnostic') border-red-500 @enderror"></textarea>
                         @error('input_preDiagnostic')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="flex flex-col">
-                        <label for="addOn">
-                            Add-on 
+                        <label for="addOn" class="font-bold">
+                            Add-on: 
                         </label>
-                        <textarea wire:model="input_addOn" name="addOn" id="addOn" placeholder="Enter add-on notes..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_addOn') border-red-500 @enderror"></textarea>
+                        <textarea wire:model="input_addOn" name="addOn" id="addOn" placeholder="Enter add-on notes..." class="min-h-32 bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_addOn') border-red-500 @enderror"></textarea>
                         @error('input_addOn')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
@@ -213,7 +216,7 @@
                 @endif
 
                 <button type="submit" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-2 pl-10 pr-10 rounded-4xl text-2xl">
-                    New Techlog +
+                    Confirm
                 </button>
             </div>
         </form>

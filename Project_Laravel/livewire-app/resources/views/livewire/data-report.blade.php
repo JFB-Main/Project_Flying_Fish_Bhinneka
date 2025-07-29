@@ -185,9 +185,9 @@
             </div>
         </div>
         <div class="bg-[#F8971A]" style="height: 64px"></div>
-        <div class="flex flex-col ml-10 mr-10 overflow-x-auto rounded-2xl"> {{-- Changed to overflow-x-auto for better handling --}}
+        <div id="myTableContent" class="flex flex-col ml-10 mr-10 overflow-x-auto rounded-2xl"> {{-- Changed to overflow-x-auto for better handling --}}
             <table class="border w-full table-auto max-w-full">
-                <thead class="bg-gray-100">
+                <thead class="bg-[#f3f4f6]">
                     <tr class="text-black font-bold h-10">
                         {{-- Basic columns with rowspan=2 --}}
                         <th rowspan="2" class="text-center md:p-4 p-0 md:w-32 w-10 border-r">Techlog ID</th>
@@ -197,73 +197,73 @@
                         <th rowspan="2" class="text-center md:p-4 p-0 md:w-96 w-none border-r">Serial Number</th>
 
                         {{-- Status columns with colspan, based on the image structure --}}
-                        <th colSpan="2" class="text-center p-4 border">On-Progress</th>
-                        <th colSpan="6" class="text-center p-4 border">Pending</th> {{-- 3 iterations * 2 columns = 6 --}}
-                        <th colSpan="6" class="text-center p-4 border">RMA to Vendor</th> {{-- 3 iterations * 2 columns = 6 --}}
-                        <th colSpan="6" class="text-center p-4 border">On-QC</th> {{-- 3 iterations * 2 columns = 6 --}}
-                        <th colSpan="2" class="text-center md:p-4 p-0 md:w-32 w-10 border-r">Complete</th>
-                        <th colSpan="2" class="text-center md:p-4 p-0 md:w-32 w-10 border-r">Return to Client</th>
+                        <th colSpan="2" class="text-white text-center p-4 border border-black bg-[#FF9F17]">On-Progress</th>
+                        <th colSpan="6" class="text-white text-center p-4 border bg-[#D516A4] border-black">Pending</th> {{-- 3 iterations * 2 columns = 6 --}}
+                        <th colSpan="6" class="text-white text-center p-4 border bg-[#C547F6] border-black">RMA to Vendor</th> {{-- 3 iterations * 2 columns = 6 --}}
+                        <th colSpan="6" class="text-white text-center p-4 border bg-[#1A96FF] border-black">On-QC</th> {{-- 3 iterations * 2 columns = 6 --}}
+                        <th colSpan="2" class="text-white text-center md:p-4 p-0 md:w-32 w-10 border-r border-black bg-[#1CA717]">Complete</th>
+                        <th colSpan="2" class="text-white text-center md:p-4 p-0 md:w-32 w-10 border-r border-black bg-[#1657FF]">Return to Client</th>
                     </tr>
                     <tr class="border-b font-bold h-10 text-black">
                         {{-- Sub-headers for "User" and "Date" --}}
-                        <th class="text-center p-4 border">User</th>
-                        <th class="text-center p-4 border">Date</th>
+                        <th class="text-white text-center p-4 border border-black bg-[#FFB55B]">User</th>
+                        <th class="text-white text-center p-4 border border-black bg-[#FFB55B]">Date</th>
 
                         @for ($i = 1; $i <= 3; $i++)
-                            <th class="text-center p-4 border">User {{ $i }}</th> {{-- Added iteration number for clarity --}}
-                            <th class="text-center p-4 border">Date {{ $i }}</th>
+                            <th class="text-white text-center p-4 border border-black bg-[#DA56B8]">User {{ $i }}</th> {{-- Added iteration number for clarity --}}
+                            <th class="text-white text-center p-4 border border-black bg-[#DA56B8]">Date {{ $i }}</th>
                         @endfor
 
                         @for ($i = 1; $i <= 3; $i++)
-                            <th class="text-center p-4 border">User {{ $i }}</th>
-                            <th class="text-center p-4 border">Date {{ $i }}</th>
+                            <th class="text-white text-center p-4 border border-black bg-[#D094F6]">User {{ $i }}</th>
+                            <th class="text-white text-center p-4 border border-black bg-[#D094F6]">Date {{ $i }}</th>
                         @endfor
 
                         @for ($i = 1; $i <= 3; $i++)
-                            <th class="text-center p-4 border">User {{ $i }}</th>
-                            <th class="text-center p-4 border">Date {{ $i }}</th>
+                            <th class="text-white text-center p-4 border border-black bg-[#68B0FF]">User {{ $i }}</th>
+                            <th class="text-white text-center p-4 border border-black bg-[#68B0FF]">Date {{ $i }}</th>
                         @endfor
 
-                        <th class="text-center p-4 border">User</th>
-                        <th class="text-center p-4 border">Date</th>
+                        <th class="text-white text-center p-4 border border-black bg-[#6EBA5C]">User</th>
+                        <th class="text-white text-center p-4 border border-black bg-[#6EBA5C]">Date</th>
 
-                        <th class="text-center p-4 border">User</th>
-                        <th class="text-center p-4 border">Date</th>
+                        <th class="text-white text-center p-4 border border-black bg-[#5993FF]">User</th>
+                        <th class="text-white text-center p-4 border border-black bg-[#5993FF]">Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($reportData as $row)
-                        <tr class="hover:bg-gray-50 text-center border-b h-10">
+                        <tr class="hover:bg-blue-50 text-center border-b h-10">
                             {{-- Directly access the keys from your $reportData structure --}}
-                            <td class="p-0 border-l border-r">{{ $row['Techlog ID'] }}</td>
-                            <td class="p-0 border-l border-r">{{ $row['Date In'] }}</td>
-                            <td class="p-0 border-l border-r">{{ $row['Customer Name'] }}</td>
-                            <td class="p-0 border-l border-r">{{ $row['Brand Type'] }}</td>
-                            <td class="p-0 border-l border-r">{{ $row['Serial Number'] }}</td>
+                            <td class="pl-5 pr-5 border-l border-r">{{ $row['Techlog ID'] }}</td>
+                            <td class="min-w-30 border-l border-r">{{ $row['Date In'] }}</td>
+                            <td class="min-w-50 pl-5 pr-5 border-l border-r">{{ $row['Customer Name'] }}</td>
+                            <td class="pl-5 pr-5 border-l border-r">{{ $row['Brand Type'] }}</td>
+                            <td class="pl-5 pr-5 border-l border-r">{{ $row['Serial Number'] }}</td>
 
-                            <td class="p-0 border-l border-r">{{ $row['On-Progress User'] }}</td>
-                            <td class="p-0 border-l border-r">{{ $row['On-Progress Date'] }}</td>
+                            <td class="pl-5 pr-5 text-orange-600 p-0 border-l border-r bg-[#FFECB3]">{{ $row['On-Progress User'] }}</td>
+                            <td class="min-w-50 text-orange-600 p-0 border-l border-r bg-[#ffe495]">{{ $row['On-Progress Date'] }}</td>
 
                             @for ($i = 1; $i <= 3; $i++)
-                                <td class="p-0 border-l border-r">{{ $row['Pending ' . $i . ' User'] }}</td>
-                                <td class="p-0 border-l border-r">{{ $row['Pending ' . $i . ' Date'] }}</td>
+                                <td class="pl-5 pr-5 text-pink-600 p-0 border-l border-r bg-[#fbc2d6]">{{ $row['Pending ' . $i . ' User'] }}</td>
+                                <td class="min-w-50 text-pink-600 p-0 border-l border-r bg-[#fca0bf]">{{ $row['Pending ' . $i . ' Date'] }}</td>
                             @endfor
 
                             @for ($i = 1; $i <= 3; $i++)
-                                <td class="p-0 border-l border-r">{{ $row['RMA to Vendor ' . $i . ' User'] }}</td>
-                                <td class="p-0 border-l border-r">{{ $row['RMA to Vendor ' . $i . ' Date'] }}</td>
+                                <td class="pl-5 pr-5 text-purple-800 p-0 border-l border-r bg-[#ecd8f0]">{{ $row['RMA to Vendor ' . $i . ' User'] }}</td>
+                                <td class="min-w-50 text-purple-800 p-0 border-l border-r bg-[#e0bce7]">{{ $row['RMA to Vendor ' . $i . ' Date'] }}</td>
                             @endfor
 
                             @for ($i = 1; $i <= 3; $i++)
-                                <td class="p-0 border-l border-r">{{ $row['On-QC ' . $i . ' User'] }}</td>
-                                <td class="p-0 border-l border-r">{{ $row['On-QC ' . $i . ' Date'] }}</td>
+                                <td class="pl-5 pr-5 text-blue-800 p-0 border-l border-r bg-[#dcefff]">{{ $row['On-QC ' . $i . ' User'] }}</td>
+                                <td class="min-w-50 text-blue-800 p-0 border-l border-r bg-[#c6e3fb]">{{ $row['On-QC ' . $i . ' Date'] }}</td>
                             @endfor
 
-                            <td class="p-0 border-l border-r">{{ $row['Complete User'] }}</td>
-                            <td class="p-0 border-l border-r">{{ $row['Complete Date'] }}</td>
+                            <td class="pl-5 pr-5 text-green-800 p-0 border-l border-r bg-[#dffae0]">{{ $row['Complete User'] }}</td>
+                            <td class="min-w-50 text-green-800 p-0 border-l border-r bg-[#c1f8c3]">{{ $row['Complete Date'] }}</td>
 
-                            <td class="p-0 border-l border-r">{{ $row['Return to Client User'] }}</td>
-                            <td class="p-0 border-l border-r">{{ $row['Return to Client Date'] }}</td>
+                            <td class="pl-5 pr-5 text-blue-800 p-0 border-l border-r bg-[#ddeaff]">{{ $row['Return to Client User'] }}</td>
+                            <td class="min-w-50 text-blue-800 p-0 border-l border-r bg-[#c3dbff]">{{ $row['Return to Client Date'] }}</td>
                         </tr>
                     @empty
                         <tr>
@@ -274,4 +274,27 @@
             </table>
         </div>
     </div>
+    
+    {{-- <script>
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('copy-table-content', async (event) => {
+                const tableId = event.tableId;
+
+                const tableContent = new Blob([document.getElementById(tableId)], {type: 'text/html'});
+
+                const tableContent = document.getElementById(tableId);
+
+                if (tableContent) {
+                    try {
+                        await navigator.clipboard.writeText(tableContent.innerText || tableContent.textContent);
+                        // await navigator.clipboard.write([new ClipboardItem({'text/html': tableContent})])
+                        alert('Table content copied to clipboard!');
+                    } catch (err) {
+                        console.error('Failed to copy table content: ', err);
+                        alert('Failed to copy table content. Please try again or copy manually.');
+                    }
+                }
+            });
+        });
+    </script> --}}
 </div>
