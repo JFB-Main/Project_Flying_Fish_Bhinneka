@@ -388,7 +388,11 @@
                                     @endif
                                 <!-- Delete Button Form -->
                                 <div class="flex flex-col gap-3">
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete this Category?')" class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-[#F8971A] hover:opacity-60">
+                                        <button type="button" 
+                                                target="_blank"
+                                                    x-on:click="window.open('{{ route('receiptForm', ['id' => $sl->id]) }}', '_blank', 'noopener,noreferrer')"
+                                                class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-[#F8971A] hover:opacity-60"
+                                                >
                                             Receipt Form
                                         </button>
                                         <button type="submit" onclick="return confirm('Are you sure you want to delete this Category?')" class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-amber-400 hover:opacity-60">

@@ -11,7 +11,7 @@
                         <label for="dateIn">
                             Date In
                         </label>
-                        <input wire:model="input_dateIn" type="date" name="datetimeTo" id="dateIn" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_dateIn') border-red-500 @enderror">
+                        <input type="" readonly name="datetimeTo" id="dateIn" value="{{$now}}" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_dateIn') border-red-500 @enderror">
                         @error('input_dateIn')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
@@ -221,4 +221,12 @@
             </div>
         </form>
     </div>    
+
+    @script
+    <script>
+        Livewire.on('open-new-tab', (data) => {
+            window.open(data.url, '_blank', 'noopener,noreferrer');
+        });
+    </script>
+    @endscript
 </div>

@@ -82,6 +82,12 @@ class Dashboard extends Component
 
         return redirect()->route('TicketPage', ['id' => $id_selected]);
     }
+    // public function receiptFormLink($id_selected){
+    //     // dd($id_selected);
+    //     $this->dispatch('open-receiptForm', $id_selected);
+
+    //     return redirect()->route('receiptForm', ['id' => $id_selected]);
+    // }
 
     public function mount()
     {
@@ -159,7 +165,7 @@ class Dashboard extends Component
         }
 
 
-        $sl = $sl->paginate(10);
+        $sl = $sl->latest()->paginate(10);
 
         return view('livewire.dashboard', [
             'Users_DDL_ArrayContain' => $Users_ListDDL,

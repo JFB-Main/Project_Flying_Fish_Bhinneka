@@ -12,9 +12,9 @@ use App\Models\WarrantyModel;
 class CreateTechlog extends Component
 {
     #[Validate] 
-    public $input_dateIn = '';
+    public $input_dateIn = null;
     public $input_salesOrder = '';
-    public $input_invoiceDate = '';
+    public $input_invoiceDate = null;
     public $input_serviceType = ''; 
     public $input_customerName = '';
     public $input_mobileNumber = '';
@@ -34,7 +34,7 @@ class CreateTechlog extends Component
     protected function rules()
     {
         return [
-            'input_dateIn' => 'required|date',
+            // 'input_dateIn' => 'required|date',
             'input_salesOrder' => 'nullable|string|max:255',
             'input_invoiceDate' => 'nullable|date', 
             'input_serviceType' => 'required|integer|exists:service_type,id',
@@ -67,7 +67,7 @@ class CreateTechlog extends Component
         protected function messages()
     {
         return [
-            'input_dateIn.required' => 'The Date In field is required.',
+            // 'input_dateIn.required' => 'The Date In field is required.',
             'input_dateIn.date' => 'The Date In must be a valid date.',
             'input_serviceType.required' => 'The Service Type is required.',
             'input_serviceType.integer' => 'The Service Type must be a valid selection.',
@@ -107,6 +107,8 @@ class CreateTechlog extends Component
         //     'Add-on:', $this->input_addOn
         // );
 
+        $this->input_dateIn = \Carbon\Carbon::now()->format('Y-m-d');
+
         $techlogCreate = Service_logsModel::create([
             'date_in' => $this->input_dateIn,
             'received_from' => $this->input_customerName,
@@ -136,6 +138,10 @@ class CreateTechlog extends Component
         if($techlogCreate) {
             session()->flash('success', 'Register Berhasil!.');
             $this->dispatch('crud-done', $techlogCreate);
+            
+            // Dispatch event to open the ReceiptForm in a new tab
+            $receiptUrl = route('receiptForm', ['id' => $techlogCreate->id]); // Use the newly created log's primary ID
+            $this->dispatch('open-new-tab', url: $receiptUrl);
         }
         else{
             session()->flash('error', 'Register Tidak Berhasil!.');
@@ -146,10 +152,12 @@ class CreateTechlog extends Component
 
         $warranty_ListDDL = WarrantyModel::all();
         $ServiceType_ListDDL = Service_typeModel::all();
+        $now = \Carbon\Carbon::parse(now())->format('Y-m-d');
 
         return view('livewire.create-techlog',[
             'warranty_ddl' => $warranty_ListDDL,
-            'serviceType_ddl' => $ServiceType_ListDDL
+            'serviceType_ddl' => $ServiceType_ListDDL,
+            'now' => $now
         ])->extends('specific')->section('createContent');
     }
 }
