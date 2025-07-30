@@ -220,17 +220,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('livewire:initialized', () => {
-            Livewire.on('set-page-title', (event) => {
-                document.title = 'event.title';
-            });
-        });
-
-        window.onload = function() {
-                window.print();
-            };
-
-    </script>
 </div>

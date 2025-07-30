@@ -17,26 +17,27 @@ class ReceiptForm extends Component
     public $tl;
 
     public $pageTitle = 'Receipt Form';
+//    #[Title(fn () => $this->pageTitle)]
 
-    public function mount(){
-        // Fetch the service log data
+    public function mount()
+    {
+        // Fetch the service log data using the ID from the URL
         $this->tl = Service_logsModel::with('user', 'status', 'serviceId', 'warranty_bind')
             ->where('id', '=', $this->id)
             ->first();
 
-        // Dynamically set the pageTitle property here
+        // Dynamically update the pageTitle property based on fetched data
         if ($this->tl && $this->tl->techlog_id) {
-            $this->pageTitle = 'Receipt Form - TechLog_ID_' . $this->tl->techlog_id;
+            $this->pageTitle = 'Receipt_Form_' . $this->tl->techlog_id;
         } else {
-            $this->pageTitle = 'Receipt Form - N/A';
+            // Fallback if data is not found or techlog_id is missing
+            $this->pageTitle = 'Receipt_Form_N/A';
         }
-
-        $this->dispatch('set-page-title', title: $this->pageTitle);
     }
     
     
     public function render()
     {
-        return view('livewire.receipt-form')->extends('layouts.printForm')->section('receiptForm');;
+        return view('livewire.receipt-form')->extends('layouts.printForm')->section('receiptForm')->title($this->pageTitle);
     }
 }

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        {{-- <title>{{$pageTitle}}</title> --}}
+        <title>{{ $title ?? 'Default Receipt' }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -38,5 +38,11 @@
         <main class="h-[297mm] w-[210mm] overflow-hidden bg-white border">
             @yield('receiptForm')
         </main>
+
+        <script>
+            window.onload = function() {
+                    window.print();
+                };
+        </script>
     </body>
 </html>
