@@ -9,7 +9,7 @@
                 <div class="flex flex-wrap justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-5/12 [&>*]:max-h-fit">
                     <div class="flex flex-col ">
                         <label for="dateIn">
-                            Date In
+                            Date In<span class="text-red-500">*</span>
                         </label>
                         <input type="" readonly name="datetimeTo" id="dateIn" value="{{$now}}" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_dateIn') border-red-500 @enderror">
                         @error('input_dateIn')
@@ -36,7 +36,7 @@
                     </div>
                     <div class="flex flex-col ">
                         <label for="serviceType">
-                            Service Type 
+                            Service Type <span class="text-red-500">*</span>
                         </label>
                         <select wire:model="input_serviceType" name="serviceType" id="serviceType" class="w-full bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('input_serviceType') border-red-500 @enderror">
                             <option value="" selected>-- Select Service Type --</option>
@@ -56,7 +56,7 @@
                 <div class="flex flex-wrap justify-around w-full gap-15  pl-5 pr-5  [&>*]:w-5/12 [&>*]:max-h-fit">
                     <div class="flex flex-col ">
                         <label for="customerName">
-                            Customer Name / Received From
+                            Customer Name / Received From <span class="text-red-500">*</span>
                         </label>
                         <input wire:model="input_customerName" type="text" name="customerName" id="customerName" placeholder="Enter Customer Name..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('input_customerName') border-red-500 @enderror">
                         @error('input_customerName')
@@ -65,7 +65,7 @@
                     </div>
                     <div class="flex flex-col">
                         <label for="mobileNumber">
-                            Mobile Number 
+                            Mobile Number <span class="text-red-500">*</span>
                         </label>
                         <input wire:model="input_mobileNumber" type="text" name="mobileNumber" id="mobileNumber" placeholder="Enter Mobile Number..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_mobileNumber') border-red-500 @enderror">
                         @error('input_mobileNumber')
@@ -101,78 +101,82 @@
                     </div>
                 </div>
                 <hr class="text-[#FFF1C7] self-center" style="width: 90%;">
-                <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
-                    ITEM DATA
-                </h1>
-                <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12 pl-5 pr-5">
-                    <div class="flex flex-col">
-                        <label for="sku">
-                            SKU 
+                <div class="flex flex-col justify-around w-full gap-15 pl-5 pr-5">
+                    <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
+                        ITEM DATA
+                    </h1>
+                    <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12">
+                        <div class="flex flex-col">
+                            <label for="sku">
+                                SKU 
+                            </label>
+                            <input wire:model="input_sku" type="text" name="sku" id="sku" placeholder="Enter SKU..." class="bg-gray-50 border  text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_sku') border-red-500 @enderror">
+                            @error('input_sku')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="flex flex-col ">
+                            <label for="brandType">
+                                Brand Type 
+                            </label>
+                            <input wire:model="input_brandType" type="text" name="brandType" id="brandType" placeholder="Enter Brand Type..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('input_brandType') border-red-500 @enderror">
+                            @error('input_brandType')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="flex flex-col w-full [&>*]:w-full pl-9 pr-9 justify-center">
+                        <label for="descriptionProduct" class="">
+                            Description Product: 
                         </label>
-                        <input wire:model="input_sku" type="text" name="sku" id="sku" placeholder="Enter SKU..." class="bg-gray-50 border  text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_sku') border-red-500 @enderror">
-                        @error('input_sku')
+                        <textarea wire:model="input_descriptionProduct" name="descriptionProduct" id="descriptionProduct" placeholder="Describe the product..." class="min-h-32 bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_descriptionProduct') border-red-500 @enderror"></textarea>
+                        @error('input_descriptionProduct')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="flex flex-col ">
-                        <label for="brandType">
-                            Brand Type 
-                        </label>
-                        <input wire:model="input_brandType" type="text" name="brandType" id="brandType" placeholder="Enter Brand Type..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('input_brandType') border-red-500 @enderror">
-                        @error('input_brandType')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="flex flex-col">
-                        <label for="partNumber">
-                            Part Number 
-                        </label>
-                        <input wire:model="input_partNumber" type="text" name="partNumber" id="partNumber" placeholder="Enter Part Number..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_partNumber') border-red-500 @enderror">
-                        @error('input_partNumber')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="flex flex-col">
-                        <label for="serialNumber">
-                            Serial Number 
-                        </label>
-                        <input wire:model="input_serialNumber" type="text" name="serialNumber" id="serialNumber" placeholder="Enter Serial Number..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_serialNumber') border-red-500 @enderror">
-                        @error('input_serialNumber')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="flex flex-col">
-                        <label for="warrantyStatus">
-                            Waranty Status 
-                        </label>
-                        <select wire:model="input_warrantyStatus" name="warrantyStatus" id="warrantyStatus" class="w-full bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('input_warrantyStatus') border-red-500 @enderror">
-                            <option value="" selected>-- Select Warranty Status --</option>
-                            @foreach($warranty_ddl as $w)
-                                <option value="{{$w->id}}">{{$w->warranty_status}}</option>
-                            @endforeach
-                        </select>
-                        @error('input_warrantyStatus')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+                    <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12">
+                        <div class="flex flex-col">
+                            <label for="partNumber">
+                                Part Number 
+                            </label>
+                            <input wire:model="input_partNumber" type="text" name="partNumber" id="partNumber" placeholder="Enter Part Number..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_partNumber') border-red-500 @enderror">
+                            @error('input_partNumber')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="serialNumber">
+                                Serial Number 
+                            </label>
+                            <input wire:model="input_serialNumber" type="text" name="serialNumber" id="serialNumber" placeholder="Enter Serial Number..." class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_serialNumber') border-red-500 @enderror">
+                            @error('input_serialNumber')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="warrantyStatus">
+                                Waranty Status 
+                            </label>
+                            <select wire:model="input_warrantyStatus" name="warrantyStatus" id="warrantyStatus" class="w-full bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('input_warrantyStatus') border-red-500 @enderror">
+                                <option value="" selected>-- Select Warranty Status --</option>
+                                @foreach($warranty_ddl as $w)
+                                    <option value="{{$w->id}}">{{$w->warranty_status}}</option>
+                                @endforeach
+                            </select>
+                            @error('input_warrantyStatus')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="bg-gray-400 pl-5 pr-5 w-11/12 self-center" style="height: 1px"></div>
-                <div class="flex flex-col justify-around w-full gap-15 pl-10 pr-10">
+                <div class="flex flex-col justify-center w-full [&>*]:-11/12 gap-15 pl-10 pr-10">
                     <div class="flex flex-col">
                         <label for="problem" class="font-bold">
                             Problem:
                         </label>
                         <textarea wire:model="input_problem" name="problem" id="problem" placeholder="Describe the problem..." class="min-h-32 bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_problem') border-red-500 @enderror"></textarea>
                         @error('input_problem')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="flex flex-col">
-                        <label for="descriptionProduct" class="font-bold">
-                            Description Product: 
-                        </label>
-                        <textarea wire:model="input_descriptionProduct" name="descriptionProduct" id="descriptionProduct" placeholder="Describe the product..." class="min-h-32 bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_descriptionProduct') border-red-500 @enderror"></textarea>
-                        @error('input_descriptionProduct')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>

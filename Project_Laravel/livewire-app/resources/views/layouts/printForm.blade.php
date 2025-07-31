@@ -35,8 +35,9 @@
     </head>
     <body class="flex justify-center items-center min-h-screen">
         @livewireScripts
-        <main class="h-[297mm] w-[210mm] overflow-hidden bg-white border">
+        <main class="h-[297mm] w-[210mm] overflow-hidden border">
             @yield('receiptForm')
+            @yield('jobOrder')
         </main>
 
         <script>

@@ -2,15 +2,12 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Service_logsModel;
-// use Livewire\Attributes\On; 
+use Livewire\Component;
 use Livewire\Attributes\URL; 
-// use Livewire\Attributes\Title; 
 
-class ReceiptForm extends Component
+class JobOrder extends Component
 {
-
     #[Url(as: 'id', except: '')]
     public $id = '';
 
@@ -28,16 +25,14 @@ class ReceiptForm extends Component
 
         // Dynamically update the pageTitle property based on fetched data
         if ($this->tl && $this->tl->techlog_id) {
-            $this->pageTitle = 'Receipt_Form_' . $this->tl->techlog_id;
+            $this->pageTitle = 'Job_Order_' . $this->tl->techlog_id;
         } else {
             // Fallback if data is not found or techlog_id is missing
-            $this->pageTitle = 'Receipt_Form_N/A';
+            $this->pageTitle = 'Job_Order_N/A';
         }
     }
-    
-    
     public function render()
     {
-        return view('livewire.receipt-form')->extends('layouts.printForm')->section('receiptForm')->title($this->pageTitle);
+        return view('livewire.job-order')->extends('layouts.printForm')->section('jobOrder')->title($this->pageTitle);;
     }
 }

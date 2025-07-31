@@ -4,6 +4,7 @@ use App\Livewire\Auth\Logout;
 use App\Livewire\Dashboard;
 use App\Livewire\CreateTechlog;
 use App\Livewire\DataReport;
+use App\Livewire\JobOrder;
 use App\Livewire\ReceiptForm;
 use App\Livewire\TicketPage;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,7 @@ Route::group(['middleware' => 'guest'], function(){
     Route::get('/ticketPage/{id}', TicketPage::class)->name('TicketPage');
 
     Route::get('/receiptForm/{id}', ReceiptForm::class)->name('receiptForm');
+    Route::get('/jobOrder/{id}', JobOrder::class)->name('jobOrder');
 
     // Route::get('/ticketPage/{id_selected}', TicketPage::class($id_selected))->name('TicketPage');
     // Route::get('/', Dashboard::class)->name('dashboard');
