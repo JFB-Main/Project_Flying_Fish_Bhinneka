@@ -21,13 +21,18 @@
                 <div class="flex flex-row [&>*]:w-full">
                     <p class="max-w-3/12">Tech Log No</p>
                     <p class="max-w-fit pr-2">:&nbsp;</p>
-                    <p>
-                        @if ($tl->techlog_id)
-                            {{$tl->techlog_id}}
-                        @else
-                            N/A
-                        @endif
-                    </p>
+                    <div id="bc" class="flex flex-col gap-2">
+                        <div class="">
+                            {!! $barcodeHtml !!}
+                        </div>
+                        <p class="w-full ">
+                            @if ($tl->techlog_id)
+                                {{$tl->techlog_id}}
+                            @else
+                                N/A
+                            @endif
+                        </p>
+                    </div>
                 </div>
                 <div class="flex flex-row [&>*]:w-full">
                     <p class="max-w-3/12">Date</p>
@@ -220,4 +225,42 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function setLetterSpacingToFitContainer(element) {
+            const containerWidth = element.offsetWidth; // Get the width of the container
+            const text = element.textContent.trim(); // Get the text content
+
+            // Create a temporary hidden element to measure the text's natural width
+            const tempSpan = document.createElement('span');
+            tempSpan.textContent = text;
+            tempSpan.style.visibility = 'hidden';
+            tempSpan.style.whiteSpace = 'nowrap'; // Prevent text wrapping
+            document.body.appendChild(tempSpan);
+
+            const naturalTextWidth = tempSpan.offsetWidth; // Get the natural width of the text
+            document.body.removeChild(tempSpan); // Remove the temporary element
+
+            // Calculate the difference in width and the number of spaces between letters
+            const widthDifference = containerWidth - naturalTextWidth;
+            const numSpaces = text.length - 1; // Number of spaces between letters
+
+            if (numSpaces > 0 && widthDifference > 0) {
+                const calculatedLetterSpacing = widthDifference / numSpaces;
+                element.style.letterSpacing = `${calculatedLetterSpacing}px`;
+            } else {
+                element.style.letterSpacing = 'normal'; // Reset if no adjustment needed or possible
+            }
+        }
+
+        // Example usage:
+        const myParagraph = document.querySelector('bc');
+        setLetterSpacingToFitContainer(myParagraph);
+
+        // You might also want to call this function on window resize
+        // window.addEventListener('resize', () => {
+        // setLetterSpacingToFitContainer(myParagraph);
+        // });
+
+    </script>
 </div>

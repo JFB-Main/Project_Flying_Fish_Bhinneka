@@ -10,12 +10,21 @@
         <a href="{{route('create-techlog')}}" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-1 pl-3 pr-3 rounded-4xl">
             New Techlog +
         </a>
+        @if (session('role') === 1)
+            <div class="flex items-center">
+                <a href="{{route('addUser')}}" class="max-w-fit max-h-fit text-[#302714] font-medium p-1 pl-3 pr-3 rounded-4xl border border-indigo-600 hover:bg-indigo-600 hover:text-white cursor-pointer">
+                    Add User +
+                </a>
+            </div>
+        @endif
     </div>
     <div class="flex flex-row max-w-fit gap-1">
         <div class="flex flex-row max-w-fit gap-1">
             <div class="items-end flex flex-col max-w-fit [&>h2]:text-xl [&>h2]:font-semibold h-fit">
                 @if (session()->has('username'))
                     <h2>{{ ucwords(session('username')) }}</h2>
+                    {{-- <h2>{{ ucwords(session('user_id')) }}</h2>
+                    <h2>{{ session()->has('role') ? ucwords(session('role')) : 'N/A' }}</h2> --}}
                 @else
                     <h2>Guest</h2>
                 @endif

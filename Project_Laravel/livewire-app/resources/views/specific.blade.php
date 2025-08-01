@@ -57,6 +57,7 @@
             @yield('ticketContent')
             @yield('createContent')
             @yield('dataReportContent')
+            @yield('addUserYield')
         </div>
 
         {{-- @if (Route::has('login'))

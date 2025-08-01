@@ -24,6 +24,7 @@ class UsersModel extends Model
         'username',
         'email',
         'password',
+        'role'
     ];
     
     /**

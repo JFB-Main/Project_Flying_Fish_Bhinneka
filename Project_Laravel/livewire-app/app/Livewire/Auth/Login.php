@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Models\UsersModel;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
@@ -10,6 +11,10 @@ class Login extends Component
 {
     public $username;
     public $password;
+
+    public $rolefetch = null;
+
+    public $role_write;
     
     /**
      * login
@@ -24,9 +29,20 @@ class Login extends Component
         ]);
 
         if(Auth::attempt(['username' => $this->username, 'password'=> $this->password])) {
+            $this->rolefetch = UsersModel::where('id', '=', Auth::id())->first();
+
+
+            // $this->role = $this->rolefetch->tip->pluck('role');
+
+            // if ($this->rolefetch->role == 1) {
+            //     $this->role_name = 'Superadmin';
+            // }
+            // elseif($this->rolefetch->role == 2){
+            //     $this->role_name = 'admin';
+            // }
 
             // Save session data after successful login
-            session(['user_id' => Auth::id(), 'username' => $this->username]);
+            session(['user_id' => Auth::id(), 'username' => $this->username, 'role' => $this->rolefetch->role]);
             // Optionally, you can flash a success message
             session()->flash('message', 'Login successful!');
 

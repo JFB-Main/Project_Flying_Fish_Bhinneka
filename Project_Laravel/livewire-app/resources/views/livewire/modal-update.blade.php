@@ -175,7 +175,7 @@
             </div>
         </div>
         <div class="bg-amber-400 border-gray-100 border-t" style="height: 1px;"></div>
-        <div class="flex flex-row justify-between p-5 border-gray-200 border-t items-center">
+        <div class="flex flex-row justify-between p-5 border-gray-200 border-t items-center md:[&>*]:text-sm">
             <div class="flex flex-row justify-between gap-5">
                 <button type="button" 
                     x-data 

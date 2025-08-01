@@ -1,8 +1,8 @@
-<div class="container flex flex-row w-full h-screen" style="">
-    <div class="w-full bg-gradient-to-tl from-amber-100 via-[#F8971A]/70 to-purple-500">
+<div class="flex flex-row w-full h-screen justify-end" style="">
+    {{-- <div class="w-full bg-gradient-to-tl from-amber-100 via-[#F8971A]/70 to-purple-500"> --}}
         {{-- <div class="bg-blue-900 opacity-20 size-full">This div element has position: absolute;</div> --}}
-    </div>
-    <div class="flex flex-col justify-center w-full shadow-xl gap-10" style="max-width: 30%">
+    {{-- </div> --}}
+    <div class="flex flex-col justify-center w-full h-full shadow-xl gap-10 pt-5 pb-5 bg-white" style=" width: 30%;">
         <div class="flex flex-col items-center gap-15">
             <img src="icon_nav\flyingfish-icon.png" alt="" style="width: 30%">
             <div class="flex flex-col items-center">

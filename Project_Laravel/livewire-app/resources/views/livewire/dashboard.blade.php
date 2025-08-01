@@ -197,8 +197,8 @@
             <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
                 TECHLOG PROPERTY SEARCH
             </h1>
-            <div class="flex flex-wrap items-end pl-15 pr-15 gap-15 w-full">
-                <div class="flex flex-col justify-center w-4/12 gap-15 [&>*]:max-h-fit">
+            <div class="flex flex-wrap justify-between items-end pl-15 pr-15 gap-15 w-full">
+                <div class="flex flex-col justify-center w-3/12 gap-15 [&>*]:max-h-fit">
                     <div class="flex flex-col">
                         <label for="searchTL">
                             Techlog ID 
@@ -238,8 +238,11 @@
                     {{-- <x-datepicker>
                     </x-datepicker> --}}
                 </div>
+                <div class="flex flex-col justify-center w-3/12">
+                    
+                </div>
+                <hr class="text-gray-300" style="width: 100%">
             </div>
-            <hr class="text-[#FFF1C7] ml-15" style="width: 70%;">
             <div class="flex flex-wrap justify-between w-full gap-15 [&>*]:w-3/12 [&>*]:max-h-fit pl-15 pr-15">
                 <div class="flex flex-col ">
                     <label for="selS">
@@ -306,14 +309,29 @@
                                 @php
                                     $statusType = $sl->status ? $sl->status->status_type : 'N/A';
                                     $statusClass = ''; // Default empty class
+                                    // $color_map = [
+                                    //     'Open' => 'bg-[#AEAAAA]',
+                                    //     'On Progress' => 'bg-[#FFB55B]',
+                                    //     'Pending' => 'bg-[#DA56B8]',
+                                    //     'RMA to Vendor' => 'bg-[#D094F6]',
+                                    //     'On-QC' => 'bg-[#68B0FF]',
+                                    //     'Completed' => 'bg-[#6EBA5C]',
+                                    //     'Canceled' => 'bg-[#DA5658]',
+                                    //     'Returned to Client' => 'bg-[#5993FF]',
+                                        
+                                    //     //....
+                                    //     ];
+
                                     $color_map = [
-                                        'Open' => 'bg-[#AEAAAA]',
-                                        'On Progress' => 'bg-[#FFB55B]',
-                                        'Pending' => 'bg-[#DA56B8]',
-                                        'RMA to Vendor' => 'bg-[#D094F6]',
-                                        'On-QC' => 'bg-[#68B0FF]',
-                                        'Completed' => 'bg-[#6EBA5C]',
+                                        'Open' => 'bg-[#888080]',
+                                        'On Progress' => 'bg-[#FF9F17]',
+                                        'Pending' => 'bg-[#D516A4]',
+                                        'RMA to Vendor' => 'bg-[#C547F6]',
+                                        'On-QC' => 'bg-[#1A96FF]',
+                                        'Completed' => 'bg-[#1CA717]',
+                                        // 'Canceled' => 'bg-[#D40000]',
                                         'Canceled' => 'bg-[#DA5658]',
+                                        // 'Returned to Client' => 'bg-[#1657FF]',
                                         'Returned to Client' => 'bg-[#5993FF]',
                                         
                                         //....

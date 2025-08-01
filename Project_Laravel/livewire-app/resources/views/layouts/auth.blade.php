@@ -21,7 +21,7 @@
         @livewireStyles
         @livewireScripts
     </head>
-    <body class="">
+    <body class="bg-gradient-to-tl from-amber-100 via-[#F8971A]/70 to-purple-500">
         @livewire('auth.login')
 
         {{-- @if (Route::has('login'))

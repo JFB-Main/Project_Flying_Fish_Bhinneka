@@ -10,4 +10,10 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+
+    //to host in server that's not just localhost
+    server: {
+        host: true,
+        host: '10.0.12.56'
+    }
 });

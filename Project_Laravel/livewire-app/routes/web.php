@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\AddUser;
 use App\Livewire\Auth\Logout;
 use App\Livewire\Dashboard;
 use App\Livewire\CreateTechlog;
@@ -43,6 +44,7 @@ Route::group(['middleware' => 'guest'], function(){
     Route::get('/dataReport', DataReport::class)->name('dataReport');
 
     Route::get('/create', CreateTechlog::class)->name('create-techlog');
+    Route::get('/addUser', AddUser::class)->name('addUser');
     
     // Route::get('/ticketPage', TicketPage::class)->name('TicketPage');
     Route::get('/ticketPage/{id}', TicketPage::class)->name('TicketPage');

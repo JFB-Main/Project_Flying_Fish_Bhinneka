@@ -2,11 +2,14 @@
 
 namespace App\Livewire;
 
+use Faker\Core\Barcode;
 use Livewire\Component;
 use App\Models\Service_logsModel;
 // use Livewire\Attributes\On; 
 use Livewire\Attributes\URL; 
 // use Livewire\Attributes\Title; 
+use Picqer\Barcode\BarcodeGeneratorHTML;
+
 
 class ReceiptForm extends Component
 {
@@ -15,6 +18,8 @@ class ReceiptForm extends Component
     public $id = '';
 
     public $tl;
+
+    public $barcodeHtml;
 
     public $pageTitle = 'Receipt Form';
 //    #[Title(fn () => $this->pageTitle)]
@@ -33,6 +38,18 @@ class ReceiptForm extends Component
             // Fallback if data is not found or techlog_id is missing
             $this->pageTitle = 'Receipt_Form_N/A';
         }
+
+        $generator = new BarcodeGeneratorHTML();
+        
+
+        $this->barcodeHtml = $generator->getBarcode(
+            $this->tl->techlog_id, 
+            $generator::TYPE_CODE_128, 
+            2,  
+            34  
+        );
+
+
     }
     
     
