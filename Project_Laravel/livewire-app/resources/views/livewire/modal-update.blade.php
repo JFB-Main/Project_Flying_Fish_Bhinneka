@@ -175,7 +175,7 @@
             </div>
         </div>
         <div class="bg-amber-400 border-gray-100 border-t" style="height: 1px;"></div>
-        <div class="flex flex-row justify-between p-5 border-gray-200 border-t items-center md:[&>*]:text-sm">
+        <div class="flex flex-row justify-between p-5 border-gray-200 border-t items-center md:[&>*]:text-sm max-md:flex-col max-md:gap-5 max-md:items-baseline">
             <div class="flex flex-row justify-between gap-5">
                 <button type="button" 
                     x-data 
@@ -224,7 +224,8 @@
                     </button>   
                 @endif
             </div>
-            <div class="flex flex-row justify-between gap-5">
+            <div class="bg-amber-400 h-[1px] w-full self-center hidden max-md:inline"></div>
+            <div class="flex flex-row justify-between gap-5 max-md:w-full">
                 <button wire:click="$dispatch('close-modal')" class="cursor-pointer px-4 py-2 border rounded-2xl bg-amber-500 border-gray-200 hover:opacity-60 text-white">
                     Close
                 </button>

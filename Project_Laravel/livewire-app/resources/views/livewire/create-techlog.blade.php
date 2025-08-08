@@ -3,10 +3,10 @@
         {{-- Add wire:submit to your form to trigger the createTechlog method --}}
         <form wire:submit.prevent="createTechlog" class="flex flex-col gap-20">
             <div class="flex flex-col gap-10">
-                <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
+                <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium max-md:text-center">
                     TECHLOG PROPERTY DATA
                 </h1>
-                <div class="flex flex-wrap justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-5/12 [&>*]:max-h-fit">
+                <div class="flex flex-wrap justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-5/12 [&>*]:max-h-fit max-md:[&>*]:w-full">
                     <div class="flex flex-col ">
                         <label for="dateIn">
                             Date In<span class="text-red-500">*</span>
@@ -50,10 +50,10 @@
                     </div>
                 </div>
                 <hr class="text-[#FFF1C7] self-center" style="width: 90%;">
-                <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
+                <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium max-md:text-center">
                     CUSTOMER DATA
                 </h1>
-                <div class="flex flex-wrap justify-around w-full gap-15  pl-5 pr-5  [&>*]:w-5/12 [&>*]:max-h-fit">
+                <div class="flex flex-wrap justify-around w-full gap-15  pl-5 pr-5  [&>*]:w-5/12 [&>*]:max-h-fit max-md:[&>*]:w-full">
                     <div class="flex flex-col ">
                         <label for="customerName">
                             Customer Name / Received From <span class="text-red-500">*</span>
@@ -102,10 +102,10 @@
                 </div>
                 <hr class="text-[#FFF1C7] self-center" style="width: 90%;">
                 <div class="flex flex-col justify-around w-full gap-15 pl-5 pr-5">
-                    <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
+                    <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium max-md:text-center">
                         ITEM DATA
                     </h1>
-                    <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12">
+                    <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12 max-md:[&>*]:w-full">
                         <div class="flex flex-col">
                             <label for="sku">
                                 SKU 

@@ -11,7 +11,7 @@
     ];
 @endphp
 
-<div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-15">
+<div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-15 max-md:px-5">
     <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 pl-5 pr-5 shadow-lg"
         x-data
         x-on:open-modal.window = "toggleScroll()"    
@@ -21,12 +21,12 @@
 
         <div class="flex flex-row max-w-fit gap-1 pl-5">
             <div class="bg-[#F8971A]" style="width: 4px"></div>
-            <h3 class=" text-2xl text-[#302714] tracking-widest font-medium">
+            <h3 class=" text-2xl text-[#302714] tracking-widest font-medium max-xl:text-xl">
                 Service Log Status Overview
             </h3>
         </div>
         <div class="flex justify-center w-full">
-            <div class="flex flex-wrap w-full gap-7 justify-center">
+            <div class="flex flex-wrap w-full gap-7 justify-center max-lg:justify-start max-lg:flex-row max-lg:flex-nowrap max-lg:pb-2 max-lg:overflow-x-scroll">
                 @foreach($statusCount as $statusId => $count)
                     @php
                         $statusMainCol= ''; // Default empty class
@@ -114,16 +114,16 @@
                         //         break;
                         // }
                     @endphp
-                    <div class="flex flex-col [&>*]:text-white" style="width: 23%">
-                        <div class=" {{$statusMainCol}} rounded-t-3xl p-7">
+                    <div class="flex flex-col [&>*]:text-white w-[21%] max-xl:w-[20%] max-lg:min-w-[30%] max-lg:w-full max-md:min-w-50">
+                        <div class="relative {{$statusMainCol}} rounded-t-3xl p-7 max-xl:p-5">
                             <div class="flex flex-col">
-                                <img src="{{$statusIcon}}" alt="" class="absolute self-end" style="width: 64px;">
-                                <span class="badge bg-primary font-bold text-2xl" style="z-index: 1">{{ $count }}</span>
-                                <p style="z-index: 1">{{ $statusNames[$statusId] ?? 'Unknown Status' }}</p>
+                                <img src="{{$statusIcon}}" alt="" class="absolute self-end w-[64px] max-xl:w-[48px] max-lg:w-[40px]">
+                                <span class="badge bg-primary font-bold text-2xl max-xl:text-sm" style="z-index: 1">{{ $count }}</span>
+                                <p style="z-index: 1" class="max-xl:text-xs">{{ $statusNames[$statusId] ?? 'Unknown Status' }}</p>
                             </div>
                         </div>
                         <div class="flex justify-center {{$statusLabelCol}}  rounded-b-3xl p-5 pt-3 pb-3">
-                            <p>
+                            <p class="max-xl:text-xs max-xl:pr-0">
                                 Total {{ $count }}
                             </p>
                         </div>
@@ -132,12 +132,15 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 shadow-lg">
+    <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 shadow-lg 
+                max-xl:[&_div_div_div_label]:text-sm max-xl:[&_div_h1]:text-2xl 
+                max-lg:[&_div_h1]:text-lg max-lg:[&_div_div_div_label]:text-[12px] max-lg:[&_div_div_div_input,_div_div_div_select]:text-[10px] max-lg:[&_div_div_div_input,_div_div_div_select]:p-1 
+                max-md:[&_div_div_div,_div_div_div_select]:w-full max-md:[&_div_div_div_label]:text-base max-md:[&_div_div_div_input,_div_div_div_select]:text-sm max-md:[&_div_div_div_input,_div_div_div_select]:p-3">
         <div class="flex flex-col gap-10">
-            <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
+            <h1 class="text-center text-3xl text-[#F8971A] tracking-widest font-medium">
                 CUSTOMER RELATED SEARCH
             </h1>
-            <div class="flex flex-wrap justify-around w-full gap-15  pl-5 pr-5  [&>*]:w-5/12 [&>*]:max-h-fit">
+            <div class="flex flex-wrap justify-around w-full gap-15  pl-5 pr-5  [&>*]:w-5/12 [&>*]:max-h-fit max-lg:pl-10 max-lg:pr-10">
                 <div class="flex flex-col ">
                     <label for="searchN">
                         Customer Name 
@@ -164,10 +167,10 @@
                 </div>
             </div>
             <hr class="text-[#FFF1C7] self-center" style="width: 90%;">
-            <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
+            <h1 class="text-center self-center text-3xl text-[#F8971A] tracking-widest font-medium">
                 ITEM RELATED SEARCH
             </h1>
-            <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12 pl-5 pr-5">
+            <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12 pl-5 pr-5 max-lg:pl-10 max-lg:pr-10">
                 <div class="flex flex-col ">
                     <label for="searchBT">
                         Brand Type 
@@ -194,19 +197,19 @@
                 </div>
             </div>
             <hr class="text-[#FFF1C7] self-center" style="width: 90%;">
-            <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
+            <h1 class="text-center self-center text-3xl text-[#F8971A] tracking-widest font-medium">
                 TECHLOG PROPERTY SEARCH
             </h1>
             <div class="flex flex-wrap justify-between items-end pl-15 pr-15 gap-15 w-full">
-                <div class="flex flex-col justify-center w-3/12 gap-15 [&>*]:max-h-fit">
+                <div class="flex flex-col justify-center w-3/12 gap-15 [&>*]:max-h-fit max-xl:w-full">
                     <div class="flex flex-col">
                         <label for="searchTL">
                             Techlog ID 
                         </label>
-                        <input wire:model.live.debounce.200ms="TechlogIDSearch" type="text" name="" id="searchTL" placeholder="Search..." class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <input wire:model.live.debounce.200ms="TechlogIDSearch" type="text" name="" id="searchTL" placeholder="Search..." class="max-xl:w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     </div>
                 </div>
-                <div class="flex flex-col justify-center w-3/12">
+                <div class="flex flex-col justify-center w-3/12 max-xl:w-5/12">
                     <label for="datetimeFrom">
                         Datetime From
                     </label>
@@ -214,7 +217,7 @@
                     {{-- <x-datepicker>
                     </x-datepicker> --}}
                 </div>
-                <div class="flex flex-col justify-center w-3/12">
+                <div class="flex flex-col justify-center w-3/12 max-xl:w-5/12">
                     <label for="datetimeTo">
                         Datetime To
                     </label>
@@ -222,7 +225,7 @@
                     {{-- <x-datepicker>
                     </x-datepicker> --}}
                 </div>
-                <div class="flex flex-col justify-center w-3/12">
+                <div class="flex flex-col justify-center w-3/12 max-xl:w-5/12">
                     <label for="datetimeFrom">
                         Completed From
                     </label>
@@ -230,7 +233,7 @@
                     {{-- <x-datepicker>
                     </x-datepicker> --}}
                 </div>
-                <div class="flex flex-col justify-center w-3/12">
+                <div class="flex flex-col justify-center w-3/12 max-xl:w-5/12">
                     <label for="datetimeTo">
                         Completed To
                     </label>
@@ -238,12 +241,12 @@
                     {{-- <x-datepicker>
                     </x-datepicker> --}}
                 </div>
-                <div class="flex flex-col justify-center w-3/12">
+                <div class="flex flex-col justify-center w-3/12 max-xl:hidden">
                     
                 </div>
                 <hr class="text-gray-300" style="width: 100%">
             </div>
-            <div class="flex flex-wrap justify-between w-full gap-15 [&>*]:w-3/12 [&>*]:max-h-fit pl-15 pr-15">
+            <div class="flex flex-wrap justify-between w-full gap-15 [&>*]:w-3/12 [&>*]:max-h-fit pl-15 pr-15 max-lg:flex-row max-lg:items-center max-lg:gap-5 max-lg:[&_div_select]:w-30 max-md:flex-col max-md:items-center max-md:gap-10">
                 <div class="flex flex-col ">
                     <label for="selS">
                         Status
@@ -280,8 +283,8 @@
             </div>
         </div>
         <div class="bg-[#F8971A]" style="height: 64px"></div>
-        <div class="flex flex-col ml-10 mr-10 overflow-x-scroll rounded-2xl">
-            <table class="w-full table-auto min-w-screen max-w-full">
+        <div class="flex flex-col ml-10 mr-10 overflow-x-scroll rounded-2xl max-md:ml-3 max-md:mr-3">
+            <table class="w-full table-auto min-w-screen max-w-full max-xl:text-sm max-lg:text-[10px] max-lg:[&_tbody_tr_td]:text-[10px] max-md:[&_tbody_tr_td]:text-xs">
                 <thead class="bg-gray-100 ">
                     <tr class="">
                         <th class="text-left p-2">Techlog ID</th>
@@ -297,7 +300,7 @@
                 </thead>
                 <tbody>
                     @forelse($service_log as $sl)
-                        <tr class="border-t hover:bg-blue-50">
+                        <tr class="border-t hover:bg-blue-50 max-xl:[&>*]:text-[12px] max-lg:[&>*]:text-[10px]">
                             <td class="p-2">
                                 {{-- x-on:click="$dispatch('open-ticketPage', {id_selected: {{ $sl->id }} })"  --}}
                                 <a wire:click="ticketPageLink({{$sl->id}})" class="cursor-pointer text-indigo-500 underline hover:text-indigo-700">
@@ -305,7 +308,7 @@
                                 </a>
                             </td>
                             {{-- <td class="p-2">{{ $sl->status ? $sl->status->status_type : 'N/A' }}</td> --}}
-                            <td class="p-2 min-w-50">
+                            <td class="p-2 min-w-50 max-md:min-w-35">
                                 @php
                                     $statusType = $sl->status ? $sl->status->status_type : 'N/A';
                                     $statusClass = ''; // Default empty class
@@ -384,11 +387,13 @@
                                     N/A
                                 @endif
                             </td> --}}
-                            <td class="p-2">{{ $sl->received_from }}</td>
-                            <td class="p-2">{{ $sl->contact_person }}</td>
+                            <td class="p-2 max-md:min-w-30">{{ $sl->received_from }}</td>
+                            <td class="p-2 max-md:min-w-30">{{ $sl->contact_person }}</td>
                             <td class="p-2">{{ $sl->mobile_number }}</td>
                             <td class="p-2">{{ $sl->serial_number }}</td>
-                            <td class="flex items-start justify-end gap-4 p-6 min-w-80">
+                            <td class="flex items-start justify-end gap-4 p-6 min-w-80 max-xl:[&>*]:text-[12px] max-xl:[&>button]:py-1 max-xl:[&_div_button]:py-1 max-lg:[&>button]:text-[10px] max-lg:[&_div_button]:text-[10px] 
+                                        max-md:[&_div_button]:text-sm max-md:[&_div_button,_button]:py-2 max-md:[&>button]:text-sm max-md:[&>button]:py-2
+                                        ">
                                 <!-- Update Button Form updateId=""-->
                                     {{-- <input type="hidden" name="id" value="{{ $u->id }}"> --}}
                                     @if ($sl->status_id < 7)

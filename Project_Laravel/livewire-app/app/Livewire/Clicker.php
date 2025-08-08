@@ -27,17 +27,17 @@ class Clicker extends Component
 
 
     
-    public function createNewUser(){
-        $userCreate = UsersModel::create([
-            'username' => "testuse32",
-            'email' => "testuser32@gmail.com",
-            'password' => bcrypt('admin123')
-        ]);
-           if($userCreate) {
-            session()->flash('success', 'Register Berhasil!.');
-        }   
-        $this->dispatch('crud-done', $userCreate);
-    }
+    // public function createNewUser(){
+    //     $userCreate = UsersModel::create([
+    //         'username' => "testuse32",
+    //         'email' => "testuser32@gmail.com",
+    //         'password' => bcrypt('admin123')
+    //     ]);
+    //        if($userCreate) {
+    //         session()->flash('success', 'Register Berhasil!.');
+    //     }   
+    //     $this->dispatch('crud-done', $userCreate);
+    // }
 
     public function reloadList(){
         $users = UsersModel::paginate(2);
@@ -60,9 +60,9 @@ class Clicker extends Component
     public function mount($message = '')
     {
         // Redirect if not logged in
-        if (!auth()->check()) {
-            return redirect()->route('auth.login');
-        }
+        // if (!auth()->check()) {
+        //     return redirect()->route('auth.login');
+        // }
 
         $this->message = $message;
 

@@ -48,10 +48,22 @@
     </head>
     {{-- class="antialiased flex flex-row bg-gradient-to-tl from-amber-100 via-[#F8971A]/70 to-purple-400 --}}
     {{-- bg-[#FFFAF3] --}}
-    <body id="dashboard"  class="antialiased flex flex-row bg-gradient-to-tl from-amber-100 via-[#ff8c00]/70 to-purple-500">
-        <x-sidebar>
-        </x-sidebar>
-        <div class="ml-64 flex flex-col overflow-y-auto gap-10" style="width: 100%;">
+    <body  x-data="{ show: false }"
+            x-on:open-sidebar.window="show = !show"
+            :class="{ 'overflow-hidden': show }"
+            id="dashboard" class="antialiased relative flex flex-row bg-gradient-to-tl from-amber-100 via-[#ff8c00]/70 to-purple-500">
+            {{-- <div x-data x-on:click="$dispatch('open-sidebar')" class="fixed w-32 h-32 bottom-0 right-0 hidden max-md:inline z-3 outline cursor-pointer"></div> --}}
+            {{-- <img src="icon_nav\Create_Sphere.svg" alt="" x-data x-on:click="$dispatch('open-sidebar')" class="fixed w-16 h-16 bottom-4 right-4 hidden max-md:inline z-3 cursor-pointer"> --}}
+            <x-sidebar >
+            </x-sidebar>
+            <div x-data="{ show: false }"
+                    x-on:open-sidebar.window="show = !show"
+                    :class="{ 'max-md:inline': show }"
+                    x-on:click="$dispatch('open-sidebar')" class="hidden fixed h-screen inset-0 bg-[#030D26] opacity-50 z-3">
+            </div>
+
+        <div class="ml-64 max-xl:ml-44 max-lg:ml-36 max-md:ml-0 flex flex-col overflow-y-auto gap-10" style="width: 100%;">
+
             @livewire('clicker', ['message' => "fff"])
             @livewire('dashboard')
             {{-- <button x-data x-on:click="$dispatch('open-modal', {name : 'test'})" x-transition:enter="transition ease-out duration-300" class="bg-orange-100 w-md">

@@ -13,8 +13,9 @@
 
     class="fixed z-50 inset-0 ">
     <div x-on:click="show = false; $dispatch('close-modal')" class="fixed inset-0 bg-[#030D26] opacity-50"></div>
-    <div class="bg-white rounded-b rounded-r rounded-l m-auto fixed inset-0 mb-auto mt-auto h-5/6 max-h-fit overflow-y-scroll shadow-xs shadow-yellow-500 border-t-4 border-[#F8971A]" 
-        style="max-width: 45%">
+    <div class="max-w-[45%] bg-white rounded-b rounded-r rounded-l m-auto fixed inset-0 mb-auto mt-auto h-5/6 max-h-fit overflow-y-scroll shadow-xs shadow-yellow-500 border-t-4 border-[#F8971A] 
+                max-md:overflow-x-scroll max-md:max-w-[90%]" 
+        style="">
         {{-- @if (isset($title))
             <div>
                 {{$title}}

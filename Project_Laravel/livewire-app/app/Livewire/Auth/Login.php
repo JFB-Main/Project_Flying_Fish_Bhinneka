@@ -28,7 +28,7 @@ class Login extends Component
             'password'  => 'required'
         ]);
 
-        if(Auth::attempt(['username' => $this->username, 'password'=> $this->password])) {
+        if(Auth::attempt(['username' => $this->username, 'password'=> $this->password]) || Auth::attempt(['email' => $this->username, 'password'=> $this->password])) {
             $this->rolefetch = UsersModel::where('id', '=', Auth::id())->first();
 
 
@@ -42,7 +42,7 @@ class Login extends Component
             // }
 
             // Save session data after successful login
-            session(['user_id' => Auth::id(), 'username' => $this->username, 'role' => $this->rolefetch->role]);
+            session(['user_id' => Auth::id(), 'username' => $this->rolefetch->username, 'role' => $this->rolefetch->role]);
             // Optionally, you can flash a success message
             session()->flash('message', 'Login successful!');
 

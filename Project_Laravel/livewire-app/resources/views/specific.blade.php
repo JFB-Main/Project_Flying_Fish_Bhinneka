@@ -48,16 +48,28 @@
     </head>
     {{-- class="antialiased flex flex-row bg-gradient-to-tl from-amber-100 via-[#F8971A]/70 to-purple-400 --}}
     {{-- bg-[#FFFAF3] --}}
-    <body id="dashboard"  class="antialiased flex flex-row bg-gradient-to-tl from-amber-200 via-[#ff8c00]/70 to-purple-500">
-        <x-sidebar>
-        </x-sidebar>
-        <div class="ml-64 flex flex-col overflow-y-auto gap-10" style="width: 100%;">
+    <body id="dashboard" class="antialiased flex flex-row bg-gradient-to-tl from-amber-200 via-[#ff8c00]/70 to-purple-500">
+        @if (auth()->check())
+            <x-sidebar>
+            </x-sidebar>
+        @endif
+        <div x-data="{ show: false }"
+                x-on:open-sidebar.window="show = !show"
+                :class="{ 'max-md:inline': show }"
+                x-on:click="$dispatch('open-sidebar')" class="hidden fixed inset-0 bg-[#030D26] opacity-50 z-3">
+        </div>
+
+        @if (auth()->check())
+        <div class="ml-64 max-xl:ml-44 max-lg:ml-36 max-md:ml-0 flex flex-col overflow-y-auto gap-10" style="width: 100%;">
+        @endif
+        <div class="flex flex-col overflow-y-auto gap-10" style="width: 100%;">
             @livewire('clicker', ['message' => "fff"])
             {{-- @livewire('dashboard') --}}
             @yield('ticketContent')
             @yield('createContent')
             @yield('dataReportContent')
-            @yield('addUserYield')
+            @yield(section: 'addUserYield')
+            @yield(section: 'guestSearchYield')
         </div>
 
         {{-- @if (Route::has('login'))

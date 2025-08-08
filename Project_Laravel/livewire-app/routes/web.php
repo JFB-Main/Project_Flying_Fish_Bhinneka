@@ -8,6 +8,7 @@ use App\Livewire\DataReport;
 use App\Livewire\JobOrder;
 use App\Livewire\ReceiptForm;
 use App\Livewire\TicketPage;
+use App\Livewire\GuestSearch;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,6 +21,7 @@ Route::group(['middleware' => 'guest'], function(){
 
     //login
     Route::get('/login', Login::class)->name('auth.login');
+    Route::get('/guestSearch', GuestSearch::class)->name('guestSearch');
 
 });
 
@@ -40,19 +42,41 @@ Route::group(['middleware' => 'guest'], function(){
 
     // Route::get('/', Dashboard::class)->name('dashboard');
 
-    Route::get('/', Dashboard::class)->name('dashboard');
-    Route::get('/dataReport', DataReport::class)->name('dataReport');
+    //batas=-------------------------------------------------------------------------------
+    //batas=-------------------------------------------------------------------------------
 
-    Route::get('/create', CreateTechlog::class)->name('create-techlog');
-    Route::get('/addUser', AddUser::class)->name('addUser');
+    // Route::get('/login', Login::class)->name('auth.login');
+
+    // Route::get('/', Dashboard::class)->name('dashboard');
+    // Route::get('/dataReport', DataReport::class)->name('dataReport');
+
+    // Route::get('/create', CreateTechlog::class)->name('create-techlog');
+    // Route::get('/addUser', AddUser::class)->name('addUser');
     
-    // Route::get('/ticketPage', TicketPage::class)->name('TicketPage');
-    Route::get('/ticketPage/{id}', TicketPage::class)->name('TicketPage');
+    // // Route::get('/ticketPage', TicketPage::class)->name('TicketPage');
+    // Route::get('/ticketPage/{id}', TicketPage::class)->name('TicketPage');
 
-    Route::get('/receiptForm/{id}', ReceiptForm::class)->name('receiptForm');
-    Route::get('/jobOrder/{id}', JobOrder::class)->name('jobOrder');
+    // Route::get('/receiptForm/{id}', ReceiptForm::class)->name('receiptForm');
+    // Route::get('/jobOrder/{id}', JobOrder::class)->name('jobOrder');
+
+    // Route::get('/logout', Logout::class)->name('auth.logout');
+
+
+    //batas=-------------------------------------------------------------------------------
+    //batas=-------------------------------------------------------------------------------
 
     // Route::get('/ticketPage/{id_selected}', TicketPage::class($id_selected))->name('TicketPage');
     // Route::get('/', Dashboard::class)->name('dashboard');
 
-    Route::get('/logout', Logout::class)->name('auth.logout');
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/', Dashboard::class)->name('dashboard');
+        Route::get('/dataReport', DataReport::class)->name('dataReport');
+        Route::get('/create', CreateTechlog::class)->name('create-techlog');
+        Route::get('/addUser', AddUser::class)->name('addUser');
+        Route::get('/ticketPage/{id}', TicketPage::class)->name('TicketPage');
+        Route::get('/receiptForm/{id}', ReceiptForm::class)->name('receiptForm');
+        Route::get('/jobOrder/{id}', JobOrder::class)->name('jobOrder');
+        Route::get('/logout', Logout::class)->name('auth.logout');
+});
+

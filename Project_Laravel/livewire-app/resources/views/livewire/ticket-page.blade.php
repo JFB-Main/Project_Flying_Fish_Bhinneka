@@ -1,4 +1,4 @@
-    @php
+@php
     
      if ($sl) {
 
@@ -54,7 +54,7 @@
     }
 @endphp
 
-<div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-10">
+<div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-10 max-md:px-5">
     {{-- @forelse ($notes as $n)
     {{$n->id}}     {{$n->note_conte}}
     @empty
@@ -64,7 +64,7 @@
     <div class="flex flex-col border justify-center border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 pl-5 pr-5 w-full">
         @if ($sl)
             <div class="flex flex-row gap-1">
-                <div class="flex flex-row w-full gap-3 justify-center">
+                <div class="flex flex-row w-full gap-3 justify-center max-xl:[&_div_*]:text-2xl max-lg:[&_div_*]:text-xl max-md:flex-col max-md:items-center">
                     <div class="flex flex-row gap-2">
                         <h1 class="text-3xl text-[#302714] font-bold">
                             TECHLOG:&nbsp;
@@ -72,7 +72,7 @@
                         <h1 class="text-[#302714] text-3xl">{{$sl->techlog_id}}</h1>
                          {{-- <div class="bg-[#F8971A]" style="width: 2px;"></div> --}}
                     </div>
-                    <div class="bg-[#F8971A]" style="width: 2px"></div>
+                    <div class="bg-[#F8971A] w-[2px] max-md:w-full"></div>
                     <div class="flex flex-row items-center gap-2">
                         <div class="flex justify-center text-white p-1 pl-2 pr-2 rounded-4xl {{$statusMainCol}}">
                             <p>{{$statusMainLabel}}</p>
@@ -81,8 +81,9 @@
                 </div>
             </div>
             <div class="bg-amber-400 pl-5 pr-5 w-full" style="height: 1px"></div>
-            <div class="flex flex-col gap-7">
-                <div class="flex flex-col gap-10">
+            <div class="flex flex-col gap-7 max-xl:[&_div_div]:w-full max-xl:[&_div_div]:text-[12px] max-xl:[&_div_div_h1]:text-lg max-lg:[&_div_div_h1]:text-base max-lg:[&_div_div_p]:text-[10px]
+                        max-md:[&_div]:flex-wrap max-md:[&_div_div]:justify-start max-md:overflow-x-scroll">
+                <div class="flex flex-col gap-10 ">
                     <div class="flex flex-row w-full gap-1 pl-5">
                         <div class="bg-[#F8971A]" style="width: 4px"></div>
                         <div class="flex flex-row gap-2">
@@ -91,7 +92,7 @@
                             </h1>
                         </div>
                     </div>
-                    <div class="flex flex-wrap w-full gap-7 [&>*]:text-md [&>*]:justify-start [&>*]:flex [&>*]:flex-row [&>*]:w-2/5 [&>*]:pl-5 [&>*]:pr-5">
+                    <div class="flex flex-wrap w-full gap-7 [&>*]:text-md [&>*]:justify-start [&>*]:flex [&>*]:flex-row [&>*]:w-2/5 [&>*]:pl-5 [&>*]:pr-5 ">
                         {{-- <div class="gap-3 flex flex-col">
                             <div class="[&>*]:font-semibold flex flex-row w-full justify-between gap-2" style="max-width: 25%">
                                 <p class="" style=>
@@ -213,7 +214,7 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap w-full gap-7 [&>*]:text-md [&>*]:justify-start [&>*]:flex [&>*]:flex-row [&>*]:w-2/5 [&>*]:pl-5 [&>*]:pr-5">
-                        <div class="gap-3 flex flex-row">
+                        <div class="gap-3 flex flex-row max-md:flex-col">
                             <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
                                 <p class="" style=>
                                     Received From
@@ -249,7 +250,7 @@
                                 </p>
                             </div>
                             <div class="w-full">
-                                {{$sl->contact_person}}
+                               {{$sl->contact_person}}
                             </div>
                         </div>
                         <div class="gap-3 flex flex-row">
@@ -384,7 +385,9 @@
                                 </p>
                             </div>
                             <div class="w-full border bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                                {{$sl->description_product}}
+                                <p>
+                                    {{$sl->description_product}}
+                                </p>
                             </div>
                         </div>
                         <div class="gap-3 flex flex-row">
@@ -397,7 +400,9 @@
                                 </p>
                             </div>
                             <div class="w-full border bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                                {{$sl->problem}}
+                                <p>
+                                    {{$sl->problem}}
+                                </p>
                             </div>
                         </div>
                         <div class="gap-3 flex flex-row">
@@ -410,7 +415,9 @@
                                 </p>
                             </div>
                             <div class="w-full border bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                                {{$sl->pre_diagnostic}}
+                                <p>
+                                    {{$sl->pre_diagnostic}}
+                                </p>
                             </div>
                         </div>
                         <div class="gap-3 flex flex-row">
@@ -423,7 +430,9 @@
                                 </p>
                             </div>
                             <div class="w-full border bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                                {{$sl->add_on}}
+                                <p>
+                                    {{$sl->add_on}}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -497,13 +506,13 @@
         <div class="flex flex-row w-full gap-1 pl-5">
             <div class="bg-[#F8971A]" style="width: 4px"></div>
             <div class="flex flex-row gap-2">
-                <h1 class="text-2xl text-[#302714] font-bold">
+                <h1 class="text-2xl max-xl:text-xl max-lg:text-lg text-[#302714] font-bold">
                     Status Update Log
                 </h1>
             </div>
         </div>
         <div class="flex flex-col overflow-x-scroll rounded-b-2xl">
-            <table class="w-full table-auto min-w-screen max-w-full">
+            <table class="w-full table-auto min-w-screen max-w-full max-xl:text-sm max-lg:text-[10px] max-lg:[&_tbody_tr_td]:text-[10px]">
                 <thead class="bg-gray-200 border-t border-gray-200 pl-3">
                     <tr class="gap-3">
                         <th class="text-left p-2" style="width: 50px;">ID</th>
@@ -562,11 +571,12 @@
 
 
     <div class="flex flex-col border justify-center border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 w-full pl-5 pr-5">
-        <div class="flex flex-row w-full gap-3 pl-5">
+        <div class="flex flex-row w-full gap-3 pl-5 
+                    max-xl:items-center max-xl:[&>*]:text-[12px] max-xl:[&>button]:py-1 max-xl:[&_div_button]:py-1 max-lg:[&>button]:text-[10px] max-lg:[&_div_button]:text-[10px]">
             <div class="flex flex-row w-fit gap-1">
                 <div class="bg-[#F8971A]" style="width: 4px"></div>
                 <div class="flex flex-row gap-2">
-                    <h1 class="text-2xl text-[#302714] font-bold">
+                    <h1 class="text-2xl max-xl:text-xl max-lg:text-lg text-[#302714] font-bold">
                         Notes
                     </h1>
                 </div>
@@ -583,7 +593,7 @@
             </div>
         </div>
         <div class="flex flex-col overflow-x-scroll rounded-b-2xl">
-            <table class="w-full table-auto min-w-screen max-w-full">
+            <table class="w-full table-auto min-w-screen max-w-full max-xl:text-sm max-lg:text-[10px] max-lg:[&_tbody_tr_td]:text-[10px]">
                 <thead class="bg-gray-200 border-t border-gray-200 pl-3">
                     <tr class="gap-3">
                         <th class="text-left p-2" style="width: 50px;">ID</th>

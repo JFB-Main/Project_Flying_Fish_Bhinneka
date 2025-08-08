@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 
 class UsersModel extends Model
 {
+    
         use HasFactory, Notifiable;
 
     protected $table = 'users';

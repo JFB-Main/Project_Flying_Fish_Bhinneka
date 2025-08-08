@@ -1,4 +1,4 @@
-<div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-10">
+<div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-10 max-md:px-5">
     {{-- <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 pl-5 pr-5">
         <h1>Service Log Status History Report</h1>
 
@@ -135,7 +135,7 @@
     </div> --}}
 
     <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 ">
-        <div class="flex flex-col pl-10 pr-10 gap-5">
+        <div class="flex flex-col pl-10 pr-10 gap-5 max-md:[&_div_div_div]:w-full max-md:[&_div_div]:flex-col">
             <div class="flex flex-col gap-5">
                 <h1 class="text-3xl text-[#F8971A] tracking-widest font-medium">
                     Date In Filter:
@@ -143,7 +143,7 @@
                 <div class="flex flex-row gap-10">
                     <div class="flex flex-col justify-center w-3/12">
                         <label for="datetimeFrom">
-                            Date In From
+                            Date In -- From
                         </label>
                         <input wire:model.live.debounce.200ms="searchFromDateIn" type="date" name="datetimeFrom" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         {{-- <x-datepicker>
@@ -151,7 +151,7 @@
                     </div>
                     <div class="flex flex-col justify-center w-3/12">
                         <label for="datetimeTo">
-                            Date In To
+                            Date In -- To
                         </label>
                         <input wire:model.live.debounce.200ms="searchToDateIn" type="date" name="datetimeTo" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         {{-- <x-datepicker>
@@ -167,7 +167,7 @@
                 <div class="flex flex-row gap-10">
                     <div class="flex flex-col justify-center w-3/12">
                         <label for="datetimeFrom">
-                            Completed From
+                            Completed -- From
                         </label>
                         <input wire:model.live.debounce.200ms="searchFromCompleted" type="date" name="datetimeFrom" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         {{-- <x-datepicker>
@@ -175,7 +175,7 @@
                     </div>
                     <div class="flex flex-col justify-center w-3/12">
                         <label for="datetimeTo">
-                            Completed To
+                            Completed -- To
                         </label>
                         <input wire:model.live.debounce.200ms="searchToCompleted" type="date" name="datetimeTo" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         {{-- <x-datepicker>
@@ -185,8 +185,8 @@
             </div>
         </div>
         <div class="bg-[#F8971A]" style="height: 64px"></div>
-        <div id="myTableContent" class="flex flex-col ml-10 mr-10 overflow-x-auto rounded-2xl"> {{-- Changed to overflow-x-auto for better handling --}}
-            <table class="border w-full table-auto max-w-full">
+        <div id="myTableContent" class="flex flex-col ml-10 mr-10 overflow-x-auto rounded-2xl max-md:ml-3 max-md:mr-3"> {{-- Changed to overflow-x-auto for better handling --}}
+            <table class="border w-full table-auto max-w-full max-xl:text-sm max-lg:text-[10px] max-lg:[&_tbody_tr_td]:text-[10px]">
                 <thead class="bg-[#f3f4f6]">
                     <tr class="text-black font-bold h-10">
                         {{-- Basic columns with rowspan=2 --}}

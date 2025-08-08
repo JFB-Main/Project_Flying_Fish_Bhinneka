@@ -15,7 +15,8 @@ return new class extends Migration
         Schema::create('status', function (Blueprint $table) {
             $table->increments('id');
             $table->string('status_type', 255);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrentOnUpdate();
         });
 
         // Create users table
@@ -24,7 +25,7 @@ return new class extends Migration
             $table->string('username', 255);
             $table->string('email', 255)->unique();
             $table->string('password', 255);
-            // $table->string('role', 50); // commented out as per original SQL
+            $table->string('role', 50)->default(2); // commented out as per original SQL
             $table->timestamps();
         });
 
@@ -78,6 +79,7 @@ return new class extends Migration
             $table->foreign('service_type')->references('id')->on('service_type')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
             $table->foreign('create_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('warranty_status')->references('id')->on('warranty')->onDelete('cascade');
             // $table->foreign('teknisi_id')->references('id')->on('users')->onDelete('cascade'); // commented out
         });
 
@@ -110,47 +112,47 @@ return new class extends Migration
         });
 
         // Add trigger and function for techlog_id generation
-        DB::unprepared('
-            DELIMITER //
-            CREATE FUNCTION techlogIdGenerate (input INT)
-            RETURNS VARCHAR(250)
-            BEGIN
-                DECLARE NumStr VARCHAR(250);
-                DECLARE MonStr VARCHAR(250);
-                DECLARE YearStr VARCHAR(250);
-                DECLARE pad INT DEFAULT 6;
-                DECLARE MonthPad INT DEFAULT 2;
+        // DB::unprepared('
+        //     DELIMITER //
+        //     CREATE FUNCTION techlogIdGenerate (input INT)
+        //     RETURNS VARCHAR(250)
+        //     BEGIN
+        //         DECLARE NumStr VARCHAR(250);
+        //         DECLARE MonStr VARCHAR(250);
+        //         DECLARE YearStr VARCHAR(250);
+        //         DECLARE pad INT DEFAULT 6;
+        //         DECLARE MonthPad INT DEFAULT 2;
 
-                SET NumStr = CAST(input AS CHAR);
-                SET MonStr = LPAD(MONTH(NOW()), MonthPad, \'0\');
-                SET YearStr = SUBSTRING(YEAR(NOW()), 3, 2);
+        //         SET NumStr = CAST(input AS CHAR);
+        //         SET MonStr = LPAD(MONTH(NOW()), MonthPad, \'0\');
+        //         SET YearStr = SUBSTRING(YEAR(NOW()), 3, 2);
 
-                IF (LENGTH(NumStr) < pad) THEN
-                    SET NumStr = CONCAT(\'TL\', YearStr, MonStr, LPAD(NumStr, pad, \'0\'));
-                ELSE
-                    SET NumStr = CONCAT(\'TL\', YearStr, MonStr, NumStr);
-                END IF;
+        //         IF (LENGTH(NumStr) < pad) THEN
+        //             SET NumStr = CONCAT(\'TL\', YearStr, MonStr, LPAD(NumStr, pad, \'0\'));
+        //         ELSE
+        //             SET NumStr = CONCAT(\'TL\', YearStr, MonStr, NumStr);
+        //         END IF;
 
-                RETURN NumStr;
-            END //
-            DELIMITER ;
+        //         RETURN NumStr;
+        //     END //
+        //     DELIMITER ;
 
-            DELIMITER $$
-            CREATE TRIGGER techlog_id_insertion
-            BEFORE insert ON service_logs
-            FOR EACH ROW
-            BEGIN
-                SET @auto_id := ( SELECT AUTO_INCREMENT
-                                FROM INFORMATION_SCHEMA.TABLES
-                                WHERE TABLE_NAME=\'service_logs\'
-                                AND TABLE_SCHEMA=DATABASE() );
+        //     DELIMITER $$
+        //     CREATE TRIGGER techlog_id_insertion
+        //     BEFORE insert ON service_logs
+        //     FOR EACH ROW
+        //     BEGIN
+        //         SET @auto_id := ( SELECT AUTO_INCREMENT
+        //                         FROM INFORMATION_SCHEMA.TABLES
+        //                         WHERE TABLE_NAME=\'service_logs\'
+        //                         AND TABLE_SCHEMA=DATABASE() );
 
-                IF (NEW.techlog_id = \'N/A\') THEN
-                    SET NEW.techlog_id = techlogIdGenerate(@auto_id);
-                END IF;
-            END$$
-            DELIMITER ;
-        ');
+        //         IF (NEW.techlog_id = \'N/A\') THEN
+        //             SET NEW.techlog_id = techlogIdGenerate(@auto_id);
+        //         END IF;
+        //     END$$
+        //     DELIMITER ;
+        // ');
     }
 
     /**

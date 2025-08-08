@@ -1,4 +1,4 @@
-<div class="flex flex-col w-auto pl-10 pr-10 pb-20 gap-15">
+<div class="flex flex-col w-auto pl-10 pr-10 pb-20 gap-15 max-md:px-5">
     <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10">
         {{-- Add wire:submit to your form to trigger the createTechlog method --}}
         <form wire:submit.prevent="createUser" class="flex flex-col gap-20">
@@ -6,24 +6,20 @@
                 <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium">
                     ADD USER
                 </h1>
-                <div class="flex flex-col items-center justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-6/12 [&>*]:max-h-fit">
+                <div class="flex flex-col items-center justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-6/12 [&>*]:max-h-fit max-md:[&>*]:w-full">
                     <div class="flex flex-col">
                         <label for="invoiceDate">
                             Username
                         </label>
                         <input wire:model="input_username" type="text" name="invoiceDate" id="" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_invoiceDate') border-red-500 @enderror">
-                        @error('input_invoiceDate')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+                        @error('input_username') <span class="text-red-500 text-sm error">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex flex-col">
                         <label for="salesOrder">
                             Email 
                         </label>
                         <input wire:model="input_email" type="email" name="salesOrder" id="" placeholder="Enter email" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_salesOrder') border-red-500 @enderror">
-                        @error('input_salesOrder')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+                        @error('input_email') <span class="text-red-500 text-sm error">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex flex-col">
                         <label for="invoiceDate">
@@ -39,33 +35,15 @@
                                 <img src="icon_SLOverview\show_icon_password.svg" alt="" style="width: 25px">
                             </button>
                         </div>
-                        @error('input_invoiceDate')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+                        @error('input_password') <span class="text-red-500 text-sm error">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex flex-col">
                         <label for="invoiceDate">
                             Confirm Password 
                         </label>
                         <input wire:model="input_confirmPassword" type="password" name="invoiceDate" id="" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_invoiceDate') border-red-500 @enderror">
-                        @error('input_invoiceDate')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+                        @error('input_confirmPassword') <span class="text-red-500 text-sm error">{{ $message }}</span> @enderror
                     </div>
-                    {{-- <div class="flex flex-col ">
-                        <label for="serviceType">
-                            Service Type <span class="text-red-500">*</span>
-                        </label>
-                        <select wire:model="input_serviceType" name="serviceType" id="serviceType" class="w-full bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('input_serviceType') border-red-500 @enderror">
-                            <option value="" selected>-- Select Service Type --</option>
-                            @foreach($serviceType_ddl as $type)
-                                <option value="{{$type->id}}">{{$type->service_type_name}}</option>
-                            @endforeach
-                        </select>
-                        @error('input_serviceType')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div> --}}
                 </div>
             </div>
             <div class="flex flex-col pl-10 pr-10 gap-10 items-center">
@@ -93,6 +71,96 @@
             </div>
         </form>
     </div>    
+
+    <div class="flex flex-col border justify-center border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 w-full pl-5 pr-5">
+        <div class="flex flex-row w-full gap-1 pl-5">
+            <div class="bg-[#F8971A]" style="width: 4px"></div>
+            <div class="flex flex-row gap-2">
+                <h1 class="text-2xl text-[#302714] font-bold">
+                    Users List
+                </h1>
+            </div>
+        </div>
+        <div class="flex flex-col overflow-x-scroll rounded-2xl">
+            <table class="w-full table-auto min-w-screen max-w-full">
+                <thead class="bg-gray-200 border-t border-gray-200 pl-3">
+                    <tr class="gap-3">
+                        <th class="text-left p-2" style="width: 50px;">ID</th>
+                        <th class="text-left p-2" style="width: 200px;">Username</th>
+                        <th class="text-left p-2" style="width: 10%;">Email</th>
+                        <th class="text-left p-2" style="width: 10%;">Role</th>
+                        <th class="text-left p-2" style="max-width: 100px">Created At</th>
+                        <th class="text-left p-2" style="max-width: 100px">Updated At</th>
+                        <th class="text-left p-2" style="max-width: 100px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($listUser as $s)
+                        <tr class="border-t">
+                            <td class="p-2 pt-5 pb-5 ">{{ $s->id }}</td>
+                            <td class="p-2 ">{{ $s->username}}</td>
+                            <td class="p-2 ">{{ $s->email}}</td>
+                            <td class="p-2 ">
+                                {{ $s->role == 1 ? 'Superadmin' : 'User'}}
+                            </td>
+                            <td class="p-2 ">{{ $s->created_at }}</td>
+                            <td class="p-2 ">{{ $s->updated_at }}</td>
+                            <td class="flex flex-row p-2">
+                                <div class="flex flex-col gap-3">
+                                        <button type="button" 
+                                                x-data 
+                                                x-on:click="
+                                                    if (confirm('Are you sure you want to delete this user?')) {
+                                                        $wire.deleteUser({{$s->id}});
+                                                        $dispatch('close-modal');
+                                                    }
+                                                "
+                                                class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-red-600 hover:opacity-60"
+                                                >
+                                            Delete
+                                        </button>
+                                        {{-- <button type="button" 
+                                                target="_blank"
+                                                    x-on:click="window.open('{{ route('jobOrder', ['id' => $s->id]) }}', '_blank', 'noopener,noreferrer')"
+                                                class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-amber-400 hover:opacity-60"
+                                                >
+                                            Update
+                                        </button> --}}
+                                    {{-- <form method="POST" action="">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form> --}}
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="p-4 text-center text-gray-500">No notes found.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        @if (session()->has('successDelete'))
+            <div class="w-full pl-10 pr-10" role="alert">
+                <p class="bg-green-100 font-semibold text-xl text-gray-400 w-full p-2 pl-5 rounded-2xl border border-green-400">
+                Success: <span class="text-green-600 text-lg font-medium">{{ session('success') }}</span>
+                </p>
+            </div>
+        @endif
+
+        {{-- Display error message if it exists (e.g., from try-catch) --}}
+        @if (session()->has('errorDelete'))
+            <div class="w-full pl-10 pr-10" role="alert">
+                <p class="bg-red-100 font-semibold text-xl text-gray-400 w-full p-2 pl-5 rounded-2xl border border-red-400">
+                    Error: <span class="text-red-600 text-lg font-medium">{{ session('error') }}</span>
+                </p>
+            </div>
+        @endif
+        <div class="p-10">
+            {{$listUser->links('vendor.livewire.tailwind')}}
+        </div>
+    </div>
 
     <script>
         function showPw() {
