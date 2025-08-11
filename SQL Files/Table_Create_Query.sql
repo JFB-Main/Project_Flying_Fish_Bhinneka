@@ -85,6 +85,8 @@ CREATE TABLE service_logs (
 	updated_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
     
     PRIMARY KEY (id),
+    
+    -- TECHLOG ID AKAN DI RESET PER TAHUN
     UNIQUE (techlog_id),
     
 	KEY `fk_service_type` (`service_type`),
@@ -98,6 +100,10 @@ CREATE TABLE service_logs (
     
 	KEY `fk_create_by` (`create_by`),
 	CONSTRAINT `fk_create_by` FOREIGN KEY (`create_by`) REFERENCES `users` (`id`) ON DELETE CASCADE
+    
+    -- Foreign key buat Warranty bakal diurus dari sisi laravel
+	-- KEY `fk_warranty` (`warranty_status`),
+-- 	CONSTRAINT `fk_warranty` FOREIGN KEY (`warranty_status`) REFERENCES `warranty` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE status_updatelog (

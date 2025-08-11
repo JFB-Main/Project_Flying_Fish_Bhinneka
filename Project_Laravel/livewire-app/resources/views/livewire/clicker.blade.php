@@ -35,10 +35,11 @@
                         </a>
                     </div>
                 @endif
+            @else
+                <a href="{{route('auth.login')}}" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-1 px-5 rounded-4xl">
+                    Login
+                </a>
             @endif
-            <a href="{{route('auth.login')}}" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-1 px-5 rounded-4xl">
-                Login
-            </a>
         </div>
     </div>
     <div class="flex flex-row max-w-fit gap-1">
@@ -55,10 +56,11 @@
                     <p class="font-semibold text-[#F18D0B] max-xl:text-[10px]">
                         Service Center Team
                     </p>
+                @else
+                    <p class="font-semibold text-[#F18D0B] max-xl:text-[10px]">
+                        Welcome!
+                    </p>
                 @endif
-                <p class="font-semibold text-[#F18D0B] max-xl:text-[10px]">
-                    Welcome !
-                </p>
             </div>
             <div class="bg-[#F8971A] self-center" style="width: 4px; height: 90%;"></div>
         </div>
