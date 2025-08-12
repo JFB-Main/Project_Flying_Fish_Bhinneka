@@ -9,66 +9,103 @@ use Livewire\Component;
 use Livewire\Attributes\On; 
 use Livewire\Attributes\URL; 
 use Livewire\WithPagination;
+use Livewire\Attributes\Computed;
 
 class TicketPage extends Component
 {
-        
     use WithPagination;
 
-    #[Url(as: 'id', except: '')]
+    #[URL(as: 'id', except: '')]
     public $id = '';
 
     public $note_specific_update;
 
-    // #[On('open-ticketPage')]
-    // public function passingData($id_selected){
-    //     dd($id_selected);
-    //     $this->id_selected = $id_selected;
-    // }
+    public $input_received_from;
+    public $input_email;
+    public $input_contact_person;
+    public $input_mobile_number;
+    public $input_address;
+
+    public function editCustomerData(){
+        // dd($this->input_received_from, $this->input_email, $this->input_contact_person, $this->input_mobile_number, $this->input_address,);
+        $this->dispatch('open-edit-techlog');
+        $this->dispatch('note-crud-done');
+    }
 
     public function createNote(){
-        $tl_for_create_note = Service_logsModel::where('id', '=', $this->id)->get()->first();
-        // dd($this->id, $tl_for_create_note->techlog_id, session('user_id'), $this->note_specific_update);
+        // Using find() is more efficient for single record retrieval by primary key.
+        $tl_for_create_note = Service_logsModel::find($this->id);
+
+        if (!$tl_for_create_note) {
+            session()->flash('error', 'Service log not found.');
+            $this->dispatch('close-modal');
+            return;
+        }
 
         $noteCreate = NotesModel::create([
             'service_logs_id' => $tl_for_create_note->techlog_id,
             'teknisi_id' => session('user_id'),
             'note_content' => $this->note_specific_update
         ]);
+        
         if($noteCreate) {
-            session()->flash('success', 'Register Berhasil!.');
-        }   
-        $this->dispatch('close-modal');
-        $this->dispatch('note-crud-done', $noteCreate);
-
+            session()->flash('success', 'Note created successfully.');
+            $this->reset('note_specific_update'); // Reset the note input field
+            $this->dispatch('close-modal');
+            // Dispatching the event without a payload is more efficient.
+            $this->dispatch('note-crud-done');
+        } else {
+            session()->flash('error', 'Failed to create note.');
+        }
     }
 
     #[On('note-crud-done')]
-    public function noteRefresh($notesList = null)
+    public function noteRefresh()
     {
+        // This method can be empty, as the component will re-render
+        // and fetch the updated data from the computed properties.
     }
 
-
-    public function mount(){
-        // dd("jsbvhd");
+    // Use a computed property for the main service log.
+    // This will only run the query once per request.
+    #[Computed]
+    public function sl()
+    {
+        return Service_logsModel::with('user', 'status', 'serviceId', 'warranty_bind')->find($this->id);
+    }
+    
+    // Use a computed property for status update logs with pagination.
+    #[Computed]
+    public function statusLog()
+    {
+        if ($this->sl) {
+            return Status_updatelogModel::with('status', 'technician')
+                ->where('service_logs_id', '=', $this->sl->techlog_id)
+                ->paginate(10);
+        }
+        return null;
     }
 
-// #[Layout('specific')]
+    // Use a computed property for notes with pagination.
+    #[Computed]
+    public function notes()
+    {
+        if ($this->sl) {
+            return NotesModel::with('technician')
+                ->where('service_logs_id', '=', $this->sl->techlog_id)
+                ->paginate(10);
+        }
+        return null;
+    }
+
     public function render()
     {
-        $sl_ListDDL = Service_logsModel::with('user', 'status', 'serviceId', 'warranty_bind')->where('id', '=', $this->id)->get()->first();
-
-        if ($sl_ListDDL){
-            $statusUpdateLogList = Status_updatelogModel::with('status', 'technician')->where('service_logs_id', '=', $sl_ListDDL->techlog_id)->paginate(10);
-            $notesList = NotesModel::with('technician')->where('service_logs_id', '=', $sl_ListDDL->techlog_id)->paginate(10);
-        }
-
-        
-
+        // The render method is now very clean and only passes data from
+        // the computed properties to the view.
         return view('livewire.ticket-page', [
-            'sl' => $sl_ListDDL,
-            'notes' => $notesList,
-            'statusLog' => $statusUpdateLogList
+            'sl' => $this->sl,
+            'notes' => $this->notes,
+            'statusLog' => $this->statusLog
         ])->extends('specific')->section('ticketContent');
     }
 }

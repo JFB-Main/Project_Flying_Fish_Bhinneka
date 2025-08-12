@@ -3,7 +3,7 @@
         <a href="{{route('create-techlog')}}" class="">
             <img src="{{asset('icon_nav\Create_Sphere.svg') }}" alt="" class="w-16 h-16 cursor-pointer">
         </a>
-        @if (session('role') == 1)
+        @if (session('role') == 1 || session('role') == 2 )
             <a href="{{route('addUser')}}" class="">
             <img src="{{asset('icon_nav\Add_user-Sphere.svg') }}" alt="" class="w-16 h-16 cursor-pointer">
             </a>
@@ -28,7 +28,7 @@
                 <a href="{{route('create-techlog')}}" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-1 pl-3 pr-3 rounded-4xl">
                     New Techlog +
                 </a>
-                @if (session('role') == 1)
+                @if (session('role') == 1 || session('role') == 2 )
                     <div class="flex items-center">
                         <a href="{{route('addUser')}}" class="max-w-fit max-h-fit text-[#302714] font-medium p-1 pl-3 pr-3 rounded-4xl border border-indigo-600 hover:bg-indigo-600 hover:text-white cursor-pointer">
                             Add User +

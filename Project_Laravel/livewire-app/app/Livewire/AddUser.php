@@ -7,6 +7,7 @@ use Livewire\Attributes\Validate;
 use App\Models\UsersModel;
 use Livewire\WithPagination;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Computed;
 
 class AddUser extends Component
 {
@@ -24,6 +25,8 @@ class AddUser extends Component
     #[Validate('required|same:input_password', message: 'The confirmation password must match the password.')]
     public $input_confirmPassword = '';
 
+    public $input_role_id = '';
+
     public function createUser(){
         $this->validate();
         
@@ -35,12 +38,14 @@ class AddUser extends Component
         $userCreate = UsersModel::create([
             'username' => $this->input_username,
             'email' => $this->input_email,
-            'password' => bcrypt($this->input_password)
+            'password' => bcrypt($this->input_password),
+            'role' => $this->input_role_id
         ]);
            if($userCreate) {
             session()->flash('success', 'Register Berhasil!.');
         }   
-        $this->dispatch('crud-users-done', $userCreate);
+        $this->reset();
+        $this->dispatch('crud-users-done');
         }
     }
 
@@ -70,18 +75,22 @@ class AddUser extends Component
     }
 
     public function mount(){
-        if((session('role') != 1 || !auth()->check())){
+        if(((session('role') >= 2 && session('role') <= 0 ) || !auth()->check())){
             return redirect()->route('auth.login');
         }
 
     }
 
+    #[Computed]
+    public function usersList()
+    {
+        return UsersModel::paginate();
+    }
+
     public function render()
     {
-        $userlist = UsersModel::paginate();
-
         return view('livewire.add-user', [
-            'listUser' => $userlist
+            'listUser' => $this->usersList
         ])->extends('specific')->section('addUserYield');
     }
 }

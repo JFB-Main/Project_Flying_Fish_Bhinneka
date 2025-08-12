@@ -39,10 +39,10 @@ class Clicker extends Component
     //     $this->dispatch('crud-done', $userCreate);
     // }
 
-    public function reloadList(){
-        $users = UsersModel::paginate(2);
-        $this->dispatch('crud-done');
-    }
+    // public function reloadList(){
+    //     $users = UsersModel::paginate(2);
+    //     $this->dispatch('crud-done');
+    // }
 
     // #[On('logout-press')]
     // public function logout()
@@ -81,8 +81,8 @@ class Clicker extends Component
     public function render()
     {
         
-        $userId = session('user_id');
-        $username = session('username');
+        // $userId = session('user_id');
+        // $username = session('username');
         return view('livewire.clicker')->layout('welcome');
     }
 }

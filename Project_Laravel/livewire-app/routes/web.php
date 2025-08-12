@@ -21,9 +21,10 @@ Route::group(['middleware' => 'guest'], function(){
 
     //login
     Route::get('/login', Login::class)->name('auth.login');
-    Route::get('/guestSearch', GuestSearch::class)->name('guestSearch');
 
 });
+
+Route::get('/guestSearch', GuestSearch::class)->name('guestSearch');
 
 
 // Route::middleware([['auth'], 'prefix' => 'auth.'])->group(function () {

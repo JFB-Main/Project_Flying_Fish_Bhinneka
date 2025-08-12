@@ -1,56 +1,29 @@
 @php
     
-     if ($sl) {
+    if ($sl) {
+        $statusMainCol = match($sl->status_id) {
+            1 => 'bg-[#888080]', 
+            2 => 'bg-[#FF9F17]', 
+            3 => 'bg-[#D516A4]', 
+            4 => 'bg-[#C547F6]', 
+            5 => 'bg-[#1A96FF]', 
+            6 => 'bg-[#1CA717]', 
+            7 => 'bg-[#D40000]', 
+            8 => 'bg-[#1657FF]', 
+            default => 'bg-gray-400', 
+        };
 
-        $statusMainCol = ''; // Default empty class
-        $statusMainLabel = '';
-        switch ($sl->status_id) {
-            case 1:
-                $statusMainCol = 'bg-[#888080]'; // Darker Grey for Open
-                $statusMainLabel = 'Open';
-                $toCol = 'text-[#888080]';
-                break;
-            case 2:
-                $statusMainCol = 'bg-[#FF9F17]'; // Darker Yellow for On Progress
-                $statusMainLabel = 'On Progress';
-                $toCol = 'text-[#FF9F17]';
-                break;
-            case 3:
-                $statusMainCol = 'bg-[#D516A4]'; // Darker Purple for Pending
-                $statusMainLabel = 'Pending';
-                $toCol = 'text-[#D516A4]';
-                break;
-            case 4:
-                $statusMainCol = 'bg-[#C547F6]'; // Darker Red for RMA
-                $statusMainLabel = 'RMA To Vendor';
-                $toCol = 'text-[#C547F6]';
-                break;
-            case 5:
-                $statusMainCol = 'bg-[#1A96FF]'; // Darker Indigo for On-QC
-                $statusMainLabel = 'On-QC';
-                $toCol = 'text-[#1A96FF]';
-                break;
-            case 6:
-                $statusMainCol = 'bg-[#1CA717]'; // Darker Green for Completed
-                $statusMainLabel = 'Completed';
-                $toCol = 'text-[#1CA717]';
-                break;
-            case 7:
-                $statusMainCol = 'bg-[#D40000]'; // Darker Gray for Canceled
-                $statusMainLabel = 'Canceled';
-                $toCol = 'text-[#D40000]';
-                break;
-            case 8:
-                $statusMainCol = 'bg-[#1657FF]'; // Darker Orange for Returned
-                $statusMainLabel = 'Returned';
-                $toCol = 'text-[#1657FF]';
-                break;
-            default:
-                $statusMainCol = 'bg-gray-400'; // Default for 'N/A' or unknown statuses
-                $statusMainLabel = 'N/A';
-                $toCol = 'text-gray-400';
-                break;
-        }
+        $statusMainLabel = match($sl->status_id) {
+            1 => 'Open',
+            2 => 'On Progress',
+            3 => 'Pending',
+            4 => 'RMA To Vendor',
+            5 => 'On-QC',
+            6 => 'Completed',
+            7 => 'Canceled',
+            8 => 'Returned',
+            default => 'N/A',
+        };
     }
 @endphp
 
@@ -204,83 +177,184 @@
 
                 <div class="bg-gray-400 pl-5 pr-5 w-full" style="height: 1px"></div>
 
-                <div class="flex flex-col gap-10">
-                    <div class="flex flex-row w-full gap-1 pl-5">
-                        <div class="bg-[#F8971A]" style="width: 4px"></div>
-                        <div class="flex flex-row gap-2">
-                            <h1 class="text-2xl text-[#302714] font-bold">
-                                Customer Property
-                            </h1>
+                <form wire:submit.prevent="editCustomerData()"
+                        class="flex flex-col">
+                    <div class="flex flex-col gap-10">
+                        <div class="flex flex-row w-full gap-1 pl-5">
+                            <div class="bg-[#F8971A]" style="width: 4px"></div>
+                            <div class="flex flex-row gap-2">
+                                <h1 class="text-2xl text-[#302714] font-bold">
+                                    Customer Property
+                                </h1>
+                                @if (session('role') == 1 || session('role') == 2 )
+                                    <div class="bg-[#F8971A]" style="width: 2px;"></div>
+                                    <button x-data = "{ show: false }"
+                                        x-on:open-edit-techlog.window="show = !show"
+                                        type="submit"
+                                        class="hidden max-w-fit text-white font-bold cursor-pointer px-4 py-1 rounded-2xl hover:opacity-60 bg-[#F8971A]"
+                                        :class="{ 'bg-[#F8971A] inline': show }">
+                                    Done
+                                    </button>
+                                    <button x-data = "{ show: false }"
+                                            x-on:open-edit-techlog.window="show = !show"
+                                            x-on:click="$dispatch('open-edit-techlog')"
+                                            type="button"
+                                            class="max-w-fit text-white font-bold cursor-pointer px-4 py-1 rounded-2xl hover:opacity-60 bg-[#F8971A]"
+                                            :class="{ 'bg-red-600': show }"
+                                            x-text="show ? 'Cancel' : 'Edit Data'">
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
+                        <div x-data = "{ show: false }"
+                            x-on:open-edit-techlog.window="show = !show"
+                            class="hidden w-full"
+                            :class="{ 'inline-flex': show }">
+                            <div class="flex flex-wrap w-full gap-7 [&>*]:text-md [&>*]:justify-start [&>*]:flex [&>*]:flex-row [&>*]:w-2/5 [&>*]:pl-5 [&>*]:pr-5">
+                                <div class="gap-3 flex flex-row max-md:flex-col">
+                                    <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                        <p class="" for="input-received_from">
+                                            Received From
+                                        </p>
+                                        <p>
+                                            :
+                                        </p>
+                                    </div>
+                                    <p class="w-full">
+                                        {{$sl->received_from}}
+                                    </p>
+                                </div>
+                                <div class="gap-3 flex flex-row">
+                                    <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                        <label class="" for="input-email">
+                                            Email
+                                        </label>
+                                        <label for="input-email">
+                                            :
+                                        </label>
+                                    </div>
+                                    <input id="input-email"
+                                            wire:model.fill="input_email"
+                                            type="email" 
+                                            class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2" 
+                                            value="{{$sl->email}}">
+                                    </input>
+                                </div>
+                                <div class="gap-3 flex flex-row">
+                                    <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                        <label class="" for="input-contact_person">
+                                            Contact Person
+                                        </label>
+                                        <label for="input-contact_person">
+                                            :
+                                        </label>
+                                    </div>
+                                    <input id="input-contact_person" 
+                                            wire:model.fill="input_contact_person"
+                                            class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2" 
+                                            value="{{$sl->contact_person}}">
+                                    </input>
+                                </div>
+                                <div class="gap-3 flex flex-row">
+                                    <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                        <label class="" for="input-mobile_number">
+                                            Mobile Number
+                                        </label>
+                                        <label for="input-mobile_number">
+                                            :
+                                        </label>
+                                    </div>
+                                    <input id="input-mobile_number" 
+                                            wire:model.fill="input_mobile_number"
+                                            class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2" 
+                                            value="{{$sl->mobile_number}}">
+                                    </input>
+                                </div>
+                                <div class="gap-3 flex flex-row">
+                                    <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                        <label class="" for="input-address">
+                                            Address
+                                        </label>
+                                        <label for="input-address">
+                                            :
+                                        </label>
+                                    </div>
+                                    <textarea wire:model.fill="input_address" id="input-address" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2">{{$sl->alamat}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div x-data = "{ show: false }"
+                            x-on:open-edit-techlog.window="show = !show"
+                            class="flex flex-wrap w-full gap-7 [&>*]:text-md [&>*]:justify-start [&>*]:flex [&>*]:flex-row [&>*]:w-2/5 [&>*]:pl-5 [&>*]:pr-5"
+                            :class="{ 'hidden': show }">
+                            <div class="gap-3 flex flex-row max-md:flex-col">
+                                <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                    <p class="" style=>
+                                        Received From
+                                    </p>
+                                    <p>
+                                        :
+                                    </p>
+                                </div>
+                                <div class="w-full">
+                                    {{$sl->received_from}}
+                                </div>
+                            </div>
+                            <div class="gap-3 flex flex-row">
+                                <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                    <p class="" style=>
+                                        Email
+                                    </p>
+                                    <p>
+                                        :
+                                    </p>
+                                </div>
+                                <div class="w-full">
+                                    {{$sl->email}}
+                                </div>
+                            </div>
+                            <div class="gap-3 flex flex-row">
+                                <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                    <p class="" style=>
+                                        Contact Person
+                                    </p>
+                                    <p>
+                                        :
+                                    </p>
+                                </div>
+                                <div class="w-full">
+                                {{$sl->contact_person}}
+                                </div>
+                            </div>
+                            <div class="gap-3 flex flex-row">
+                                <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                    <p class="" style=>
+                                        Mobile Number
+                                    </p>
+                                    <p>
+                                        :
+                                    </p>
+                                </div>
+                                <div class="w-full">
+                                    {{$sl->mobile_number}}
+                                </div>
+                            </div>
+                            <div class="gap-3 flex flex-row">
+                                <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
+                                    <p class="" style=>
+                                        Address
+                                    </p>
+                                    <p>
+                                        :
+                                    </p>
+                                </div>
+                                <div class="content-baseline w-full">
+                                    {{$sl->alamat}}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex flex-wrap w-full gap-7 [&>*]:text-md [&>*]:justify-start [&>*]:flex [&>*]:flex-row [&>*]:w-2/5 [&>*]:pl-5 [&>*]:pr-5">
-                        <div class="gap-3 flex flex-row max-md:flex-col">
-                            <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
-                                <p class="" style=>
-                                    Received From
-                                </p>
-                                <p>
-                                    :
-                                </p>
-                            </div>
-                            <div class="w-full">
-                                {{$sl->received_from}}
-                            </div>
-                        </div>
-                        <div class="gap-3 flex flex-row">
-                            <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
-                                <p class="" style=>
-                                    Email
-                                </p>
-                                <p>
-                                    :
-                                </p>
-                            </div>
-                            <div class="w-full">
-                                {{$sl->email}}
-                            </div>
-                        </div>
-                        <div class="gap-3 flex flex-row">
-                            <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
-                                <p class="" style=>
-                                    Contact Person
-                                </p>
-                                <p>
-                                    :
-                                </p>
-                            </div>
-                            <div class="w-full">
-                               {{$sl->contact_person}}
-                            </div>
-                        </div>
-                        <div class="gap-3 flex flex-row">
-                            <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
-                                <p class="" style=>
-                                    Mobile Number
-                                </p>
-                                <p>
-                                    :
-                                </p>
-                            </div>
-                            <div class="w-full">
-                                {{$sl->mobile_number}}
-                            </div>
-                        </div>
-                        <div class="gap-3 flex flex-row">
-                            <div class="[&>*]:font-semibold flex flex-row w-full justify-between" style="max-width: 100%">
-                                <p class="" style=>
-                                    Address
-                                </p>
-                                <p>
-                                    :
-                                </p>
-                            </div>
-                            <div class="w-full">
-                                {{$sl->alamat}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </form>
 
                 <div class="bg-gray-400 pl-5 pr-5 w-full" style="height: 1px"></div>
 
@@ -581,7 +655,7 @@
                     </h1>
                 </div>
             </div>
-            <button x-on:click="$dispatch('open-modal', {name: 'note+'})" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-1 pl-3 pr-3 rounded-4xl">
+            <button type="button" x-on:click="$dispatch('open-modal', {name: 'note+'})" class="max-h-fit bg-[#F8971A] hover:opacity-60 w-fit text-white font-medium p-1 pl-3 pr-3 rounded-4xl">
                 New Notes +
             </button>
             <div>

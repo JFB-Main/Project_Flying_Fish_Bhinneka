@@ -11,7 +11,7 @@ CREATE TABLE users (
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(50) NOT NULL DEFAULT 2,
+  `role` varchar(50) NOT NULL DEFAULT 3,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   

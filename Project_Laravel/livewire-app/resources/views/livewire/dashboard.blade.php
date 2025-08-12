@@ -1,6 +1,6 @@
 @php
     $statusNames = [
-        1 => 'Open Techlog',
+        1 => 'Open',
         2 => 'On Progress',
         3 => 'Pending',
         4 => 'RMA to Vendor',
@@ -9,120 +9,71 @@
         7 => 'Cancelled',
         8 => 'Returned to Client',
     ];
+
+    $color_map_main = [
+        1 => 'bg-[#AEAAAA]',
+        2 => 'bg-[#FFB55B]',
+        3 => 'bg-[#DA56B8]',
+        4 => 'bg-[#D094F6]',
+        5 => 'bg-[#68B0FF]',
+        6 => 'bg-[#6EBA5C]',
+        7 => 'bg-[#DA5658]',
+        8 => 'bg-[#5993FF]',
+    ];
+
+    $color_map_label = [
+        1 => 'bg-[#888080]',
+        2 => 'bg-[#FF9F17]',
+        3 => 'bg-[#D516A4]',
+        4 => 'bg-[#C547F6]',
+        5 => 'bg-[#1A96FF]',
+        6 => 'bg-[#1CA717]',
+        7 => 'bg-[#D40000]',
+        8 => 'bg-[#1657FF]',
+    ];
+
+    $icon_map = [
+        1 => 'icon_SLOverview/icon_Open.svg',
+        2 => 'icon_SLOverview/icon_On_Progrss.svg',
+        3 => 'icon_SLOverview/icon_Pending.svg',
+        4 => 'icon_SLOverview/icon_RMA_to_Vendor.svg',
+        5 => 'icon_SLOverview/icon_QC.svg',
+        6 => 'icon_SLOverview/icon_completed.svg',
+        7 => 'icon_SLOverview/icon_Cancel.svg',
+        8 => 'icon_SLOverview/icon_Returned_to_client.svg',
+    ];
 @endphp
 
 <div class="flex flex-col w-auto pl-10 pr-10 pb-10 gap-15 max-md:px-5">
     <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10 pl-5 pr-5 shadow-lg"
         x-data
-        x-on:open-modal.window = "toggleScroll()"    
-        x-on:close-modal.window = "toggleScroll()"
-        x-on:keydown.escape.window = "toggleKeydownScroll()"
+        x-on:open-modal.window="toggleScroll()" 
+        x-on:close-modal.window="toggleScroll()"
+        x-on:keydown.escape.window="toggleKeydownScroll()"
     >
-
         <div class="flex flex-row max-w-fit gap-1 pl-5">
             <div class="bg-[#F8971A]" style="width: 4px"></div>
-            <h3 class=" text-2xl text-[#302714] tracking-widest font-medium max-xl:text-xl">
+            <h3 class="text-2xl text-[#302714] tracking-widest font-medium max-xl:text-xl">
                 Service Log Status Overview
             </h3>
         </div>
         <div class="flex justify-center w-full">
             <div class="flex flex-wrap w-full gap-7 justify-center max-lg:justify-start max-lg:flex-row max-lg:flex-nowrap max-lg:pb-2 max-lg:overflow-x-scroll">
-                @foreach($statusCount as $statusId => $count)
+                @foreach($this->statusCounts as $statusId => $count)
                     @php
-                        $statusMainCol= ''; // Default empty class
-                        $statusLabelCol= ''; // Default empty class
-                        $statusIcon= ''; // Default empty class
-
-                        $color_map = [
-                            1=> 'bg-[#AEAAAA]',
-                            2 => 'bg-[#FFB55B]',
-                            3 => 'bg-[#DA56B8]',
-                            4 => 'bg-[#D094F6]',
-                            5 => 'bg-[#68B0FF]',
-                            6 => 'bg-[#6EBA5C]',
-                            7 => 'bg-[#DA5658]',
-                            8 => 'bg-[#5993FF]',
-                            
-                            //....
-                            ];
-
-                        $label_map = [
-                            1 => 'bg-[#888080]',
-                            2 => 'bg-[#FF9F17]',
-                            3 => 'bg-[#D516A4]',
-                            4 => 'bg-[#C547F6]',
-                            5 => 'bg-[#1A96FF]',
-                            6 => 'bg-[#1CA717]',
-                            7 => 'bg-[#D40000]',
-                            8 => 'bg-[#1657FF]',
-                            
-                            //....
-                            ];
-
-                        $icon_map = [
-                            1 => 'icon_SLOverview/icon_Open.svg',
-                            2 => 'icon_SLOverview/icon_On_Progrss.svg',
-                            3 => 'icon_SLOverview/icon_Pending.svg',
-                            4 => 'icon_SLOverview/icon_RMA_to_Vendor.svg',
-                            5 => 'icon_SLOverview/icon_QC.svg',
-                            6 => 'icon_SLOverview/icon_completed.svg',
-                            7 => 'icon_SLOverview/icon_Cancel.svg',
-                            8 => 'icon_SLOverview/icon_Returned_to_client.svg',
-                            
-                            //....
-                            ];
-
-                        $statusMainCol = $color_map[$statusId] ?? 'bg-gray-300';
-                        $statusLabelCol = $label_map[$statusId] ?? 'bg-gray-400';
+                        $statusMainCol = $color_map_main[$statusId] ?? 'bg-gray-300';
+                        $statusLabelCol = $color_map_label[$statusId] ?? 'bg-gray-400';
                         $statusIcon = $icon_map[$statusId] ?? 'N/A';
-                        // switch ($statusId) {
-                        //     case '1':
-                        //         $statusMainCol = 'bg-[#AEAAAA]'; // Grey for Open
-                        //         $statusLabelCol = 'bg-[#888080]'; // Grey for Open
-                        //         break;
-                        //     case '2':
-                        //         $statusMainCol = 'bg-[#FFB55B]'; // Example: yellow for On Progress
-                        //         $statusLabelCol = 'bg-[#FF9F17]'; // Grey for Open
-                        //         break;
-                        //     case '3':
-                        //         $statusMainCol = 'bg-[#DA56B8]'; // Example: purple for Pending
-                        //         $statusLabelCol = 'bg-[#D516A4]'; // Grey for Open
-                        //         break;
-                        //     case '4':
-                        //         $statusMainCol = 'bg-[#D094F6]'; // Example: red for RMA
-                        //         $statusLabelCol = 'bg-[#C547F6]'; // Grey for Open
-                        //         break;
-                        //     case '5':
-                        //         $statusMainCol = 'bg-[#68B0FF]'; // Example: indigo for On-QC
-                        //         $statusLabelCol = 'bg-[#1A96FF]'; // Grey for Open
-                        //         break;
-                        //     case '6':
-                        //         $statusMainCol = 'bg-[#6EBA5C]'; // Example: green for Completed
-                        //         $statusLabelCol = 'bg-[#1CA717]'; // Grey for Open
-                        //         break;
-                        //     case '7':
-                        //         $statusMainCol = 'bg-[#DA5658]'; // Example: gray for Canceled
-                        //         $statusLabelCol = 'bg-[#D40000]'; // Grey for Open
-                        //         break;
-                        //     case '8':
-                        //         $statusMainCol = 'bg-[#5993FF]'; // Example: orange for Returned
-                        //         $statusLabelCol = 'bg-[#1657FF]'; // Grey for Open
-                        //         break;
-                        //     default:
-                        //         $statusMainCol = 'bg-gray-300'; // For 'N/A' or unknown statuses
-                        //         $statusLabelCol = 'bg-gray-400'; // Grey for Open
-                        //         break;
-                        // }
                     @endphp
                     <div class="flex flex-col [&>*]:text-white w-[21%] max-xl:w-[20%] max-lg:min-w-[30%] max-lg:w-full max-md:min-w-50">
-                        <div class="relative {{$statusMainCol}} rounded-t-3xl p-7 max-xl:p-5">
+                        <div class="relative {{ $statusMainCol }} rounded-t-3xl p-7 max-xl:p-5">
                             <div class="flex flex-col">
-                                <img src="{{$statusIcon}}" alt="" class="absolute self-end w-[64px] max-xl:w-[48px] max-lg:w-[40px]">
+                                <img src="{{ $statusIcon }}" alt="" class="absolute self-end w-[64px] max-xl:w-[48px] max-lg:w-[40px]">
                                 <span class="badge bg-primary font-bold text-2xl max-xl:text-sm" style="z-index: 1">{{ $count }}</span>
                                 <p style="z-index: 1" class="max-xl:text-xs">{{ $statusNames[$statusId] ?? 'Unknown Status' }}</p>
                             </div>
                         </div>
-                        <div class="flex justify-center {{$statusLabelCol}}  rounded-b-3xl p-5 pt-3 pb-3">
+                        <div class="flex justify-center {{ $statusLabelCol }} rounded-b-3xl p-5 pt-3 pb-3">
                             <p class="max-xl:text-xs max-xl:pr-0">
                                 Total {{ $count }}
                             </p>
@@ -140,7 +91,7 @@
             <h1 class="text-center text-3xl text-[#F8971A] tracking-widest font-medium">
                 CUSTOMER RELATED SEARCH
             </h1>
-            <div class="flex flex-wrap justify-around w-full gap-15  pl-5 pr-5  [&>*]:w-5/12 [&>*]:max-h-fit max-lg:pl-10 max-lg:pr-10">
+            <div class="flex flex-wrap justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-5/12 [&>*]:max-h-fit max-lg:pl-10 max-lg:pr-10">
                 <div class="flex flex-col ">
                     <label for="searchN">
                         Customer Name 
@@ -214,35 +165,26 @@
                         Datetime From
                     </label>
                     <input wire:model.live.debounce.200ms="searchFromDateIn" type="date" name="datetimeFrom" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    {{-- <x-datepicker>
-                    </x-datepicker> --}}
                 </div>
                 <div class="flex flex-col justify-center w-3/12 max-xl:w-5/12">
                     <label for="datetimeTo">
                         Datetime To
                     </label>
                     <input wire:model.live.debounce.200ms="searchToDateIn" type="date" name="datetimeTo" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    {{-- <x-datepicker>
-                    </x-datepicker> --}}
                 </div>
                 <div class="flex flex-col justify-center w-3/12 max-xl:w-5/12">
                     <label for="datetimeFrom">
                         Completed From
                     </label>
                     <input wire:model.live.debounce.200ms="searchFromCompleted" type="date" name="datetimeFrom" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    {{-- <x-datepicker>
-                    </x-datepicker> --}}
                 </div>
                 <div class="flex flex-col justify-center w-3/12 max-xl:w-5/12">
                     <label for="datetimeTo">
                         Completed To
                     </label>
                     <input wire:model.live.debounce.200ms="searchToCompleted" type="date" name="datetimeTo" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    {{-- <x-datepicker>
-                    </x-datepicker> --}}
                 </div>
                 <div class="flex flex-col justify-center w-3/12 max-xl:hidden">
-                    
                 </div>
                 <hr class="text-gray-300" style="width: 100%">
             </div>
@@ -253,8 +195,8 @@
                     </label>
                     <select wire:model.live.debounce.50ms="statusDDL" name="selS" id="ddl" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                         <option value="" selected>-- All Selected --</option>
-                        @foreach($Status_DDL_ArrayContain as $s)
-                            <option value="{{$s->id}}">{{$s->status_type}}</option>
+                        @foreach($this->allStatuses as $s)
+                            <option value="{{ $s->id }}">{{ $s->status_type }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -264,8 +206,8 @@
                     </label>
                     <select wire:model.live.debounce.50ms="serviceTypeDDL" name="selST" id="ddl" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                         <option value="" selected>-- All Selected --</option>
-                        @foreach($ServiceType_DDL_ArrayContain as $st)
-                            <option value="{{$st->id}}">{{$st->service_type_name}}</option>
+                        @foreach($this->allServiceTypes as $st)
+                            <option value="{{ $st->id }}">{{ $st->service_type_name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -275,8 +217,8 @@
                     </label>
                     <select wire:model.live.debounce.50ms="createByDDL" name="selCB" id="ddl" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                         <option value="" selected>-- All Selected --</option>
-                        @foreach($Users_DDL_ArrayContain as $u)
-                            <option value="{{$u->id}}">{{$u->username}}</option>
+                        @foreach($this->allUsers as $u)
+                            <option value="{{ $u->id }}">{{ $u->username }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -296,80 +238,33 @@
                         <th class="text-left p-2">Phone</th>
                         <th class="text-left p-2">SN</th>
                         <th class="text-center p-2 max-w-fit">Action | Print</th>
+                        @if (session('role') == 1)
+                            <th class="text-center p-2 text-red-500 ">Danger Zone</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($service_log as $sl)
+                    @forelse($this->serviceLogs as $sl)
                         <tr class="border-t hover:bg-blue-50 max-xl:[&>*]:text-[12px] max-lg:[&>*]:text-[10px]">
                             <td class="p-2">
-                                {{-- x-on:click="$dispatch('open-ticketPage', {id_selected: {{ $sl->id }} })"  --}}
-                                <a wire:click="ticketPageLink({{$sl->id}})" class="cursor-pointer text-indigo-500 underline hover:text-indigo-700">
-                                {{ $sl->techlog_id }}
+                                <a wire:click="ticketPageLink({{ $sl->id }})" class="cursor-pointer text-indigo-500 underline hover:text-indigo-700">
+                                    {{ $sl->techlog_id }}
                                 </a>
                             </td>
-                            {{-- <td class="p-2">{{ $sl->status ? $sl->status->status_type : 'N/A' }}</td> --}}
                             <td class="p-2 min-w-50 max-md:min-w-35">
                                 @php
                                     $statusType = $sl->status ? $sl->status->status_type : 'N/A';
-                                    $statusClass = ''; // Default empty class
-                                    // $color_map = [
-                                    //     'Open' => 'bg-[#AEAAAA]',
-                                    //     'On Progress' => 'bg-[#FFB55B]',
-                                    //     'Pending' => 'bg-[#DA56B8]',
-                                    //     'RMA to Vendor' => 'bg-[#D094F6]',
-                                    //     'On-QC' => 'bg-[#68B0FF]',
-                                    //     'Completed' => 'bg-[#6EBA5C]',
-                                    //     'Canceled' => 'bg-[#DA5658]',
-                                    //     'Returned to Client' => 'bg-[#5993FF]',
-                                        
-                                    //     //....
-                                    //     ];
-
-                                    $color_map = [
+                                    $color_map_status = [
                                         'Open' => 'bg-[#888080]',
                                         'On Progress' => 'bg-[#FF9F17]',
                                         'Pending' => 'bg-[#D516A4]',
                                         'RMA to Vendor' => 'bg-[#C547F6]',
                                         'On-QC' => 'bg-[#1A96FF]',
                                         'Completed' => 'bg-[#1CA717]',
-                                        // 'Canceled' => 'bg-[#D40000]',
                                         'Canceled' => 'bg-[#DA5658]',
-                                        // 'Returned to Client' => 'bg-[#1657FF]',
                                         'Returned to Client' => 'bg-[#5993FF]',
-                                        
-                                        //....
-                                        ];
-
-                                    $statusClass = $color_map[$statusType] ?? 'bg-gray-500-italic';
-                                    // switch ($statusType) {
-                                    //     case 'Open':
-                                    //         $statusClass = 'bg-[#888080]'; // Darker Grey for Open
-                                    //         break;
-                                    //     case 'On Progress':
-                                    //         $statusClass = 'bg-[#FF9F17]'; // Darker Yellow for On Progress
-                                    //         break;
-                                    //     case 'Pending':
-                                    //         $statusClass = 'bg-[#D516A4]'; // Darker Purple for Pending
-                                    //         break;
-                                    //     case 'RMA to Vendor':
-                                    //         $statusClass = 'bg-[#C547F6]'; // Darker Red for RMA
-                                    //         break;
-                                    //     case 'On-QC':
-                                    //         $statusClass = 'bg-[#1A96FF]'; // Darker Indigo for On-QC
-                                    //         break;
-                                    //     case 'Completed':
-                                    //         $statusClass = 'bg-[#1CA717]'; // Darker Green for Completed
-                                    //         break;
-                                    //     case 'Canceled':
-                                    //         $statusClass = 'bg-[#D40000]'; // Darker Red for Canceled
-                                    //         break;
-                                    //     case 'Returned to Client':
-                                    //         $statusClass = 'bg-[#1657FF]'; // Darker Orange for Returned
-                                    //         break;
-                                    //     default:
-                                    //         $statusClass = 'bg-gray-500 italic'; // Darker Grey for 'N/A' or unknown statuses (adjusted from 400 for consistency)
-                                    //         break;
-                                    // }
+                                    ];
+                                    $statusClass = $color_map_status[$statusType] ?? 'bg-gray-500';
                                 @endphp
                                 <span class="{{ $statusClass }} text-white p-1 pl-2 pr-2 rounded-4xl">
                                     {{ $statusType }}
@@ -377,74 +272,66 @@
                             </td>
                             <td class="min-w-25 p-2">{{ $sl->date_in }}</td>
                             <td class="min-w-25 p-2">{{ $sl->serviceId ? $sl->serviceId->service_type_name : 'N/A' }}</td>
-                            {{-- <td class="p-2">{{$sl->serviceId === 1 ? 'a' : ($sl->serviceId === 2 ? 'b' : 'N/A') }}</td> --}}
-                            {{-- <td class="p-2">
-                                @if (($p = $sl->service_id) == 1)  
-                                    a
-                                @elseif (($p = $sl->service_id) == 2)
-                                    b
-                                @else
-                                    N/A
-                                @endif
-                            </td> --}}
                             <td class="p-2 max-md:min-w-30">{{ $sl->received_from }}</td>
                             <td class="p-2 max-md:min-w-30">{{ $sl->contact_person }}</td>
                             <td class="p-2">{{ $sl->mobile_number }}</td>
                             <td class="p-2">{{ $sl->serial_number }}</td>
                             <td class="flex items-start justify-end gap-4 p-6 min-w-80 max-xl:[&>*]:text-[12px] max-xl:[&>button]:py-1 max-xl:[&_div_button]:py-1 max-lg:[&>button]:text-[10px] max-lg:[&_div_button]:text-[10px] 
-                                        max-md:[&_div_button]:text-sm max-md:[&_div_button,_button]:py-2 max-md:[&>button]:text-sm max-md:[&>button]:py-2
-                                        ">
-                                <!-- Update Button Form updateId=""-->
-                                    {{-- <input type="hidden" name="id" value="{{ $u->id }}"> --}}
+                                            max-md:[&_div_button]:text-sm max-md:[&_div_button,_button]:py-2 max-md:[&>button]:text-sm max-md:[&>button]:py-2
+                                            ">
+                                <div class="flex flex-col gap-3 items-end">
                                     @if ($sl->status_id < 7)
-                                        <button  x-data x-on:click="$dispatch('open-modal', { name: 'test', slId_For_UpdateStatusId: {{ $sl->id }} })" type="submit" class="max-w-fit text-white cursor-pointer px-4 py-2 rounded-2xl hover:opacity-60 bg-indigo-600" style="">
+                                        <button x-data x-on:click="$dispatch('open-modal', { name: 'test', slId_For_UpdateStatusId: {{ $sl->id }} })" type="button" class="max-w-fit text-white cursor-pointer px-4 py-2 rounded-2xl hover:opacity-60 bg-indigo-600">
                                             Update
                                         </button>
-                                    @elseif($sl->status_id >= 8)
-                                        <button  x-data x-on:click="" type="submit" class="max-w-fit text-[#302714] px-4 py-2 rounded-2xl border border-indigo-600 " style="opacity: 0.6; cursor: not-allowed;">
+                                    @elseif($sl->status_id === 8)
+                                        <button type="button" class="max-w-fit text-[#302714] px-4 py-2 rounded-2xl border border-indigo-600" style="opacity: 0.6; cursor: not-allowed;">
                                             Closed
                                         </button>
-                                    @elseif($sl->status_id = 7)
-                                        <button  x-data x-on:click="" type="submit" class="max-w-fit text-[#302714] px-4 py-2 rounded-2xl border border-red-600 " style="opacity: 0.6; cursor: not-allowed;">
+                                    @elseif($sl->status_id === 7)
+                                        <button type="button" class="max-w-fit text-[#302714] px-4 py-2 rounded-2xl border border-red-600" style="opacity: 0.6; cursor: not-allowed;">
                                             Cancelled
                                         </button>
                                     @endif
-                                <!-- Delete Button Form -->
+                                </div>
                                 <div class="flex flex-col gap-3">
-                                        <button type="button" 
-                                                target="_blank"
-                                                    x-on:click="window.open('{{ route('receiptForm', ['id' => $sl->id]) }}', '_blank', 'noopener,noreferrer')"
-                                                class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-[#F8971A] hover:opacity-60"
-                                                >
-                                            Receipt Form
-                                        </button>
-                                        <button type="button" 
-                                                target="_blank"
-                                                    x-on:click="window.open('{{ route('jobOrder', ['id' => $sl->id]) }}', '_blank', 'noopener,noreferrer')"
-                                                class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-amber-400 hover:opacity-60"
-                                                >
-                                            Job Order
-                                        </button>
-                                    {{-- <form method="POST" action="">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form> --}}
+                                    <button type="button"
+                                        x-on:click="window.open('{{ route('receiptForm', ['id' => $sl->id]) }}', '_blank', 'noopener,noreferrer')"
+                                        class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-[#F8971A] hover:opacity-60">
+                                        Receipt Form
+                                    </button>
+                                    <button type="button"
+                                        x-on:click="window.open('{{ route('jobOrder', ['id' => $sl->id]) }}', '_blank', 'noopener,noreferrer')"
+                                        class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-amber-400 hover:opacity-60">
+                                        Job Order
+                                    </button>
                                 </div>
                             </td>
+                            @if (session(key: 'role') == 1)
+                            <td class="bg-red-100 content-baseline justify-end p-6 min-w-fit max-xl:[&>*]:text-[12px] max-xl:[&>button]:py-1 max-xl:[&_div_button]:py-1 max-lg:[&>button]:text-[10px] max-lg:[&_div_button]:text-[10px] 
+                                            max-md:[&_div_button]:text-sm max-md:[&_div_button,_button]:py-2 max-md:[&>button]:text-sm max-md:[&>button]:py-2
+                                            ">
+                                    <button x-data
+                                            x-on:click="if (confirm('Are you sure you want to DELETE this techlog?')) { $wire.deleteTechlog({{ $sl->id }}); }"
+                                            type="button" 
+                                            class="max-w-fit text-white font-bold cursor-pointer px-4 py-2 rounded-2xl hover:opacity-60 bg-red-600">
+                                        Delete
+                                    </button>
+                            </td>
+                            @endif
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="p-4 text-center text-gray-500">No Category found.</td>
+                            <td colspan="9" class="p-4 text-center text-gray-500">No Service Log found.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
-
         </div>
         @if (session()->has('success'))
             <div class="w-full pl-10 pr-10" role="alert">
                 <p class="bg-gray-100 font-semibold text-xl text-gray-400 w-full p-2 pl-5 rounded-2xl border border-amber-200">
-                Success: <span class="text-green-500 text-lg font-medium">{{ session('success') }}</span>
+                    Success: <span class="text-green-500 text-lg font-medium">{{ session('success') }}</span>
                 </p>
             </div>
         @else
@@ -455,40 +342,12 @@
             </div>
         @endif
         <div class="p-10">
-            {{$service_log->links('vendor.livewire.tailwind')}}
+            {{ $this->serviceLogs->links('vendor.livewire.tailwind') }}
         </div>
     </div>
-
     <x-modal-UpdatePopUp name="test" title="Test">
         @slot('body')
             <livewire:modal-update/>
         @endslot
     </x-modal-UpdatePopUp>
-
-
-    {{-- @if (session('success'))
-        <span>
-            {{session('success')}}
-        </span>
-    @endif --}}
-
-    {{-- this button below led to its own function --}}
-    {{-- <button wire:click="logout">
-        logout
-    </button> --}}
-
-        {{-- this button below led to the web routing file that cast /logout on the browser which lead to livewire.auth.logout --}}
-    {{-- <form action="{{route('auth.logout')}}">
-        <button class="text-base active:bg-red-100">
-        Logout
-        </button>
-    </form> --}}
-    
-    {{-- <hr> --}}
-    {{-- @foreach ($service_log as $sl)
-        <h3>
-            {{$u->username}}
-        </h3>
-    @endforeach --}}
-
 </div>

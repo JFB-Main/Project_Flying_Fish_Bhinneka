@@ -11,16 +11,38 @@
                         <label for="invoiceDate">
                             Username
                         </label>
-                        <input wire:model="input_username" type="text" name="invoiceDate" id="" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_invoiceDate') border-red-500 @enderror">
+                        <input wire:model="input_username" type="text" id="" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_invoiceDate') border-red-500 @enderror">
                         @error('input_username') <span class="text-red-500 text-sm error">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex flex-col">
                         <label for="salesOrder">
                             Email 
                         </label>
-                        <input wire:model="input_email" type="email" name="salesOrder" id="" placeholder="Enter email" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_salesOrder') border-red-500 @enderror">
+                        <input wire:model="input_email" type="email" id="" placeholder="Enter email" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_salesOrder') border-red-500 @enderror">
                         @error('input_email') <span class="text-red-500 text-sm error">{{ $message }}</span> @enderror
                     </div>
+                    @if (session('role') == 1)
+                        <div class="flex flex-col">
+                            <label for="">
+                                Role 
+                            </label>
+                            <select wire:model="input_role_id" id="" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_salesOrder') border-red-500 @enderror">
+                                <option value="3">User</option>
+                                <option value="2">Admin</option>
+                            </select>
+                            @error('input_email') <span class="text-red-500 text-sm error">{{ $message }}</span> @enderror
+                        </div>
+                    @else
+                        <div class="flex flex-col">
+                            <label for="">
+                                Role 
+                            </label>
+                            <i class="bg-gray-50 border text-green-600 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('input_salesOrder') border-red-500 @enderror">
+                                User role default to normal user under your permission level
+                            </i>
+                            @error('input_email') <span class="text-red-500 text-sm error">{{ $message }}</span> @enderror
+                        </div>
+                    @endif
                     <div class="flex flex-col">
                         <label for="invoiceDate">
                             Password 
@@ -101,7 +123,7 @@
                             <td class="p-2 ">{{ $s->username}}</td>
                             <td class="p-2 ">{{ $s->email}}</td>
                             <td class="p-2 ">
-                                {{ $s->role == 1 ? 'Superadmin' : 'User'}}
+                                {{ $s->role == 1 ? 'Superadmin' : ( $s->role == 2 ? 'Admin' : 'User')}}
                             </td>
                             <td class="p-2 ">{{ $s->created_at }}</td>
                             <td class="p-2 ">{{ $s->updated_at }}</td>

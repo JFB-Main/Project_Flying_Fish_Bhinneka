@@ -7,6 +7,9 @@ use Livewire\Attributes\Validate;
 use App\Models\Service_logsModel;
 use App\Models\Service_typeModel;
 use App\Models\WarrantyModel;
+// use Livewire\Attributes\Layout;
+use Livewire\Attributes\Computed;
+use Carbon\Carbon;
 
 
 class CreateTechlog extends Component
@@ -46,7 +49,7 @@ class CreateTechlog extends Component
                 'max:20',
                 'regex:/^[0-9()+\-]+$/'
             ],
-            'input_email' => 'nullable|email|max:255',
+            'input_email' => 'required|email|max:255',
             'input_contactPerson' => 'nullable|string|max:255',
             'input_address' => 'nullable|string|max:500',
 
@@ -75,15 +78,31 @@ class CreateTechlog extends Component
             'input_customerName.required' => 'The Customer Name field is required.',
             'input_mobileNumber.required' => 'The Mobile Number field is required.',
             'input_email.email' => 'The Email must be a valid email address.',
+            'input_email.required' => 'The Email must be a valid email address.',
             'input_serialNumber.unique' => 'This Serial Number already exists.',
             // Add more specific messages as needed
         ];
     }
 
+    #[Computed]
+    public function warrantyOptions()
+    {
+        return WarrantyModel::all();
+    }
+
+    /**
+     * Computed property to get all service types.
+     * This data is only fetched once per request.
+     */
+    #[Computed]
+    public function serviceTypeOptions()
+    {
+        return Service_typeModel::all();
+    }
 
 
     public function createTechlog(){
-        $validatedData = $this->validate();
+        $this->validate();
         
 
         // dd(
@@ -107,10 +126,10 @@ class CreateTechlog extends Component
         //     'Add-on:', $this->input_addOn
         // );
 
-        $this->input_dateIn = \Carbon\Carbon::now()->format('Y-m-d');
+        // $this->input_dateIn = \Carbon\Carbon::now()->format('Y-m-d');
 
         $techlogCreate = Service_logsModel::create([
-            'date_in' => $this->input_dateIn,
+            'date_in' => Carbon::now()->format('Y-m-d'),
             'received_from' => $this->input_customerName,
             'alamat' => $this->input_address,
             'mobile_number' => $this->input_mobileNumber,
@@ -137,11 +156,13 @@ class CreateTechlog extends Component
         ]);
         if($techlogCreate) {
             session()->flash('success', 'Register Berhasil!.');
-            $this->dispatch('crud-done', $techlogCreate);
+            $this->dispatch('crud-done');
             
             // Dispatch event to open the ReceiptForm in a new tab
             $receiptUrl = route('receiptForm', ['id' => $techlogCreate->id]); // Use the newly created log's primary ID
             $this->dispatch('open-new-tab', url: $receiptUrl);
+
+            $this->reset(); 
         }
         else{
             session()->flash('error', 'Register Tidak Berhasil!.');
@@ -150,14 +171,12 @@ class CreateTechlog extends Component
 
     public function render(){
 
-        $warranty_ListDDL = WarrantyModel::all();
-        $ServiceType_ListDDL = Service_typeModel::all();
-        $now = \Carbon\Carbon::parse(now())->format('Y-m-d');
+
 
         return view('livewire.create-techlog',[
-            'warranty_ddl' => $warranty_ListDDL,
-            'serviceType_ddl' => $ServiceType_ListDDL,
-            'now' => $now
+            'warranty_ddl' => $this->warrantyOptions,
+            'serviceType_ddl' => $this->serviceTypeOptions,
+            'now' => Carbon::now()->format('Y-m-d')
         ])->extends('specific')->section('createContent');
     }
 }

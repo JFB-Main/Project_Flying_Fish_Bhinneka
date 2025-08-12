@@ -2,7 +2,8 @@
     {{-- <div class="w-full bg-gradient-to-tl from-amber-100 via-[#F8971A]/70 to-purple-500"> --}}
         {{-- <div class="bg-blue-900 opacity-20 size-full">This div element has position: absolute;</div> --}}
     {{-- </div> --}}
-    <div class="flex flex-col justify-center w-[30%] h-full shadow-xl gap-10 py-16 bg-white max-xl:gap-0 max-md:w-full max-md:py-10 max-md:px-5 max-md:rounded-4xl max-md:max-h-fit max-md:gap-10" style="">
+    <div class="flex flex-col justify-center w-[30%] h-full shadow-xl gap-3 py-16 
+                bg-white max-xl:gap-0 max-md:w-full max-md:py-10 max-md:px-5 max-md:rounded-4xl max-md:max-h-fit max-md:gap-10" style="">
         <div class="flex flex-col items-center gap-15 max-xl:gap-10 max-lg:gap-5">
             <img src="icon_nav\flyingfish-icon.png" alt="" style="" class="w-[30%] max-xl:w-[25%] mafullx-md:w-[40%]">
             <div class="flex flex-col items-center">
@@ -11,9 +12,9 @@
             </div>
         </div>
         <div class="flex flex-col p-10 max-lg:p-7 max-md:p-0 max-lg:py-5">
-            <form wire:submit.prevent="login" class="flex flex-col gap-10 max-lg:gap-7">
+            <form wire:submit.prevent="login" class="flex flex-col gap-10 max-xl:gap-3">
 
-                <div class="flex flex-col gap-5 max-xl:[&_div_*]:text-[12px] max-xl:p-1.5 max-lg:[&_div_*]:text-[10px] max-lg:gap-2 max-md:[&_div_*]:text-base max-md:gap-7 max-md:[&_div_input]:text-sm max-md:[&_div_input]:p-2.5">
+                <div class="flex flex-col gap-5 max-xl:[&_div_*]:text-[12px] max-xl:[&_div_input]:p-1.5 max-xl:p-1.5 max-lg:[&_div_*]:text-[10px] max-lg:gap-2 max-md:[&_div_*]:text-base max-md:gap-7 max-md:[&_div_input]:text-sm max-md:[&_div_input]:p-1.5">
                     <div class="form-group">
                         <label class="font-weight-bold ">Username</label>
                         <input type="text" wire:model.lazy="username"
@@ -49,9 +50,13 @@
                     </div>
                 </div>
 
-                <button type="submit" class="cursor-pointer px-4 py-2 border rounded-2xl max-xl:text-[12px] max-lg:text-[8px] max-lg:py-1.5 max-md:py-2.5 max-md:text-base bg-amber-500 border-gray-200 hover:opacity-60 text-white">
+                <button type="submit" class="cursor-pointer px-4 py-2 border rounded-2xl max-xl:text-[12px]  max-xl:py-1.5 max-lg:text-[8px] max-md:py-2.5 max-md:text-base bg-amber-500 border-gray-200 hover:opacity-60 text-white">
                     LOGIN
                 </button>
+                <p class="self-center text-gray-600
+                            max-xl:text-[12px] max-lg:text-[10px] max-md:text-base">
+                    Are you a guest? <span class="text-amber-500 hover:opacity-60"> <a href="{{route('guestSearch')}}"> Click Here</a></span>
+                </p>
             </form>
         </div>
         <div class="flex flex-col text-gray-400 self-center items-center gap-5 max-xl:gap-2">
