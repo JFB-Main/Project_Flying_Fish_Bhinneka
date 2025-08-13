@@ -70,6 +70,7 @@
             @yield('dataReportContent')
             @yield(section: 'addUserYield')
             @yield(section: 'guestSearchYield')
+            @yield(section: 'changePasswordYield')
         </div>
 
         {{-- @if (Route::has('login'))

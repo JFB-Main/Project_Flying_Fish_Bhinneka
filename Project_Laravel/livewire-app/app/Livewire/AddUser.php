@@ -25,12 +25,12 @@ class AddUser extends Component
     #[Validate('required|same:input_password', message: 'The confirmation password must match the password.')]
     public $input_confirmPassword = '';
 
-    public $input_role_id = '';
+    public $input_role_id = '3';
 
     public function createUser(){
         $this->validate();
         
-        // dd($this->input_username, $this->input_email, $this->input_password, $this->input_confirmPassword);
+        // dd($this->input_username, $this->input_email, $this->input_password, $this->input_confirmPassword, $this->input_role_id);
 
         if($this->input_password != $this->input_confirmPassword){
         }
@@ -75,8 +75,8 @@ class AddUser extends Component
     }
 
     public function mount(){
-        if(((session('role') >= 2 && session('role') <= 0 ) || !auth()->check())){
-            return redirect()->route('auth.login');
+        if(((session('role') >= 2 || session('role') <= 0 ) || session('role') == null || !auth()->check())){
+            return redirect()->route('dashboard');
         }
 
     }

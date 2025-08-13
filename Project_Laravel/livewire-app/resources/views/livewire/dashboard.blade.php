@@ -89,7 +89,7 @@
                 max-md:[&_div_div_div,_div_div_div_select]:w-full max-md:[&_div_div_div_label]:text-base max-md:[&_div_div_div_input,_div_div_div_select]:text-sm max-md:[&_div_div_div_input,_div_div_div_select]:p-3">
         <div class="flex flex-col gap-10">
             <h1 class="text-center text-3xl text-[#F8971A] tracking-widest font-medium">
-                CUSTOMER RELATED SEARCH
+                CUSTOMER PROPERTY SEARCH
             </h1>
             <div class="flex flex-wrap justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-5/12 [&>*]:max-h-fit max-lg:pl-10 max-lg:pr-10">
                 <div class="flex flex-col ">
@@ -119,7 +119,7 @@
             </div>
             <hr class="text-[#FFF1C7] self-center" style="width: 90%;">
             <h1 class="text-center self-center text-3xl text-[#F8971A] tracking-widest font-medium">
-                ITEM RELATED SEARCH
+                ITEM PROPERTY SEARCH
             </h1>
             <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12 pl-5 pr-5 max-lg:pl-10 max-lg:pr-10">
                 <div class="flex flex-col ">

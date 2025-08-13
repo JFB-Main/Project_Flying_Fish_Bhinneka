@@ -114,7 +114,8 @@ class Dashboard extends Component
 
     public function ticketPageLink($id_selected){
         // dd($id_selected);
-        $this->dispatch('open-ticketPage', $id_selected);
+        
+        // $this->dispatch('open-ticketPage', $id_selected);
 
         return redirect()->route('TicketPage', ['id' => $id_selected]);
     }

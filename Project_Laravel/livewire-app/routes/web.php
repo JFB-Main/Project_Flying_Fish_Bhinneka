@@ -9,6 +9,7 @@ use App\Livewire\JobOrder;
 use App\Livewire\ReceiptForm;
 use App\Livewire\TicketPage;
 use App\Livewire\GuestSearch;
+use App\Livewire\ChangePassword;
 use Illuminate\Support\Facades\Route;
 
 
@@ -79,5 +80,6 @@ Route::get('/guestSearch', GuestSearch::class)->name('guestSearch');
         Route::get('/receiptForm/{id}', ReceiptForm::class)->name('receiptForm');
         Route::get('/jobOrder/{id}', JobOrder::class)->name('jobOrder');
         Route::get('/logout', Logout::class)->name('auth.logout');
+        Route::get('/changePassword', ChangePassword::class)->name('changePassword');
 });
 

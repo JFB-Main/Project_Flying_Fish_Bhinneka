@@ -64,7 +64,9 @@
             </div>
             <div class="bg-[#F8971A] self-center" style="width: 4px; height: 90%;"></div>
         </div>
-        <img src="{{ asset('icon_nav/Profile_Picture.png') }}" alt="" class="self-center max-xl:size-[45px] max-lg:size-[30px]">
+        <a href="{{route('changePassword')}}">
+            <img src="{{ asset('icon_nav/Profile_Picture.png') }}" alt="" class="self-center max-xl:size-[45px] max-lg:size-[30px]">
+        </a>
         {{-- <button wire:click="createNewUser()">
             new user
         </button>

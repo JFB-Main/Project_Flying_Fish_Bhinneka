@@ -55,7 +55,7 @@ class Clicker extends Component
     //     // Redirect to login
     //     return $this->redirect('/login', navigate: true);
     // }
-    
+
 
     public function mount($message = '')
     {
