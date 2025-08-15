@@ -1,26 +1,37 @@
 <div class="flex flex-row justify-between bg-white p-5 pl-8 pr-8 border-b border-amber-300 max-xl:text-sm max-md:px-4 shadow-lg">
-    <div class="flex-col gap-4 fixed bottom-4 right-4 hidden max-md:flex z-3 ">
-        <a href="{{route('create-techlog')}}" class="">
-            <img src="{{asset('icon_nav\Create_Sphere.svg') }}" alt="" class="w-16 h-16 cursor-pointer">
-        </a>
-        @if (session('role') == 1 || session('role') == 2 )
-            <a href="{{route('addUser')}}" class="">
-            <img src="{{asset('icon_nav\Add_user-Sphere.svg') }}" alt="" class="w-16 h-16 cursor-pointer">
+    @if ((session('role') == null || !auth()->check()))
+
+    @else
+        <div class="flex-col gap-4 fixed bottom-4 right-4 hidden max-md:flex z-3 ">
+            <a href="{{route('create-techlog')}}" class="">
+                <img src="{{asset('icon_nav\Create_Sphere.svg') }}" alt="" class="w-16 h-16 cursor-pointer">
             </a>
-        @endif
-    </div>
+            @if (session('role') == 1 || session('role') == 2 )
+                <a href="{{route('addUser')}}" class="">
+                <img src="{{asset('icon_nav\Add_user-Sphere.svg') }}" alt="" class="w-16 h-16 cursor-pointer">
+                </a>
+            @endif
+        </div>
+    @endif
     {{-- <div x-on:click="$dispatch('open-sidebar')" class="bg-purple-600 w-10 cursor-pointer hidden max-md:flex"></div> --}}
     <div class="flex flex-row max-w-fit gap-5 items-center">
 
         {{-- icon sphere buat create  --}}
-        <img x-on:click="$dispatch('open-sidebar')" src="{{asset('icon_nav\sidebar_burger.svg') }}" alt="" class=" w-10 cursor-pointer hidden max-md:flex"> 
+        @if ((session('role') == null || !auth()->check()))
+
+        @else
+            <img x-on:click="$dispatch('open-sidebar')" src="{{asset('icon_nav\sidebar_burger.svg') }}" alt="" class=" w-10 cursor-pointer hidden max-md:flex"> 
+        @endif
         {{-- icon sphere buat create  --}}
 
         <div class="flex flex-row max-w-fit gap-1">
+            @if ((session('role') == null || !auth()->check()))
+                <img src="{{ asset('icon_nav/flyingfish-icon.png') }}" alt="" class="w-[50px] h-[50px] self-center mr-2 max-md:size-[40px]">
+            @endif
             <div class="bg-[#F8971A]" style="width: 4px"></div>
             <h1 class="text-2xl max-xl:text-xl max-lg:text-base font-semibold self-center">
-            {{ $pageTitle }} 
-            {{-- {{$message}} --}}
+                {{ $pageTitle }} 
+                {{-- {{$message}} --}}
             </h1>
         </div>
         <div class="flex flex-row gap-5 max-lg:[&>*]:text-[10px] max-md:hidden">
@@ -42,7 +53,7 @@
             @endif
         </div>
     </div>
-    <div class="flex flex-row max-w-fit gap-1">
+    <div class="flex flex-row max-w-fit gap-1 item">
         <div class="flex flex-row max-w-fit gap-1">
             <div class="items-end flex flex-col max-w-fit [&>h2]:text-xl [&>h2]:font-semibold max-xl:[&>h2]:text-lg max-lg:[&>h2]:text-base h-fit">
                 @if (session()->has('username'))
@@ -64,8 +75,14 @@
             </div>
             <div class="bg-[#F8971A] self-center" style="width: 4px; height: 90%;"></div>
         </div>
-        <a href="{{route('changePassword')}}">
-            <img src="{{ asset('icon_nav/Profile_Picture.png') }}" alt="" class="self-center max-xl:size-[45px] max-lg:size-[30px]">
+        <a href="{{route('changePassword')}}" class="self-center">
+            @if ((session('role') == null || !auth()->check()))
+                <a href="{{route('auth.login')}}" class="self-center max-xl:size-[45px] max-lg:size-[30px] max-md:size-[40px]">
+                    <img src="{{ asset('icon_nav/Profile_Picture.png') }}" alt="" >
+                </a>
+            @else
+                <img src="{{ asset('icon_nav/Profile_Picture.png') }}" alt="" class="self-center max-xl:size-[45px] max-lg:size-[30px] max-md:size-[40px]">
+            @endif
         </a>
         {{-- <button wire:click="createNewUser()">
             new user

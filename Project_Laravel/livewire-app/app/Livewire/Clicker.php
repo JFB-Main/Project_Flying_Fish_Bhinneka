@@ -72,6 +72,7 @@ class Clicker extends Component
             'dashboard' => 'Dashboard',
             'dataReport' => 'Data Report',
             'create-techlog' => 'Create Techlog',
+            'guestSearch' => 'Flying Fish',
             null => 'N/A', // <- if route has no name
             default => 'Dashboard'
         };

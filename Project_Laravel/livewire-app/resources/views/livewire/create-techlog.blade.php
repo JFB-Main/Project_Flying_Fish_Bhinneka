@@ -1,8 +1,8 @@
-<div class="flex flex-col w-auto pl-10 pr-10 pb-20 gap-15">
+<div class="flex flex-col w-auto px-10 pb-20 gap-15">
     <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10">
         {{-- Add wire:submit to your form to trigger the createTechlog method --}}
         <form wire:submit.prevent="createTechlog" class="flex flex-col gap-20">
-            <div class="flex flex-col gap-10">
+            <div class="flex flex-col gap-10 max-md:px-5">
                 <h1 class="self-center text-3xl text-[#F8971A] tracking-widest font-medium max-md:text-center">
                     TECHLOG PROPERTY DATA
                 </h1>
@@ -125,7 +125,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="flex flex-col w-full [&>*]:w-full pl-9 pr-9 justify-center">
+                    <div class="flex flex-col w-full [&>*]:w-full pl-9 pr-9 justify-center max-md:px-0">
                         <label for="descriptionProduct" class="">
                             Description Product: 
                         </label>
@@ -134,7 +134,7 @@
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12">
+                    <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12 max-md:[&>*]:w-full ">
                         <div class="flex flex-col">
                             <label for="partNumber">
                                 Part Number 

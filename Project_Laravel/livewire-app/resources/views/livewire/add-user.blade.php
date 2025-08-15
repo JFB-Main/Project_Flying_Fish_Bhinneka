@@ -1,5 +1,9 @@
 <div class="flex flex-col w-auto pl-10 pr-10 pb-20 gap-15 max-md:px-5">
-    <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10">
+    <div class="flex flex-col border border-amber-300 bg-white pt-10 pb-10 rounded-4xl gap-10"
+        x-data
+        x-on:open-modal.window="toggleScroll()" 
+        x-on:close-modal.window="toggleScroll()"
+        x-on:keydown.escape.window="toggleKeydownScroll()">
         {{-- Add wire:submit to your form to trigger the createTechlog method --}}
         <form wire:submit.prevent="createUser" class="flex flex-col gap-20">
             <div class="flex flex-col gap-10">
@@ -114,6 +118,7 @@
                         <th class="text-left p-2" style="max-width: 100px">Created At</th>
                         <th class="text-left p-2" style="max-width: 100px">Updated At</th>
                         <th class="text-left p-2" style="max-width: 100px">Action</th>
+                        <th class="text-center p-2 text-red-500 ">Danger Zone</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,8 +132,17 @@
                             </td>
                             <td class="p-2 ">{{ $s->created_at }}</td>
                             <td class="p-2 ">{{ $s->updated_at }}</td>
-                            <td class="flex flex-row p-2">
-                                <div class="flex flex-col gap-3">
+                            <td>
+                                <button type="button" 
+                                        x-data 
+                                        x-on:click="$dispatch('open-modal', {name: 'passwordChangeModal', userId: '{{$s->id}}'})"
+                                        class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-[#F8971A] hover:opacity-60"
+                                        >
+                                    Change Password
+                                </button>
+                            </td>
+                            <td class="p-2 bg-red-100">
+                                <div class="flex flex-col gap-3 min-w-fit">
                                         <button type="button" 
                                                 x-data 
                                                 x-on:click="
@@ -137,21 +151,10 @@
                                                         $dispatch('close-modal');
                                                     }
                                                 "
-                                                class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-red-600 hover:opacity-60"
+                                                class="self-center text-white cursor-pointer px-4 py-2 rounded-2xl bg-red-600 hover:opacity-60"
                                                 >
                                             Delete
                                         </button>
-                                        {{-- <button type="button" 
-                                                target="_blank"
-                                                    x-on:click="window.open('{{ route('jobOrder', ['id' => $s->id]) }}', '_blank', 'noopener,noreferrer')"
-                                                class="text-white cursor-pointer px-4 py-2 rounded-2xl bg-amber-400 hover:opacity-60"
-                                                >
-                                            Update
-                                        </button> --}}
-                                    {{-- <form method="POST" action="">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form> --}}
                                 </div>
                             </td>
                         </tr>
@@ -182,6 +185,8 @@
         <div class="p-10">
             {{$listUser->links('vendor.livewire.tailwind')}}
         </div>
+        <x-modal-AdminChangePassword name="passwordChangeModal" title="Test">
+        </x-modal-AdminChangePassword>
     </div>
 
     <script>

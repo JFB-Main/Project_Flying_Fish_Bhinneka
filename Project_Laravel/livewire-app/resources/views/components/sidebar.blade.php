@@ -13,10 +13,12 @@ x-data="{ show: false }"
 
     <div class="bg-gradient-to-b from-amber-400 via-[#F8971A] to-[#f88d1a] to-[90%] w-full h-min pt-3 pb-3">
         <div class="flex flex-row gap-2 items-center justify-baseline pl-5 max-lg:pl-0 max-lg:justify-center max-lg:">
-            <img src="{{ asset('icon_nav/flyingfish-icon.png') }}" alt="" style="width: 20%; height: 20%;">
-            <h1 class="text-[#FFF8DE] font-bold text-xl max-xl:text-lg max-lg:text-base">
+            <a href="{{route('guestSearch')}}" class="w-[20%] h-[20%]" style="">
+                <img src="{{ asset('icon_nav/flyingfish-icon.png') }}" alt="">
+            </a>
+            <a href="{{route('guestSearch')}}" class="text-[#FFF8DE] font-bold hover:text-[#fbe4be] text-xl max-xl:text-lg max-lg:text-base">
             Flying Fish
-            </h1>
+            </a>
         </div>
     </div>
     <div class="w-full bg-white h-full pl-5 max-xl:pl-0 max-xl:items-center max-xl:[&_div]:items-start gap-6">
