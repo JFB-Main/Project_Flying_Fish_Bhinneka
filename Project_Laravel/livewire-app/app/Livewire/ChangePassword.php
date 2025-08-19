@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 // use Livewire\Attributes\Validate;
 use App\Models\UsersModel;
+use Illuminate\Support\Facades\Hash;
 // use Livewire\Attributes\On;
 // use Livewire\Attributes\Computed;
 
@@ -44,17 +45,24 @@ class ChangePassword extends Component
     public function updatePassword(){
         $this->validate();
         // dd(session('user_id'), $this->old_password, $this->old_confirmPassword, $this->new_password, $this->new_confirmPassword);
+        $old_p_check = UsersModel::find(session('user_id'));
 
-        $passwordupdate = UsersModel::find(session('user_id'))->update([
-            'password' => bcrypt($this->new_password),
-        ]);
-        if($passwordupdate) {
-            session()->flash('success', 'Update Berhasil!.');
+        if(Hash::check($this->old_password, $old_p_check->password)){
+            $passwordupdate = UsersModel::find(session('user_id'))->update([
+                'password' => bcrypt($this->new_password),
+            ]);
+            if($passwordupdate) {
+                session()->flash('success', 'Update Berhasil!.');
 
+            }
+            else{
+                session()->flash('error', 'Update Tidak Berhasil!.');
+            }  
         }
         else{
-            session()->flash('error', 'Update Tidak Berhasil!.');
-        }  
+            session()->flash('error', 'Password Lama Tidak Sesuai Dengan Yang Ada!');
+        }
+
     $this->reset();
     }
 

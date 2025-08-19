@@ -644,6 +644,28 @@
                     {{$notes->links('vendor.livewire.tailwind')}}
                 </div>
             </div>
+        @elseif(!$service_log &&( $tl_hide != null ||$tl_hide != '' ))
+            <div class="flex flex-col gap-2 self-center h-full items-center justify-center opacity-40
+                    max-xl:[&>p]:text-4xl max-xl:[&>i]:text-sm max-xl:gap-1
+                    max-lg:[&>p]:text-2xl max-lg:[&>i]:text-[8px] max-lg:gap-0">
+                <p class="text-5xl text-gray-600">
+                    <span class="font-bold">Techlog</span> does not exist
+                </p>
+                <i class="text-xl text-gray-600">
+                    Make sure the <span class="font-bold">Techlog</span> you have typed is correct
+                </i>
+            </div>
+        @else
+            <div class="flex flex-col gap-2 self-center h-full items-center justify-center opacity-40
+                    max-xl:[&>p]:text-4xl max-xl:[&>i]:text-sm max-xl:gap-1
+                    max-lg:[&>p]:text-2xl max-lg:[&>i]:text-[8px] max-lg:gap-0">
+                <p class="text-5xl text-gray-600">
+                    Your <span class="font-bold">Techlog</span> will be shown here 
+                </p>
+                <i class="text-xl text-gray-600">
+                    please input the techlog first
+                </i>
+            </div>
         @endif
     </div>
 </div>
