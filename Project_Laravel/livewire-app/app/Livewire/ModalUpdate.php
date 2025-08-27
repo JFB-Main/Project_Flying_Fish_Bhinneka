@@ -89,7 +89,7 @@ class ModalUpdate extends Component
     // Consolidated method for the other status changes
     public function updateWithSpecificStatus($status)
     {
-        // First, check if the record actually exists before proceeding
+        // check if the record actually exists before proceeding
         if (!$this->techlogIdSelector) {
             session()->flash('error', 'Error: Service Log not found.');
             $this->dispatch('close-modal');

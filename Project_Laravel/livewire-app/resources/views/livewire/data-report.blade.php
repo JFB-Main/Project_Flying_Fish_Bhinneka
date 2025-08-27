@@ -232,46 +232,57 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($reportData as $row)
-                        <tr class="hover:bg-blue-50 text-center border-b h-10">
-                            {{-- Directly access the keys from your $reportData structure --}}
-                            <td class="pl-5 pr-5 border-l border-r">{{ $row['Techlog ID'] }}</td>
-                            <td class="min-w-30 border-l border-r">{{ $row['Date In'] }}</td>
-                            <td class="min-w-50 pl-5 pr-5 border-l border-r">{{ $row['Customer Name'] }}</td>
-                            <td class="pl-5 pr-5 border-l border-r">{{ $row['Brand Type'] }}</td>
-                            <td class="pl-5 pr-5 border-l border-r">{{ $row['Serial Number'] }}</td>
+                    @if ($reportLoaded)
+                        @forelse ($this->GenerateReport as $row)
+                            <tr class="hover:bg-blue-50 text-center border-b h-10">
+                                {{-- Directly access the keys from your $reportData structure --}}
+                                <td class="pl-5 pr-5 border-l border-r">{{ $row['Techlog ID'] }}</td>
+                                <td class="min-w-30 border-l border-r">{{ $row['Date In'] }}</td>
+                                <td class="min-w-50 pl-5 pr-5 border-l border-r">{{ $row['Customer Name'] }}</td>
+                                <td class="pl-5 pr-5 border-l border-r">{{ $row['Brand Type'] }}</td>
+                                <td class="pl-5 pr-5 border-l border-r">{{ $row['Serial Number'] }}</td>
 
-                            <td class="pl-5 pr-5 text-orange-600 p-0 border-l border-r bg-[#FFECB3]">{{ $row['On-Progress User'] }}</td>
-                            <td class="min-w-50 text-orange-600 p-0 border-l border-r bg-[#ffe495]">{{ $row['On-Progress Date'] }}</td>
+                                <td class="pl-5 pr-5 text-orange-600 p-0 border-l border-r bg-[#FFECB3]">{{ $row['On-Progress User'] }}</td>
+                                <td class="min-w-50 text-orange-600 p-0 border-l border-r bg-[#ffe495]">{{ $row['On-Progress Date'] }}</td>
 
-                            @for ($i = 1; $i <= 3; $i++)
-                                <td class="pl-5 pr-5 text-pink-600 p-0 border-l border-r bg-[#fbc2d6]">{{ $row['Pending ' . $i . ' User'] }}</td>
-                                <td class="min-w-50 text-pink-600 p-0 border-l border-r bg-[#fca0bf]">{{ $row['Pending ' . $i . ' Date'] }}</td>
-                            @endfor
+                                @for ($i = 1; $i <= 3; $i++)
+                                    <td class="pl-5 pr-5 text-pink-600 p-0 border-l border-r bg-[#fbc2d6]">{{ $row['Pending ' . $i . ' User'] }}</td>
+                                    <td class="min-w-50 text-pink-600 p-0 border-l border-r bg-[#fca0bf]">{{ $row['Pending ' . $i . ' Date'] }}</td>
+                                @endfor
 
-                            @for ($i = 1; $i <= 3; $i++)
-                                <td class="pl-5 pr-5 text-purple-800 p-0 border-l border-r bg-[#ecd8f0]">{{ $row['RMA to Vendor ' . $i . ' User'] }}</td>
-                                <td class="min-w-50 text-purple-800 p-0 border-l border-r bg-[#e0bce7]">{{ $row['RMA to Vendor ' . $i . ' Date'] }}</td>
-                            @endfor
+                                @for ($i = 1; $i <= 3; $i++)
+                                    <td class="pl-5 pr-5 text-purple-800 p-0 border-l border-r bg-[#ecd8f0]">{{ $row['RMA to Vendor ' . $i . ' User'] }}</td>
+                                    <td class="min-w-50 text-purple-800 p-0 border-l border-r bg-[#e0bce7]">{{ $row['RMA to Vendor ' . $i . ' Date'] }}</td>
+                                @endfor
 
-                            @for ($i = 1; $i <= 3; $i++)
-                                <td class="pl-5 pr-5 text-blue-800 p-0 border-l border-r bg-[#dcefff]">{{ $row['On-QC ' . $i . ' User'] }}</td>
-                                <td class="min-w-50 text-blue-800 p-0 border-l border-r bg-[#c6e3fb]">{{ $row['On-QC ' . $i . ' Date'] }}</td>
-                            @endfor
+                                @for ($i = 1; $i <= 3; $i++)
+                                    <td class="pl-5 pr-5 text-blue-800 p-0 border-l border-r bg-[#dcefff]">{{ $row['On-QC ' . $i . ' User'] }}</td>
+                                    <td class="min-w-50 text-blue-800 p-0 border-l border-r bg-[#c6e3fb]">{{ $row['On-QC ' . $i . ' Date'] }}</td>
+                                @endfor
 
-                            <td class="pl-5 pr-5 text-green-800 p-0 border-l border-r bg-[#dffae0]">{{ $row['Complete User'] }}</td>
-                            <td class="min-w-50 text-green-800 p-0 border-l border-r bg-[#c1f8c3]">{{ $row['Complete Date'] }}</td>
+                                <td class="pl-5 pr-5 text-green-800 p-0 border-l border-r bg-[#dffae0]">{{ $row['Complete User'] }}</td>
+                                <td class="min-w-50 text-green-800 p-0 border-l border-r bg-[#c1f8c3]">{{ $row['Complete Date'] }}</td>
 
-                            <td class="pl-5 pr-5 text-blue-800 p-0 border-l border-r bg-[#ddeaff]">{{ $row['Return to Client User'] }}</td>
-                            <td class="min-w-50 text-blue-800 p-0 border-l border-r bg-[#c3dbff]">{{ $row['Return to Client Date'] }}</td>
-                        </tr>
-                    @empty
+                                <td class="pl-5 pr-5 text-blue-800 p-0 border-l border-r bg-[#ddeaff]">{{ $row['Return to Client User'] }}</td>
+                                <td class="min-w-50 text-blue-800 p-0 border-l border-r bg-[#c3dbff]">{{ $row['Return to Client Date'] }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="27" class="text-center p-4">No service log data available for this report.</td>
+                            </tr>
+                        @endforelse
+                    @else
                         <tr>
-                            <td colspan="27" class="text-center p-4">No service log data available for this report.</td>
+                            <td colspan="27" class="text-center p-4">Please use filters above to generate the report.</td>
                         </tr>
-                    @endforelse
+                    @endif
                 </tbody>
             </table>
+            @if ($reportLoaded)
+                <div class="p-10">
+                    {{ $this->GenerateReport->links('vendor.livewire.tailwind') }}
+                </div>
+            @endif
         </div>
     </div>
     

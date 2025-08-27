@@ -14,6 +14,12 @@ export default defineConfig({
     //to host in server that's not just localhost
     server: {
         host: true,
+        //wifi ccit
+        // host: '192.168.68.121'
+
+        //hotspot hp
+        // host: '10.214.155.1' 
+
         host: '10.0.12.56'
     }
 });

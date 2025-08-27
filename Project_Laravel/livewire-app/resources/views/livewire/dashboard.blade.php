@@ -53,7 +53,7 @@
     >
         <div class="flex flex-row max-w-fit gap-1 pl-5">
             <div class="bg-[#F8971A]" style="width: 4px"></div>
-            <h3 class="text-2xl text-[#302714] tracking-widest font-medium max-xl:text-xl">
+            <h3  class="text-2xl text-[#302714] tracking-widest font-medium max-xl:text-xl">
                 Service Log Status Overview
             </h3>
         </div>
@@ -88,10 +88,14 @@
                 max-lg:[&_div_h1]:text-lg max-lg:[&_div_div_div_label]:text-[12px] max-lg:[&_div_div_div_input,_div_div_div_select]:text-[10px] max-lg:[&_div_div_div_input,_div_div_div_select]:p-1 
                 max-md:[&_div_div_div,_div_div_div_select]:w-full max-md:[&_div_div_div_label]:text-base max-md:[&_div_div_div_input,_div_div_div_select]:text-sm max-md:[&_div_div_div_input,_div_div_div_select]:p-3">
         <div class="flex flex-col gap-10">
-            <h1 class="text-center text-3xl text-[#F8971A] tracking-widest font-medium">
+            <h1 x-data x-on:click="$dispatch('filter1-close')" class="text-center text-3xl text-[#F8971A] tracking-widest font-medium cursor-pointer">
                 CUSTOMER PROPERTY SEARCH
             </h1>
-            <div class="flex flex-wrap justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-5/12 [&>*]:max-h-fit max-lg:pl-10 max-lg:pr-10">
+            <div
+                x-data = "{ show : false}"
+                x-show = "show"
+                x-on:filter1-close.window = "show = !show"
+                id="filter1" class="flex flex-wrap justify-around w-full gap-15 pl-5 pr-5 [&>*]:w-5/12 [&>*]:max-h-fit max-lg:pl-10 max-lg:pr-10">
                 <div class="flex flex-col ">
                     <label for="searchN">
                         Customer Name 
@@ -118,10 +122,14 @@
                 </div>
             </div>
             <hr class="text-[#FFF1C7] self-center" style="width: 90%;">
-            <h1 class="text-center self-center text-3xl text-[#F8971A] tracking-widest font-medium">
+            <h1 x-data x-on:click="$dispatch('filter2-close')" class="text-center self-center text-3xl text-[#F8971A] tracking-widest font-medium cursor-pointer">
                 ITEM PROPERTY SEARCH
             </h1>
-            <div class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12 pl-5 pr-5 max-lg:pl-10 max-lg:pr-10">
+            <div
+                x-data = "{ show : false}"
+                x-show = "show"
+                x-on:filter2-close.window = "show = !show"
+                id="filter2" class="flex flex-wrap justify-around w-full gap-15 [&>*]:w-5/12 pl-5 pr-5 max-lg:pl-10 max-lg:pr-10">
                 <div class="flex flex-col ">
                     <label for="searchBT">
                         Brand Type 
@@ -148,10 +156,14 @@
                 </div>
             </div>
             <hr class="text-[#FFF1C7] self-center" style="width: 90%;">
-            <h1 class="text-center self-center text-3xl text-[#F8971A] tracking-widest font-medium">
+            <h1 x-data x-on:click="$dispatch('filter3-close')" class="text-center self-center text-3xl text-[#F8971A] tracking-widest font-medium cursor-pointer">
                 TECHLOG PROPERTY SEARCH
             </h1>
-            <div class="flex flex-wrap justify-between items-end pl-15 pr-15 gap-15 w-full">
+            <div 
+                x-data = "{ show : false}"
+                x-show = "show"
+                x-on:filter3-close.window = "show = !show"
+                id="filter3" class="flex flex-wrap justify-between items-end pl-15 pr-15 gap-15 w-full">
                 <div class="flex flex-col justify-center w-3/12 gap-15 [&>*]:max-h-fit max-xl:w-full">
                     <div class="flex flex-col">
                         <label for="searchTL">
@@ -350,4 +362,33 @@
             <livewire:modal-update/>
         @endslot
     </x-modal-UpdatePopUp>
+
+    <script>
+        function showFilter1() {
+        var x = document.getElementById("filter1");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        }
+
+        function showFilter2() {
+        var x = document.getElementById("filter2");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        }
+
+        function showFilter3() {
+        var x = document.getElementById("filter3");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        }
+    </script>
 </div>

@@ -63,8 +63,8 @@
                 </div>
                 <div class="flex flex-row [&>*]:w-full">
                     <p>
-                        @if ($tl->address)
-                            {{$tl->address}}
+                        @if ($tl->alamat)
+                            {{$tl->alamat}}
                         @else
                             Address N/A
                         @endif

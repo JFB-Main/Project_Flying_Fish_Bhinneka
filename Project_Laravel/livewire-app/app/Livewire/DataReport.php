@@ -7,12 +7,15 @@ use App\Models\Service_LogsModel;
 // use App\Models\StatusModel;
 // use App\Models\Status_updatelogModel;
 // use App\Models\User;
+use Livewire\WithPagination;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DataReport extends Component
 {
+    use WithPagination;
     public $searchFromDateIn;
 
     public $searchToDateIn;
@@ -22,6 +25,8 @@ class DataReport extends Component
     public $searchToCompleted;
 
     public $reportData;
+
+     public $reportLoaded = false;
 
         protected $queryString = [
         'searchFromDateIn' => ['except' => ''],
@@ -179,27 +184,66 @@ class DataReport extends Component
 
     public function mount()
     {
-        $this->generateReport();
+        // $this->generateReport();
     }
 
     public function updated($propertyName)
     {
         if (in_array($propertyName, ['searchFromDateIn', 'searchToDateIn', 'searchFromCompleted', 'searchToCompleted'])) {
-            $this->generateReport();
+            $this->reportLoaded = true;
+            $this->getGenerateReportProperty();
+            // $this->resetPage();
+            // if ($this->searchFromDateIn || $this->searchToDateIn || $this->searchFromCompleted || $this->searchToCompleted) {
+            //     $this->reportLoaded = true;
+            // }
+            // $this->resetPage();
         }
     }
 
-    public function generateReport()
+    public function getGenerateReportProperty()
     {
+        if (!$this->reportLoaded) {
+            return new LengthAwarePaginator(
+                collect(),
+                0,
+                20,
+                LengthAwarePaginator::resolveCurrentPage(),
+                ['path' => LengthAwarePaginator::resolveCurrentPath()]
+            );
+        }
+        else{
+        //initialize empty collection
+        $this->reportData = collect(); 
+
+        //A base query with eager loading
         $serviceLogsQuery = Service_LogsModel::with(['statusUpdateLog_bind' => function (HasMany $query) {
                 $query->orderBy('created_at', 'asc')->with(['status', 'technician']);
             }
         ]);
 
         $this->applyDateFilters($serviceLogsQuery);
+        
 
-        $this->reportData = $serviceLogsQuery->get()
-            ->map(fn($log) => $this->formatLogData($log));
+        //using chunk() to process records in smaller groups to prevent memory availability exceeding
+
+        $paginatedLogs = $serviceLogsQuery->paginate(1000);
+
+        // This `map` operation will format the paginated results into your desired array structure.
+        $paginatedLogs->through(fn($log) => $this->formatLogData($log));
+
+        return $paginatedLogs;
+        }
+
+        // $serviceLogsQuery->chunk(1000, function ($logs) {
+
+        // // Map the current chunk of logs and append to the reportData collection
+        //     $formattedChunk = $logs->map(fn($log) => $this->formatLogData($log));
+        //     $this->reportData = $this->reportData->concat($formattedChunk);
+
+        // });
+
+        // $this->reportData = $serviceLogsQuery->get()
+        //     ->map(fn($log) => $this->formatLogData($log));
     }
 
     private function applyDateFilters(Builder $query)
@@ -237,7 +281,55 @@ class DataReport extends Component
         $rmaCount = 0;
         $qcCount = 0;
 
-        foreach ($log->statusUpdateLog_bind as $update) {
+            // foreach ($log->statusUpdateLog_bind as $update) {
+            //     $statusType = $update->status->status_type ?? 'Unknown';
+            //     $userName = $update->technician->username ?? 'N/A';
+            //     $updateDate = Carbon::parse($update->created_at)->format('Y-m-d H:i:s');
+
+            //     switch ($statusType) {
+            //         case 'On Progress':
+            //             if (is_null($row['On-Progress User'])) {
+            //                 $row['On-Progress User'] = $userName;
+            //                 $row['On-Progress Date'] = $updateDate;
+            //             }
+            //             break;
+            //         case 'Pending':
+            //             $pendingCount++;
+            //             if ($pendingCount <= 3) {
+            //                 $row["Pending {$pendingCount} User"] = $userName;
+            //                 $row["Pending {$pendingCount} Date"] = $updateDate;
+            //             }
+            //             break;
+            //         case 'RMA to Vendor':
+            //             $rmaCount++;
+            //             if ($rmaCount <= 3) {
+            //                 $row["RMA to Vendor {$rmaCount} User"] = $userName;
+            //                 $row["RMA to Vendor {$rmaCount} Date"] = $updateDate;
+            //             }
+            //             break;
+            //         case 'On-QC':
+            //             $qcCount++;
+            //             if ($qcCount <= 3) {
+            //                 $row["On-QC {$qcCount} User"] = $userName;
+            //                 $row["On-QC {$qcCount} Date"] = $updateDate;
+            //             }
+            //             break;
+            //         case 'Completed':
+            //             if (is_null($row['Complete User'])) {
+            //                 $row['Complete User'] = $userName;
+            //                 $row['Complete Date'] = $updateDate;
+            //             }
+            //             break;
+            //         case 'Returned to Client':
+            //             if (is_null($row['Return to Client User'])) {
+            //                 $row['Return to Client User'] = $userName;
+            //                 $row['Return to Client Date'] = $updateDate;
+            //             }
+            //             break;
+            //     }
+            // }
+
+        foreach (collect($log->statusUpdateLog_bind) as $update) {
             $statusType = $update->status->status_type ?? 'Unknown';
             $userName = $update->technician->username ?? 'N/A';
             $updateDate = Carbon::parse($update->created_at)->format('Y-m-d H:i:s');
@@ -307,7 +399,58 @@ class DataReport extends Component
     
     public function render()
     {
-        return view('livewire.data-report', ['reportData' => $this->reportData])->extends('specific')->section('dataReportContent');
+        // $serviceLogs = new LengthAwarePaginator(
+        //     collect(), // Create an empty collection
+        //     0, // Total items
+        //     20, // Per page
+        //     1, // Current page
+        //     ['path' => LengthAwarePaginator::resolveCurrentPath()]
+        // );
+
+        // if ($this->reportLoaded) {
+        //     $serviceLogsQuery = Service_LogsModel::with(['statusUpdateLog_bind' => function (HasMany $query) {
+        //         $query->orderBy('created_at', 'asc')->with(['status', 'technician']);
+        //     }]);
+
+        //     $this->applyDateFilters($serviceLogsQuery);
+
+        //     $serviceLogs = $serviceLogsQuery->paginate(1000);
+        // }
+
+        // // Always build the query
+        // $serviceLogsQuery = Service_LogsModel::with(['statusUpdateLog_bind' => function (HasMany $query) {
+        //     $query->orderBy('created_at', 'asc')->with(['status', 'technician']);
+        // }]);
+
+        // // Always apply the filters, they will only be active if the properties are set
+        // $this->applyDateFilters($serviceLogsQuery);
+
+        // // Always paginate the result, which returns a LengthAwarePaginator instance, never null.
+        // $serviceLogs = $serviceLogsQuery->paginate(20);
+
+
+        // if ($this->reportLoaded) {
+        //     // Build the query only when filters have been applied
+        //     $serviceLogsQuery = Service_LogsModel::with(['statusUpdateLog_bind' => function (HasMany $query) {
+        //         $query->orderBy('created_at', 'asc')->with(['status', 'technician']);
+        //     }]);
+
+        //     $this->applyDateFilters($serviceLogsQuery);
+
+        //     // Paginate the query result
+        //     $serviceLogs = $serviceLogsQuery->paginate(20);
+        // } else {
+        //     // Return an empty paginator by default before the first search
+        //     $serviceLogs = new LengthAwarePaginator(
+        //         collect(), // Create an empty collection
+        //         0, // Total items
+        //         20, // Per page
+        //         LengthAwarePaginator::resolveCurrentPage(),
+        //         ['path' => LengthAwarePaginator::resolveCurrentPath()]
+        //     );
+        // }
+
+        return view('livewire.data-report')->extends('specific')->section('dataReportContent');
     }
 
 
