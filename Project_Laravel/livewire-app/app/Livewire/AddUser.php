@@ -13,7 +13,7 @@ class AddUser extends Component
 {
     use WithPagination;
 
-    #[Validate('required|min:3|max:50', message: 'The username must be between 3 and 50 characters.')]
+    #[Validate('required', message: 'The username must be between 3 and 50 characters.')]
     public $input_username = '';
 
     #[Validate('required|email|unique:users,email', message: 'This email is already in use or invalid.')]
@@ -35,27 +35,42 @@ class AddUser extends Component
     public $confirm_pw_for_change;
 
     public function createUser(){
-        $this->validate();
+        $this->validate(
+    [
+            'input_username' => 'required',
+            'input_email' => 'required|email|unique:users,email',
+            'input_password' => 'required|min:8',
+            'input_confirmPassword' => 'required|same:input_password',
+            ],
+[
+                'input_username.required' => 'The username is required.',
+                'input_email.required' => 'This email is already in use or invalid.',
+                'input_password.required' => 'The password must be at least 8 characters long.',
+                'input_confirmPassword.required' => 'The confirmation password must match the password.',
+            ]
+        );
         
         // dd($this->input_username, $this->input_email, $this->input_password, $this->input_confirmPassword, $this->input_role_id);
 
-        if($this->input_password != $this->input_confirmPassword){
+        if($this->input_password = $this->input_confirmPassword){
+            $userCreate = UsersModel::create([
+                'username' => $this->input_username,
+                'email' => $this->input_email,
+                'password' => bcrypt($this->input_password),
+                'role' => $this->input_role_id
+            ]);
+            
+            if($userCreate) {
+                session()->flash('success', 'Register Berhasil!.');
+            }  
+            
+            $this->reset();
+            $this->dispatch('crud-users-done');
         }
         else{
-        $userCreate = UsersModel::create([
-            'username' => $this->input_username,
-            'email' => $this->input_email,
-            'password' => bcrypt($this->input_password),
-            'role' => $this->input_role_id
-        ]);
-           if($userCreate) {
-            session()->flash('success', 'Register Berhasil!.');
-        }   
-        $this->reset();
-        $this->dispatch('crud-users-done');
+            session()->flash('error', 'Register Gagal!.');
         }
     }
-
     public function resetAdminchangePassword(){
         $this->reset('pw_for_change', 'confirm_pw_for_change');
         $this->dispatch('close-modal');

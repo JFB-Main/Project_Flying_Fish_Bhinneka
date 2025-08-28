@@ -36,7 +36,7 @@
                             x-ref="pwChange" 
                             wire:model="pw_for_change" 
                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-2xl focus:ring-blue-500 focus:border-blue-500 p-2.5 @error('pw_for_change') border-red-500 @enderror"
-                            {{-- wire:model="someFieldToUpdate" Example: bind to a Livewire property for input --}}
+
                         >
                         </input>
                         <button type="button" class="flex border border-gray-200 w-fit pl-2 pr-2 items-center hover:shadow"
@@ -60,7 +60,7 @@
                         id="confirmpw"
                         wire:model="confirm_pw_for_change" 
                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 p-2.5 @error('confirm_pw_for_change') border-red-500 @enderror"
-                        {{-- wire:model="someFieldToUpdate" Example: bind to a Livewire property for input --}}
+
                     >
                     </input>
                     @error('confirm_pw_for_change')
