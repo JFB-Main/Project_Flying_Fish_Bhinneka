@@ -19,6 +19,9 @@ INSERT INTO service_type (
     service_type_name 
 ) VALUES ('On-Site'), ('Carry-In');
 
+-- 1 = onsite
+-- 2 = carry in
+
 INSERT INTO warranty (
     warranty_status 
 ) VALUES ('Active'), ('Expired'), ('Void');

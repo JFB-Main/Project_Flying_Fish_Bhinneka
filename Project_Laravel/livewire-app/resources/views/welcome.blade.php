@@ -11,6 +11,9 @@
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
 
+        <link rel="icon" type="image/png" href="{{ asset('icon_nav/flyingfish-icon.png') }}">
+
+
         {{-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> --}}
 
         <!-- Styles / Scripts -->
@@ -21,14 +24,14 @@
             </style>
         @endif
 
-        <style>
+        {{-- <style>
             /* @source "../node_modules/flowbite-datepicker"; */
             @import "tailwindcss";
             /* @plugin "flowbite/plugin"; */
             /* @import "flowbite/src/themes/default"; */
             /* @source "../node_modules/flowbite"; */
 
-        </style>
+        </style> --}}
 
         {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 

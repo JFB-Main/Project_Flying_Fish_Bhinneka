@@ -7,7 +7,8 @@ use Livewire\Component;
 use Livewire\Attributes\On; 
 use App\Models\Service_logsModel;
 use App\Models\StatusModel;
-use Illuminate\Support\Facades\DB;
+use App\Models\NotesModel;
+// use Illuminate\Support\Facades\DB;
 
 class ModalUpdate extends Component
 {
@@ -79,6 +80,14 @@ class ModalUpdate extends Component
             'status_note' => $this->note_update
         ]);
         
+
+        $noteEdit = "STATUS UPDATE NOTE: ".$this->note_update;
+        NotesModel::create([
+            'service_logs_id' => $this->techlogIdSelector->techlog_id,
+            'teknisi_id' => session('user_id'),
+            'note_content' => $noteEdit
+        ]);
+        
         session()->flash('success', 'Techlog ' . $this->techlogIdSelector->techlog_id . ' has been successfully updated');
 
         // Close the modal and notify the parent component to refresh its data
@@ -108,6 +117,14 @@ class ModalUpdate extends Component
             'teknisi_id' => session('user_id'),
             'status_note' => $this->note_update
         ]);
+
+        $noteEdit = "STATUS UPDATE NOTE: ".$this->note_update;
+        NotesModel::create([
+            'service_logs_id' => $this->techlogIdSelector->techlog_id,
+            'teknisi_id' => session('user_id'),
+            'note_content' => $noteEdit
+        ]);
+        
         
         $actionMessage = $this->getStatusMessage($status);
         session()->flash('success', 'Techlog ' . $this->techlogIdSelector->techlog_id . ' has been successfully ' . $actionMessage);

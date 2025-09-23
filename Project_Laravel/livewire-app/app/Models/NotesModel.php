@@ -22,7 +22,8 @@ class NotesModel extends Model
     protected $fillable = [
         'service_logs_id',
         'teknisi_id',
-        'note_content'
+        'note_content',
+        'image_path'
     ];
     /**
      * The attributes that should be cast to native types.

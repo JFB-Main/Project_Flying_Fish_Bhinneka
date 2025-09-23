@@ -352,26 +352,39 @@
                     (................................)
                 </p>
             </div>
-            <div class="flex flex-col border">
-                <p class="pl-3 pr-3">
-                    Receiver
-                </p>
-                <div class="h-12"></div>
-                <div class="bg-gray-600 h-[1px] w-full" ></div>
-                <p class="tracking-widest pl-3 pr-3">
-                    (................................)
-                </p>
-            </div>
-            <div class="flex flex-col border">
-                <p class="pl-3 pr-3">
-                    Telah Diterima Dengan Baik Oleh
-                </p>
-                <div class="h-12"></div>
-                <div class="bg-gray-600 h-[1px] w-full" ></div>
-                <p class="tracking-widest pl-3 pr-3">
-                    (................................)
-                </p>
-            </div>
+            @if ($tl->service_type == '1')
+                    <div class="flex flex-col border">
+                    <p class="pl-3 pr-3">
+                        Technician
+                    </p>
+                    <div class="h-12"></div>
+                    <div class="bg-gray-600 h-[1px] w-full" ></div>
+                    <p class="tracking-widest pl-3 pr-3">
+                        (................................)
+                    </p>
+                </div>
+            @else
+                <div class="flex flex-col border">
+                    <p class="pl-3 pr-3">
+                        Receiver
+                    </p>
+                    <div class="h-12"></div>
+                    <div class="bg-gray-600 h-[1px] w-full" ></div>
+                    <p class="tracking-widest pl-3 pr-3">
+                        (................................)
+                    </p>
+                </div>
+                <div class="flex flex-col border">
+                    <p class="pl-3 pr-3">
+                        Telah Diterima Dengan Baik Oleh
+                    </p>
+                    <div class="h-12"></div>
+                    <div class="bg-gray-600 h-[1px] w-full" ></div>
+                    <p class="tracking-widest pl-3 pr-3">
+                        (................................)
+                    </p>
+                </div>
+            @endif
         </div>
     </div>
 </div>

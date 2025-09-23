@@ -133,7 +133,7 @@ CREATE TABLE `notes` (
 	`service_logs_id` varchar(255) NOT NULL,
 	`teknisi_id` int(11) DEFAULT NULL,
     
-	note_content varchar(255) NOT NULL,
+	note_content TEXT NOT NULL,
 	created_at timestamp NOT NULL DEFAULT current_timestamp(),
 
 	PRIMARY KEY (`id`),

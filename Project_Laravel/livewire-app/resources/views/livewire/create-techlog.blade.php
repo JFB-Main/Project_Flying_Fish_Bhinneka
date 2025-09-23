@@ -198,6 +198,18 @@
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold" for="file_input">Upload file</label>   
+                        <input type="file" 
+                                id="file_input" 
+                                name="file_input" 
+                                wire:model="input_file"
+                                class="w-full text-gray-400 text-sm bg-gray-50 file:cursor-pointer cursor-pointer file:border-0 file:py-2.5 file:px-4 file:mr-4 file:bg-gray-200 file:text-gray-700 file:hover:bg-gray-700 rounded-2xl border-1 @error('input_file') border-red-500 @enderror" 
+                                accept="image/jpeg,image/png,image/jpg">
+                        @error('input_file')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
             </div>
             <div class="flex flex-col pl-10 pr-10 gap-10 items-center">

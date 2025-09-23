@@ -13,7 +13,7 @@
 
     class="fixed z-50 inset-0 ">
     <div x-on:click="show = false; $dispatch('close-modal')" class="fixed inset-0 bg-[#030D26] opacity-50"></div>
-    <div class="bg-white rounded-b rounded-r rounded-l m-auto fixed inset-0 max-w-xl mb-auto mt-auto h-5/6 max-h-fit overflow-y-scroll shadow-xs shadow-yellow-500 border-t-4 border-[#F8971A]" >
+    <div class="bg-white rounded-b rounded-r rounded-l m-auto fixed inset-0 max-w-xl mb-auto mt-auto h-5/6 max-h-fit shadow-xs shadow-yellow-500 border-t-4 border-[#F8971A]" >
 
         <form wire:submit.prevent="createNote" class="flex flex-col items-center pt-5 pb-5">
             <div class="flex flex-col gap-2 items-center w-full">
@@ -32,10 +32,25 @@
                         id="new_status_value"
                         style="min-height: 300px"
                         wire:model="note_specific_update" 
-                        class="w-full bg-gray-50 border overflow-y-scroll border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                        class="w-full bg-gray-50 border overflow-y-scroll border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 p-2.5 @error('note_specific_update') border-red-500 @enderror"
                         {{-- wire:model="someFieldToUpdate" Example: bind to a Livewire property for input --}}
                     >
                     </textarea>
+                    @error('note_specific_update')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    <div class="flex flex-col">
+                        <label class="font-bold" for="file_input">Upload file (max 200kb)</label>   
+                        <input type="file" 
+                                id="file_input" 
+                                name="file_input" 
+                                wire:model="input_file"
+                                class="w-full text-gray-400 text-sm bg-gray-50 file:cursor-pointer cursor-pointer file:border-0 file:py-2.5 file:px-4 file:mr-4 file:bg-gray-200 file:text-gray-700 file:hover:bg-gray-700 rounded-2xl border-1 @error('input_file') border-red-500 @enderror" 
+                                accept="image/jpeg,image/png,image/jpg">
+                        @error('input_file')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
             </div>
             <div class="flex flex-row justify-between pl-5 pr-5 w-full gap-5">

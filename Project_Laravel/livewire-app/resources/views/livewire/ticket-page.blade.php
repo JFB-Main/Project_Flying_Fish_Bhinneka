@@ -988,6 +988,7 @@
                         <th class="text-left p-2" style="width: 10%;">Created By</th>
                         <th class="text-left p-2" style="width: 10%;">Created At</th>
                         <th class="text-left p-2" style="max-width: 100px">Note Content</th>
+                        <th class="text-left p-2" style="max-width: 100px">File Image</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -998,6 +999,21 @@
                             <td class="p-2 ">{{ $n->teknisi_id ? $n->technician->username : 'N/A' }}</td>
                             <td class="p-2 ">{{ $n->created_at }}</td>
                             <td class="p-2 ">{{ $n->note_content }}</td>
+                            @if ($n->image_path)
+                                <td class="">   
+                                    <div x-on:click="$dispatch('open-modal', { name: 'fullscreen', fullscreen_path: '{{ asset('storage/' . $n->image_path) }}' })" class="p-2.5 flex justify-center">
+                                        <img src="{{ asset('storage/' . $n->image_path) }}" class="max-w-[160px] max-h-[90px] rounded-2xl shadow-lg" alt="">
+                                    </div>
+                                    <x-modal-ImageFullscreen name="fullscreen" title="Test" fullscreen_path="{{$n->image_path}}">
+                                    </x-modal-ImageFullscreen>
+                                </td>
+                            @else
+                                <td class="">
+                                    <i class="text-gray-500">
+                                        [no image in the note]
+                                    </i>
+                                </td>
+                            @endif
                         </tr>
                     @empty
                         <tr>
@@ -1013,4 +1029,5 @@
             {{$notes->links('vendor.livewire.tailwind')}}
         </div>
     </div>
+
 </div>

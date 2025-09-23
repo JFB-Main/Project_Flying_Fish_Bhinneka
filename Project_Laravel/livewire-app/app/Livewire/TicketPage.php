@@ -11,15 +11,24 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\URL; 
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
+// use Intervention\Image\ImageManager;
+// use Intervention\Image\Drivers\Gd\Driver;
+
+use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class TicketPage extends Component
 {
     use WithPagination;
 
+    use WithFileUploads;
+
     #[URL(as: 'id', except: '')]
     public $id = '';
 
     public $note_specific_update;
+
+    public $input_file;
 
     public $input_invoice_date = null;
 
@@ -45,6 +54,7 @@ class TicketPage extends Component
     protected function rules()
     {
         return [
+            'input_file' => 'nullable|image|mimes:jpeg,png,jpg|max:256', 
             'input_invoice_date'   => 'nullable|date',
             'input_so'             => 'nullable|string|max:255',
             'input_email'          => 'required|email|max:255',
@@ -81,6 +91,11 @@ class TicketPage extends Component
             'input_mobile_number.regex'  => 'The Mobile Number format is invalid.',
             'input_warranty.integer'     => 'The Warranty selection must be a valid number.',
             'input_warranty.exists'      => 'The selected Warranty is invalid.',
+
+            // 'input_file.required' => 'Please select a file to upload.',
+            'input_file.image' => 'The file must be an image.',
+            'input_file.mimes' => 'Only JPEG, JPG, and PNG images are allowed.',
+            'input_file.max' => 'The file must be smaller than 256KB.',
         ];
     }
 
@@ -111,6 +126,8 @@ class TicketPage extends Component
         //     'add_on'           => $this->input_add_on,
         // ]);
 
+        $invoiceDateValue = !empty($this->input_invoice_date) ? $this->input_invoice_date : null;
+
         $techlogUpdate = Service_logsModel::find($this->id)->update([
             'alamat' => $this->input_address,
             'mobile_number' => $this->input_mobile_number,
@@ -128,7 +145,7 @@ class TicketPage extends Component
             'add_on' => $this->input_add_on,
 
             'sales_order' => $this->input_so,
-            'invoice_date' => $this->input_invoice_date,
+            'invoice_date' => $invoiceDateValue,
             'warranty_status' => $this->input_warranty,
         ]);
         if($techlogUpdate) {
@@ -145,6 +162,16 @@ class TicketPage extends Component
 
     public function createNote(){
         // Using find() is more efficient for single record retrieval by primary key.
+        $this->validate([
+            'note_specific_update' => 'required',
+            'input_file' => 'nullable|image|mimes:jpeg,png,jpg|max:256',
+        ], [
+            'note_specific_update.required' => 'The note content is required.',
+            'input_file.image' => 'The file must be an image.',
+            'input_file.mimes' => 'Only JPEG, JPG, and PNG images are allowed.',
+            'input_file.max' => 'The file must be smaller than 256KB.',
+        ]);
+        
         $tl_for_create_note = Service_logsModel::find($this->id);
 
         if (!$tl_for_create_note) {
@@ -153,15 +180,36 @@ class TicketPage extends Component
             return;
         }
 
-        $noteCreate = NotesModel::create([
-            'service_logs_id' => $tl_for_create_note->techlog_id,
-            'teknisi_id' => session('user_id'),
-            'note_content' => $this->note_specific_update
-        ]);
+        if ($this->input_file) {
+            // Get the original file extension
+            $extension = $this->input_file->getClientOriginalExtension();
+
+            // Generate a unique, random filename to prevent collisions
+            $newFileName = Str::uuid() . '.' . $extension;
+
+            $this->input_file->storeAs('image_uploads', $newFileName, 'public');
+
+            $path = $this->input_file->storeAs('image_uploads', $newFileName, 'public');
+            // dd($path);
+             $noteCreate = NotesModel::create([
+                'service_logs_id' => $tl_for_create_note->techlog_id,
+                'teknisi_id' => session('user_id'),
+                'note_content' => $this->note_specific_update,
+                'image_path' => $path
+            ]);
+        }
+        else{
+            $noteCreate = NotesModel::create([
+                'service_logs_id' => $tl_for_create_note->techlog_id,
+                'teknisi_id' => session('user_id'),
+                'note_content' => $this->note_specific_update
+
+            ]);
+        }
         
         if($noteCreate) {
             session()->flash('success', 'Note created successfully.');
-            $this->reset('note_specific_update'); // Reset the note input field
+            $this->reset('input_file', 'note_specific_update'); // Reset the note input field
             $this->dispatch('close-modal');
             // Dispatching the event without a payload is more efficient.
             $this->dispatch('note-crud-done');
