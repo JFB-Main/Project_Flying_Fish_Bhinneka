@@ -51,13 +51,50 @@
         x-on:close-modal.window="toggleScroll()"
         x-on:keydown.escape.window="toggleKeydownScroll()"
     >
-        <div class="flex flex-row max-w-fit gap-1 pl-5">
+        {{-- <div class="flex flex-row max-w-fit gap-1 pl-5">
             <div class="bg-[#F8971A]" style="width: 4px"></div>
             <h3  class="text-2xl text-[#302714] tracking-widest font-medium max-xl:text-xl">
                 Service Log Status Overview
             </h3>
         </div>
-        <div class="flex justify-center w-full">
+        <div class="flex flex-row">
+            <div class="flex flex-col justify-center w-3/12 max-xl:w-5/12">
+                <label for="datetimeFrom">
+                    Datetime From
+                </label>
+                <input wire:model.live.debounce.200ms="searchFromDateIn" type="date" name="datetimeFrom" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            </div>
+            <div class="flex flex-col justify-center w-3/12 max-xl:w-5/12">
+                <label for="datetimeTo">
+                    Datetime To
+                </label>
+                <input wire:model.live.debounce.200ms="searchToDateIn" type="date" name="datetimeTo" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            </div>
+        </div> --}}
+        <div class="flex flex-row max-w-full justify-between align-top">
+            <div class="flex flex-row h-fit max-w-fit gap-1 pl-5">
+                <div class="bg-[#F8971A]" style="width: 4px"></div>
+                <h3  class="text-2xl text-[#302714] tracking-widest font-medium max-xl:text-xl">
+                    Service Log Status Overview
+                </h3>
+            </div>
+            <div class="flex flex-row gap-5 items-center pr-15">
+                <p class="text-xl ">Date Filter:</p>
+                <div class="flex flex-col justify-center  max-xl:w-5/12">
+                    {{-- <label for="datetimeFrom">
+                        Datetime From
+                    </label> --}}
+                    <input wire:model.live.debounce.200ms="overviewSearchFromDateIn" type="date" name="datetimeFrom" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                </div>
+                <div class="flex flex-col justify-center max-xl:w-5/12">
+                    {{-- <label for="datetimeTo">
+                        Datetime To
+                    </label> --}}
+                    <input wire:model.live.debounce.200ms="overviewSearchToDateIn" type="date" name="datetimeTo" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col justify-center w-full gap-10">
             <div class="flex flex-wrap w-full gap-7 justify-center max-lg:justify-start max-lg:flex-row max-lg:flex-nowrap max-lg:pb-2 max-lg:overflow-x-scroll">
                 @foreach($this->statusCounts as $statusId => $count)
                     @php
@@ -65,7 +102,8 @@
                         $statusLabelCol = $color_map_label[$statusId] ?? 'bg-gray-400';
                         $statusIcon = $icon_map[$statusId] ?? 'N/A';
                     @endphp
-                    <div class="flex flex-col [&>*]:text-white w-[21%] max-xl:w-[20%] max-lg:min-w-[30%] max-lg:w-full max-md:min-w-50">
+                    <div class="flex flex-col [&>*]:text-white cursor-pointer w-[21%] max-xl:w-[20%] max-lg:min-w-[30%] max-lg:w-full max-md:min-w-50 active:opacity-80"
+                        wire:click="$set('statusDDL', {{ $statusId }})">
                         <div class="relative {{ $statusMainCol }} rounded-t-3xl p-7 max-xl:p-5">
                             <div class="flex flex-col">
                                 <img src="{{ $statusIcon }}" alt="" class="absolute self-end w-[64px] max-xl:w-[48px] max-lg:w-[40px]">
@@ -80,6 +118,14 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+            <div class="flex flex-col gap-1 rounded-3xl bg-gray-50 border border-amber-200 p-5 ">
+                <p class="text-gray-600 font-semibold text-lg">Total Techlog:</p>
+                @if ($this->TotalStatusCounts)
+                    <p class="text-3xl font-bold text-[#F8971A]">{{$this->TotalStatusCounts}}</p>
+                @else
+                    <p class="text-base text-gray-400">-- There are no techlog for the date given --</p>
+                @endif
             </div>
         </div>
     </div>
@@ -259,7 +305,10 @@
                     @forelse($this->serviceLogs as $sl)
                         <tr class="border-t hover:bg-blue-50 max-xl:[&>*]:text-[12px] max-lg:[&>*]:text-[10px]">
                             <td class="p-2">
-                                <a wire:click="ticketPageLink({{ $sl->id }})" class="cursor-pointer text-indigo-500 underline hover:text-indigo-700">
+                                {{-- <a wire:click="ticketPageLink({{ $sl->id }})" class="cursor-pointer text-indigo-500 underline hover:text-indigo-700">
+                                    {{ $sl->techlog_id }}
+                                </a> --}}
+                                <a href="{{ route('TicketPage', ['id' => $sl->id]) }}" class="cursor-pointer text-indigo-500 underline hover:text-indigo-700">
                                     {{ $sl->techlog_id }}
                                 </a>
                             </td>

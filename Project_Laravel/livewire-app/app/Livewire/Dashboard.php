@@ -18,6 +18,9 @@ class Dashboard extends Component
 {
     use WithPagination;
 
+    public $overviewSearchFromDateIn;
+    public $overviewSearchToDateIn;
+
     public $nameSearch;
     public $mobileNumberSearch;
     public $emailSearch;
@@ -68,6 +71,9 @@ class Dashboard extends Component
     public function getStatusCountsProperty()
     {
         $statusCountsFromDb = Service_logsModel::select('status_id', DB::raw('count(*) as total'))
+            ->when($this->overviewSearchFromDateIn && $this->overviewSearchToDateIn, fn (Builder $query) => $query->whereBetween('date_in', [$this->overviewSearchFromDateIn, $this->overviewSearchToDateIn . ' 23:59:59']))
+            ->when($this->overviewSearchFromDateIn && !$this->overviewSearchToDateIn, fn (Builder $query) => $query->where('date_in', '>=', $this->overviewSearchFromDateIn))
+            ->when($this->overviewSearchToDateIn && !$this->overviewSearchFromDateIn, fn (Builder $query) => $query->where('date_in', '<=', $this->overviewSearchToDateIn . ' 23:59:59'))
             ->groupBy('status_id')
             ->pluck('total', 'status_id');
 
@@ -76,6 +82,17 @@ class Dashboard extends Component
         return collect($allPossibleStatuses)->mapWithKeys(function ($statusId) use ($statusCountsFromDb) {
             return [$statusId => $statusCountsFromDb->get($statusId, 0)];
         })->toArray();
+    }
+
+    public function getTotalStatusCountsProperty(): mixed
+    {
+        $TotalstatusCounts = Service_logsModel::with('status', 'serviceId')
+            ->when($this->overviewSearchFromDateIn && $this->overviewSearchToDateIn, fn (Builder $query) => $query->whereBetween('date_in', [$this->overviewSearchFromDateIn, $this->overviewSearchToDateIn . ' 23:59:59']))
+            ->when($this->overviewSearchFromDateIn && !$this->overviewSearchToDateIn, fn (Builder $query) => $query->where('date_in', '>=', $this->overviewSearchFromDateIn))
+            ->when($this->overviewSearchToDateIn && !$this->overviewSearchFromDateIn, fn (Builder $query) => $query->where('date_in', '<=', $this->overviewSearchToDateIn . ' 23:59:59'))
+            ->count();
+        
+        return $TotalstatusCounts;
     }
 
     // A computed property for the main paginated query
@@ -130,7 +147,8 @@ class Dashboard extends Component
             'Status_DDL_ArrayContain' => $this->allStatuses,
             'service_log' => $this->serviceLogs,
             'cardOnOpen' => $this->statusCounts[1], // Access the computed property value
-            'statusCount' => $this->statusCounts
+            'statusCount' => $this->statusCounts,
+            'TotalStatusCount' => $this->TotalStatusCounts
         ]);
     }
 }
