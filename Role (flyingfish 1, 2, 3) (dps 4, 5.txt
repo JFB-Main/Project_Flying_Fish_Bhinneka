@@ -1,0 +1,76 @@
+Role: (flyingfish: 1, 2, 3) (dps: 4, 5, 6) TAMBAHIN SATU COLUMN BARU BUAT BEDAIN ANTARA MODULE
+
+
+-- table dps
+
+table pelanggan_dps:
+- id (auto generated)
+- nama varchar(max)
+- email varchar(max)
+- nomor_telepon varchar(max)
+- alamat varchar(max)
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+
+table alamat_servis_dps
+- id (auto generated)
+- nama_alamat varchar(max)
+- id_pelanggan (int) (fk)
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+
+table produk_dps:
+- id (auto generated)
+- sku_produk varchar(max)
+- nama_produk varchar(max)
+- serial_number varchar(max)
+- nomor_invoice_so varchar(max)
+- sales_order varchar(max)
+- produk_bhinneka TINYINT NULL
+- id_warranty (fk) (table already made)
+- id_alamat_servis (fk)
+- id_pelanggan_dps (fk)
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+
+
+-- misc core:
+table tipe_service_dps:
+- id (auto generated)
+- nama_tipe_service varchar(max)
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+insert on tipe_service_dps: Instalasi, Presite Remote, Presite Onsite, Servis Remote, Servis Onsite, Servis Call
+
+table status_dps
+- id (auto generated)
+`status_type` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+
+insert on status_dps: Open, Menunggu Servis, Dalam Pengerjaan, Selesai
+
+-- table service:
+
+table service_logs_dps:
+- id (auto generated)
+- nomor_service
+- id_tipe_service (FK)
+- status
+- jadwal
+- waktu_mulai
+- waktu_selesai
+- id_produk (FK)
+- id_warranty (FK)
+- id_pelanggan (FK)
+- id_alamat_servis (FK)
+- id_teknisi (table already made)
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+
+table notes_dps:
+- id (auto generated)
+- id_service_logs_dps
+- id_teknisi (table already made)
+- note_content
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),

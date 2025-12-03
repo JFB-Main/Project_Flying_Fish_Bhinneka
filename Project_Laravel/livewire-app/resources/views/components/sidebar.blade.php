@@ -25,7 +25,7 @@ x-data="{ show: false }"
         <div class="flex flex-col pt-5 gap-6 items-baseline max-xl:[&>*]:ml-auto max-xl:[&>*]:mr-auto max-xl:[&>*]:w-10/12 [&>*]:hover:font-semibold [&>*]:hover:text-[#F8971A] [&>*]:active:bg-[#EDE9E6] [&>*]:hover:rounded-2xl [&>*]:pl-1 [&>*]:pr-2 [&>*]:gap-3">
             <div class="flex flex-row">
                 <img src="{{ asset('icon_nav/dashboard_icon.svg') }}" alt="" class="self-center w-[30px] max-xl:w-[20px]">
-                <form action="{{ url('/') }}">
+                <form action="{{ route('dashboard')}}">
                     <button x-data class="text-xl max-xl:text-base max-lg:text-sm">
                         <span>
                             Dashboard
@@ -41,6 +41,15 @@ x-data="{ show: false }"
                     </span>
                 </a>
             </div>
+            <div class="flex flex-row items-start">
+                <img src="{{ asset(path: 'icon_nav/service_icon.svg') }}" alt="" class="self-center w-[30px] max-xl:w-[20px]">
+                <a class="text-xl max-xl:text-base max-lg:text-sm" href="{{route('mainMenu')}}">
+                    <span>
+                        Home
+                    </span>
+                </a>
+            </div>
+            <div class="w-[90%] bg-amber-400/30 h-[1px]"></div>
             <div class="flex flex-row items-start">
                 <img src="{{ asset('icon_nav/logout_icon.svg') }}" alt="" class="self-center w-[30px] max-xl:w-[20px]">
                 <form action="{{route('auth.logout')}}">

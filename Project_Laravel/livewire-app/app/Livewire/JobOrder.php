@@ -33,6 +33,6 @@ class JobOrder extends Component
     }
     public function render()
     {
-        return view('livewire.job-order')->extends('layouts.printForm')->section('jobOrder')->title($this->pageTitle);;
+        return view('livewire.job-order')->extends('layouts.printForm')->section('jobOrder')->title($this->pageTitle);
     }
 }

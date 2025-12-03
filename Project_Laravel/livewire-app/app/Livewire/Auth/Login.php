@@ -42,7 +42,7 @@ class Login extends Component
             // }
 
             // Save session data after successful login
-            session(['user_id' => Auth::id(), 'username' => $this->rolefetch->username, 'role' => $this->rolefetch->role]);
+            session(['user_id' => Auth::id(), 'username' => $this->rolefetch->username, 'role' => $this->rolefetch->role, 'module_role' => $this->rolefetch->module_role]);
             // Optionally, you can flash a success message
             session()->flash('message', 'Login successful!');
 

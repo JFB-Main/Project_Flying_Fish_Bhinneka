@@ -8,7 +8,7 @@ INSERT INTO status (
 -- ) VALUES ('admin3', 'admin3@gmail.com', '$2y$10$12GSpJaGC.r5qE6iQcQYKuTSqU7AeH7Rs./L6JZvAx70FQgqkexrW'); 
 
 INSERT INTO users (
-    username, email, password, role
+    username, email, password, role, module_role
 ) VALUES ('superadmin', 'flyingfishsuperadmin@gmail.com', '$2y$10$ZsbXxrDqBUCc3s/1c8wqcej.x2aq2iVHu6ulIS3uAT1egly8SK7oi', 1); 
 
 -- $2y$10$ZsbXxrDqBUCc3s/1c8wqcej.x2aq2iVHu6ulIS3uAT1egly8SK7oi

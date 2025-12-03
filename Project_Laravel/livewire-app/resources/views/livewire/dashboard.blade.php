@@ -81,15 +81,15 @@
             <div class="flex flex-row gap-5 items-center pr-15">
                 <p class="text-xl ">Date Filter:</p>
                 <div class="flex flex-col justify-center  max-xl:w-5/12">
-                    {{-- <label for="datetimeFrom">
+                    <label for="datetimeFrom" class="text-sm text-gray-600 pl-1">
                         Datetime From
-                    </label> --}}
+                    </label>
                     <input wire:model.live.debounce.200ms="overviewSearchFromDateIn" type="date" name="datetimeFrom" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
                 <div class="flex flex-col justify-center max-xl:w-5/12">
-                    {{-- <label for="datetimeTo">
+                    <label for="datetimeTo" class="text-sm text-gray-600 pl-1">
                         Datetime To
-                    </label> --}}
+                    </label>
                     <input wire:model.live.debounce.200ms="overviewSearchToDateIn" type="date" name="datetimeTo" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
             </div>

@@ -73,7 +73,7 @@
     <div class="flex flex-col border min-h-screen border-amber-300 bg-white py-15 px-10 rounded-4xl gap-10 shadow-lg
                 max-md:px-5">
         <div class="flex flex-col gap-7 shadow-md -mx-10 pb-10 max-md:-mx-5">
-            <p class="w-fit h-fit py-2 self-center text-6xl font-semibold bg-gradient-to-t from-orange-400 to-gray-900 text-transparent bg-clip-text text-center max-w-[60%]
+            <p class="w-fit h-fit py-2 self-center text-6xl font-semibold bg-gradient-to-t from-orange-400 to-purple-900 text-transparent bg-clip-text text-center max-w-[60%]
                 max-xl:text-5xl max-lg:text-4xl max-md:text-2xl">
                 A Robust Service Team CRM & Techlog Management Website
             </p>

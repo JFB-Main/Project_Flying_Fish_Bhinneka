@@ -68,6 +68,6 @@ class ChangePassword extends Component
 
     public function render()
     {
-        return view('livewire.change-password')->extends('specific')->section('changePasswordYield');;
+        return view('livewire.change-password')->extends('mainLayout')->section('changePasswordYield');;
     }
 }

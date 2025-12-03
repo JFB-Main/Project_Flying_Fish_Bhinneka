@@ -7,8 +7,8 @@
         <div class="flex flex-col items-center gap-15 max-xl:gap-10 max-lg:gap-5">
             <img src="icon_nav\flyingfish-icon.png" alt="" style="" class="w-[30%] max-xl:w-[25%] mafullx-md:w-[40%]">
             <div class="flex flex-col items-center">
-                <h5 class="text-center font-bold text-4xl text-[#F8971A] max-xl:text-3xl max-lg:text-xl max-md:text-4xl">FLYING FISH</h5>
-                <p class="text-sm font-light text-gray-600 max-lg:text-[10px] max-md:text-sm">Service Center System</p>
+                <h5 class="text-center font-bold text-4xl text-red-600/70 max-xl:text-3xl max-lg:text-xl max-md:text-4xl">LOGIN</h5>
+                <p class="text-sm font-light text-gray-600 max-lg:text-[10px] max-md:text-sm">Service Center & DPS ERP System</p>
             </div>
         </div>
         <div class="flex flex-col p-10 max-lg:p-7 max-md:p-0 max-lg:py-5">
@@ -50,12 +50,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="cursor-pointer px-4 py-2 border rounded-2xl max-xl:text-[12px]  max-xl:py-1.5 max-lg:text-[8px] max-md:py-2.5 max-md:text-base bg-amber-500 border-gray-200 hover:opacity-60 text-white">
+                <button type="submit" class="cursor-pointer px-4 py-2 border rounded-2xl max-xl:text-[12px]  max-xl:py-1.5 max-lg:text-[8px] max-md:py-2.5 max-md:text-base bg-[#132c53] border-gray-200 hover:opacity-60 text-white">
                     LOGIN
                 </button>
                 <p class="self-center text-gray-600
                             max-xl:text-[12px] max-lg:text-[10px] max-md:text-base">
-                    Are you a guest? <span class="text-amber-500 hover:opacity-60"> <a href="{{route('guestSearch')}}"> Click Here</a></span>
+                    Are you a guest? <span class="text-[#f1b500] hover:opacity-60"> <a href="{{route('mainMenu')}}"> Click Here</a></span>
                 </p>
             </form>
         </div>

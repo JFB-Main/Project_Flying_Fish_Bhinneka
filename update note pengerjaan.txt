@@ -1,0 +1,34 @@
+leader tekjnisi & teks=nisi 
+open = yagn create => leader teknisi & (teknisi yang bertugas(udahgak bisa))
+
+teknisi assigning di null (gak jadi)
+
+yangngisi note pada proses berjalannyua teknisi dan di lock di status selesai
+
+yang ngisi note cuma teknisi (disesuain)
+
+edit dsata gak bisa sejak dalam pengerjaan (cuma dalam open) X
+
+Teknisi udah ditentuin ejak tiket di create
+
+EDIT DATA BISA DISEMUA SAAT
+
+EDIT DATA EDIT PERIHAL DATA BARANG (BISA NGUBAH SN DAN ALAMAT SERVIS DAN NAMA PRODUK)
+
+Page laporan nampil: selesai
+
+page servis: open menunggu teknisi dalam pengerjaan
+
+
+page laporan: download pdf
+
+update dan isi note kepisah
+
+page servis: note(aktifitas servis) muncul pas status berubah ke dalam pengerjaan!!!!!
+
+TAMBAHIN TABLE status_update_dps !!!!
+
+page laporan: nampilin status update only
+
+page servis: nampilin status update & notes
+

@@ -13,7 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
-        $middleware->redirectGuestsTo(fn (Request $request) => route('guestSearch'));
+        // $middleware->redirectGuestsTo(fn (Request $request) => route('auth.login'));
+        $middleware->alias([
+        'role' => \App\Http\Middleware\CheckModuleRole::class
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

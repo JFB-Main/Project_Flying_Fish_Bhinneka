@@ -18,7 +18,7 @@
 
 -- DELIMITER //
 
-CREATE FUNCTION techlogIdGenerate (input INT)
+-- CREATE FUNCTION techlogIdGenerate (input INT)
 -- RETURNS VARCHAR(250)
 -- BEGIN
 --     DECLARE NumStr VARCHAR(250);
@@ -66,12 +66,12 @@ CREATE FUNCTION techlogIdGenerate (input INT)
 
 DELIMITER $$
 
-CREATE TRIGGER techlog_id_insertion_by_year
-BEFORE insert ON service_logs
+CREATE TRIGGER no_servis_dps_insertion_by_year
+BEFORE insert ON service_logs_dps
 FOR EACH ROW
 BEGIN
-    IF (NEW.techlog_id = 'N/A') THEN
-        SET NEW.techlog_id = generate_yearly_next_techlog_id();
+    IF (NEW.nomor_service = 'N/A') THEN
+        SET NEW.nomor_service = generate_yearly_next_no_servis_dps();
     END IF;
 END$$
 DELIMITER ;
@@ -79,7 +79,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE FUNCTION generate_yearly_next_techlog_id()
+CREATE FUNCTION generate_yearly_next_no_servis_dps()
 RETURNS VARCHAR(250)
 DETERMINISTIC
 BEGIN
@@ -89,18 +89,19 @@ BEGIN
 
     -- 1. Count the existing records for the current month
     SELECT COUNT(*) INTO count_for_year
-    FROM service_logs
+    FROM service_logs_dps
     WHERE YEAR(created_at) = YEAR(NOW());
 
     -- 2. Increment the count to get the next ID number
     SET next_id_number = count_for_year + 1;
 
     -- 3. Get the month and year as strings
+    SET @DayStr = LPAD(DAY(NOW()), 2, '0');
     SET @MonStr = LPAD(MONTH(NOW()), 2, '0');
-    SET @YearStr = SUBSTRING(YEAR(NOW()), 3, 2);
+    SET @YearStr = CAST(YEAR(NOW()) AS CHAR(4));
     
     -- 4. Concatenate and pad the number to create the final techlog ID
-    SET next_id_string = CONCAT('TL', @YearStr, @MonStr, LPAD(next_id_number, 5, '0'));
+    SET next_id_string = CONCAT(@YearStr, '/', @MonStr, '/', @DayStr, '/', LPAD(next_id_number, 5, '0'));
 
     RETURN next_id_string;
 END //

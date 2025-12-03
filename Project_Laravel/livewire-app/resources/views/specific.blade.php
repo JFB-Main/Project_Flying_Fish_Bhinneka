@@ -1,3 +1,7 @@
+@php
+    $module_role = 2
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -43,17 +47,25 @@
                 font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             }
         </style> --}}
-
         @livewireStyles
 
         {{-- <script src="https://cdn.tailwind.css"></script> --}}
     </head>
     {{-- class="antialiased flex flex-row bg-gradient-to-tl from-amber-100 via-[#F8971A]/70 to-purple-400 --}}
     {{-- bg-[#FFFAF3] --}}
+    @if ($module_role == 2)
     <body id="dashboard" class="antialiased flex flex-row bg-gradient-to-tl from-amber-200 via-[#ff8c00]/70 to-purple-500">
+    @else
+    <body id="dashboard" class="antialiased flex flex-row bg-blue-50">
+    @endif
         @if (auth()->check())
-            <x-sidebar>
-            </x-sidebar>
+            @if ($module_role == 2)
+                <x-sidebar>
+                </x-sidebar>
+            @else
+                <x-sidebar-dps>
+                </x-sidebar-dps>
+            @endif
         @endif
         <div x-data="{ show: false }"
                 x-on:open-sidebar.window="show = !show"
@@ -65,12 +77,15 @@
         <div class="ml-64 max-xl:ml-44 max-lg:ml-36 max-md:ml-0 flex flex-col overflow-y-auto gap-10" style="width: 100%;">
         @endif
         <div class="flex flex-col overflow-y-auto gap-10" style="width: 100%;">
-            @livewire('clicker', ['message' => "fff"])
+            @if ($module_role  == 2)
+                @livewire('clicker', ['message' => "fff"])
+            @else
+                @livewire('navbar-dps', ['message' => "fff"])
+            @endif
             {{-- @livewire('dashboard') --}}
             @yield('ticketContent')
             @yield('createContent')
             @yield('dataReportContent')
-            @yield(section: 'addUserYield')
             @yield(section: 'guestSearchYield')
             @yield(section: 'changePasswordYield')
         </div>

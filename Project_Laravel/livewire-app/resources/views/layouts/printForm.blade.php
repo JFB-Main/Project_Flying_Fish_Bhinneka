@@ -38,6 +38,7 @@
         <main class="h-[297mm] w-[210mm] overflow-hidden border">
             @yield('receiptForm')
             @yield('jobOrder')
+            @yield('contentxportServisDps')
         </main>
 
         <script>
