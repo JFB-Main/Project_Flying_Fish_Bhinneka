@@ -12,6 +12,8 @@ use Livewire\Component;
 
 use Livewire\Attributes\URL; 
 use Livewire\Attributes\On; 
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 use Livewire\Attributes\Computed;
 
@@ -157,24 +159,72 @@ class DetailServisDps extends Component
             return;
         }
         
-        // 2. Update the ServiceLogDps table (Direct Update)
-        $serviceLog->update([
-            'id_tipe_service' => $this->edit_tipe,
-            'permasalahan' => $this->edit_permasalahan,
-            'id_alamat_servis' => $this->edit_alamat_servis
-        ]);
+        // // 2. Update the ServiceLogDps table (Direct Update)
+        // $serviceLog->update([
+        //     'id_tipe_service' => $this->edit_tipe,
+        //     'permasalahan' => $this->edit_permasalahan,
+        //     'id_alamat_servis' => $this->edit_alamat_servis
+        // ]);
 
-        // 3. Update the ProductDps table (Via Relationship)
-        // This updates the row in the products_dps table linked by $serviceLog->id_produk
-        $serviceLog->produk_dps()->update([
-            'nama_produk' => $this->edit_nama_produk,
-            'serial_number' => $this->edit_sn_produk,
-            'id_alamat_servis' => $this->edit_alamat_servis
-        ]);
+        // // 3. Update the ProductDps table (Via Relationship)
+        // // This updates the row in the products_dps table linked by $serviceLog->id_produk
+        // $serviceLog->produk_dps()->update([
+        //     'nama_produk' => $this->edit_nama_produk,
+        //     'serial_number' => $this->edit_sn_produk,
+        //     'id_alamat_servis' => $this->edit_alamat_servis
+        // ]);
 
-        $this->dispatch('open-edit-techlog');
-        $this->dispatch('note-crud-done');
-        session()->flash('success', 'Data servis telah di update!');
+        try {
+            // 1. Start a database transaction
+            DB::beginTransaction();
+
+            // 2. Update the ServiceLogDps table (Direct Update)
+            $serviceLog->update([
+                'id_tipe_service' => $this->edit_tipe,
+                'permasalahan' => $this->edit_permasalahan,
+                'id_alamat_servis' => $this->edit_alamat_servis
+            ]);
+
+            // 3. Update the ProductDps table (Via Relationship)
+            // If 'edit_sn_produk' is a duplicate, the database will throw an exception here.
+            $serviceLog->produk_dps()->update([
+                'nama_produk' => $this->edit_nama_produk,
+                'serial_number' => $this->edit_sn_produk,
+                'id_alamat_servis' => $this->edit_alamat_servis
+            ]);
+
+            // 4. Commit the transaction if both updates succeed
+            DB::commit();
+
+            // SUCCESS Notification
+            $this->dispatch('note-crud-done');
+            $this->dispatch('open-edit-techlog');
+            session()->flash('success', 'Detail Service berhasil diperbarui!');
+
+        } catch (Exception $e) {
+            // 5. Rollback the transaction if any error occurs (including unique constraint violation)
+            DB::rollBack();
+
+            $errorMessage = 'Gagal menyimpan data.';
+
+            // Check for the specific unique constraint error (usually SQLSTATE 23000)
+            // You might need to adjust the SQLSTATE or message check based on your database driver.
+            if (str_contains($e->getMessage(), 'Duplicate entry') || $e->getCode() === '23000') {
+                $errorMessage = 'Gagal update produk: Serial Number sudah terdaftar pada produk lain.';
+            } else {
+                // Log the unexpected error for debugging
+                \Log::error("Service Log Update Failed: " . $e->getMessage());
+            }
+
+            // ERROR Notification
+            // $this->dispatch('show-notification', [
+            //     'type' => 'error',
+            //     'message' => $errorMessage,
+            // ]);
+            session()->flash('error', $errorMessage);
+        }
+
+        // session()->flash('success', 'Data servis telah di update!');
     }
 
     public function editTiketDpsDataTeknisi(){

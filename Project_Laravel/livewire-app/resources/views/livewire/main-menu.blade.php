@@ -18,9 +18,11 @@
                     <a href="{{route('auth.logout')}}" class="max-h-fit bg-white hover:opacity-60 w-fit text-gray-600 font-medium p-1 px-5 rounded-4xl">
                         Logout
                     </a>
-                    <a href="{{route('addUser')}}" class="max-h-fit bg-white hover:opacity-60 w-fit text-gray-600 font-medium p-1 px-5 rounded-4xl">
-                        Add User
-                    </a>
+                    @if (session('role') != 3)
+                        <a href="{{route('addUser')}}" class="max-h-fit bg-white hover:opacity-60 w-fit text-gray-600 font-medium p-1 px-5 rounded-4xl">
+                            Add User
+                        </a>
+                    @endif
                 @else
                     <a href="{{route('auth.login')}}" class="max-h-fit bg-white hover:opacity-60 w-fit text-gray-600 font-medium p-1 px-5 rounded-4xl">
                         Login

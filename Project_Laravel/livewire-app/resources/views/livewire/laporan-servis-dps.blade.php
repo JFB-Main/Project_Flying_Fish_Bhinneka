@@ -79,10 +79,29 @@
                     <div class="flex flex-row self-end w-fit gap-5">
                         {{-- <a href="{{ route('pelanggan-dps') }}" class="bg-[#0f387a] border border-[#132c53] max-w-fit max-h-fit text-white font-medium p-2 pl-4 pr-4 rounded-lg hover:bg-[#0b4095] cursor-pointer">
                             Ekspor ▼ --}}
-                        </a>
-                        <a href="" class="bg-[#0f387a] border border-[#132c53] max-w-fit max-h-fit text-white font-medium p-2 pl-4 pr-4 rounded-lg hover:bg-[#0b4095] cursor-pointer">
+                        {{-- </a> --}}
+                        {{-- <a href="" class="bg-[#0f387a] border border-[#132c53] max-w-fit max-h-fit text-white font-medium p-2 pl-4 pr-4 rounded-lg hover:bg-[#0b4095] cursor-pointer">
                             + Export
-                        </a>
+                        </a> --}}
+                        
+                        {{-- wire:click. Defines the action to run --}}
+                        {{-- wire:target Defines which action to monitor for loading feedback --}}
+                        <button 
+                            type="button"
+                            wire:click="exportToExcel" 
+                            class="bg-[#0f387a] border border-[#132c53] max-w-fit max-h-fit text-white font-medium p-2 pl-4 pr-4 rounded-lg 
+                                hover:bg-[#0b4095] cursor-pointer inline-flex items-center justify-center"
+                                
+                            wire:loading.attr="disabled"
+                            wire:target="exportToExcel"
+                        >
+                            <span wire:loading wire:target="exportToExcel" class="flex items-center">
+                                <i class="fas fa-spinner fa-spin mr-2"></i> Mempersiapkan Laporan...
+                            </span>
+                            <span wire:loading.remove wire:target="exportToExcel" class="flex items-center">
+                                <i class="fas fa-file-excel mr-2"></i> Export ▼
+                            </span>
+                        </button>
                     </div>
                 </div>
                 <div class="flex flex-row shadow-md px-10 pb-5 gap-10">

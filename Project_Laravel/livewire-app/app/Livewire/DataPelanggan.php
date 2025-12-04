@@ -10,6 +10,9 @@ use Livewire\WithPagination;
 
 use App\Models\PelangganDps; 
 
+use Maatwebsite\Excel\Facades\Excel; 
+use App\Exports\DataPelangganExport;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -33,6 +36,33 @@ class DataPelanggan extends Component
             ->paginate(10);
     }
 
+    public function exportToExcel()
+    {
+        // 1. GATHER STATE: Collect all current search properties (filters)
+        $filters = [
+            'namaSearch' => $this->namaSearch,
+            'teleponSearch' => $this->teleponSearch,
+            'emailSearch' => $this->emailSearch,
+            'alamatSearch' => $this->alamatSearch,
+        ];
+        
+        try {
+            $filename = 'Data_Pelanggan_DPS_' . now()->format('Ymd_His') . '.xlsx';
+            
+            // 2. TRIGGER EXPORT: Instantiate the export class with filters and trigger download.
+            return Excel::download(new DataPelangganExport($filters), $filename);
+
+        } catch (\Exception $e) {
+            \Log::error("Livewire Data Pelanggan Export Failed: " . $e->getMessage());
+            
+            $this->dispatch('show-notification', [
+                'type' => 'error',
+                'message' => 'Gagal mengekspor data pelanggan. Error: ' . $e->getMessage(),
+            ]);
+
+            return;
+        }
+    }
 
     public function render()
     {

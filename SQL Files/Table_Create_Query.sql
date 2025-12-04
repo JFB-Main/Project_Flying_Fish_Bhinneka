@@ -270,8 +270,8 @@ CREATE TABLE service_logs_dps (
     id_pelanggan INT,
     id_alamat_servis INT,
     
-    id_teknisi INT UNSIGNED, -- Foreign key for the assigned technician
-    created_by INT UNSIGNED, -- Foreign key for the user who created the log
+    id_teknisi INT UNSIGNED, -- Foreign key for the assigned technician | di dps int(11) terus hapus 'UNSIGNED' nya di query
+    created_by INT UNSIGNED, -- Foreign key for the user who created the log | di dps int(11) terus hapus 'UNSIGNED' nya di query
     
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
@@ -318,7 +318,7 @@ CREATE TABLE service_logs_dps (
 CREATE TABLE notes_dps (
     id INT AUTO_INCREMENT,
     id_service_logs_dps INT DEFAULT NULL,
-    id_teknisi INT UNSIGNED, -- Now linked to the users table
+    id_teknisi INT UNSIGNED, -- Now linked to the users table | di dps int(11) terus hapus 'UNSIGNED' nya di query
     note_content TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     PRIMARY KEY (`id`),

@@ -46,7 +46,9 @@
                 @if ($serviceData->id_teknisi == session(key:'user_id') )
                     <div class="flex flex-row gap-5">
                         @if ($serviceData->status == 4)
-                            <a href="{{ route('export-servis-dps', ['id' => $serviceData->id]) }}" class="bg-gray-100 border border-blue-200 max-w-fit max-h-fit text-blue-400  font-medium px-2 py-1 rounded-lg hover:bg-blue-200">
+                            <a href="{{ route('export-servis-dps', ['id' => $serviceData->id]) }}" 
+                                target="_blank" rel="noopener noreferrer"
+                                class="bg-gray-100 border border-blue-200 max-w-fit max-h-fit text-blue-400  font-medium px-2 py-1 rounded-lg hover:bg-blue-200">
                                 + PDF LAPORAN
                             </a> 
                         @else
@@ -69,7 +71,9 @@
                     </div>
                 @else
                     @if ($serviceData->status == 4)
-                        <a href="" class="bg-gray-100 border border-blue-200 max-w-fit max-h-fit text-blue-400  font-medium px-2 py-1 rounded-lg hover:bg-blue-200">
+                        <a href="{{ route('export-servis-dps', ['id' => $serviceData->id]) }}" 
+                            target="_blank" rel="noopener noreferrer"
+                            class="bg-gray-100 border border-blue-200 max-w-fit max-h-fit text-blue-400  font-medium px-2 py-1 rounded-lg hover:bg-blue-200">
                         + PDF LAPORAN
                         </a> 
                     @endif
@@ -332,7 +336,11 @@
                     </div>
                     <div class="flex flex-col">
                         <h2 class="font-medium min-w-[125px]">Jadwal</h2>
-                        <p class="">{{$serviceData->jadwal_kunjungan}}</p>
+                        @if ($serviceData->jadwal_kunjungan)
+                            <p class="">{{$serviceData->jadwal_kunjungan}}</p>
+                        @else
+                            <p>Belum Dijadwalkan</p>
+                        @endif
                     </div>
                 </div>
                 <div x-data = "{ show: false }"

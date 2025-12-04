@@ -25,6 +25,8 @@ export default defineConfig({
         // host: '192.168.1.103'
 
         host: '10.0.12.56'
+        
+        // host: '10.0.0.119'
 
         //hotspot 5g
         // host: '192.168.1.9'

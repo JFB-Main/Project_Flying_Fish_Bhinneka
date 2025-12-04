@@ -147,9 +147,8 @@
                             <td class="p-2 font-light text-gray-600 text-[10px]">{{$n->note_content}}</td>
                         </tr>
                     @empty
-                        <tr>
-                            <td colspan="9" class="">Tidak ada log aktivitas.</td>
-                            <td colspan="9" class=""></td>
+                        <tr class=" border border-gray-300">
+                            <td colspan="9" class="p-2 font-light text-gray-600 text-[10px]">Tidak ada log aktivitas.</td>
                         </tr>
                     @endforelse
                 </tbody>
