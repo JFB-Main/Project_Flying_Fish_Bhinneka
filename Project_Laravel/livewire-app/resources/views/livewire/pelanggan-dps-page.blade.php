@@ -39,7 +39,7 @@
                         </div>
                         <div class="flex flex-row">
                             <label for="NamaEmail" class="">
-                                Email<span class="text-red-500">*</span>
+                                Email
                             </label>
                             <div class="flex flex-col w-full">
                                 <input wire:model="email" type="text" name="NamaEmail" id="NamaEmail" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('email') border-red-500 @enderror">
@@ -50,7 +50,7 @@
                         </div>
                         <div class="flex flex-row">
                             <label for="NamaTelepon" class="">
-                                Telepon<span class="text-red-500">*</span>
+                                Telepon
                             </label>
                             <div class="flex flex-col w-full">
                                 <input wire:model="telepon" type="text" name="NamaTelepon" id="NamaTelepon" class="bg-gray-50 border text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('telepon') border-red-500 @enderror">

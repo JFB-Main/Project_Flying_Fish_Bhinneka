@@ -144,7 +144,7 @@
                     @forelse($note as $n)
                         <tr class=" border border-gray-300">
                             <td class="bg-gray-50 pl-2 pt-2 align-top font-light text-gray-600 text-xs">{{$n->created_at}}</td>
-                            <td class="p-2 font-light text-gray-600 text-[10px]">{{$n->note_content}}</td>
+                            <td class="p-2 font-light text-gray-600 text-[10px]">{!! $n->note_content_html !!}</td>
                         </tr>
                     @empty
                         <tr class=" border border-gray-300">

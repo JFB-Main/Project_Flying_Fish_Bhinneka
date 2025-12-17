@@ -59,10 +59,44 @@
 -- Dibuat di Insert Laravel
 
 -- select CAST(@NumStr := month(NOW()) AS char) AS 'm', SUBSTRING(@NumStr := year(NOW()),3,2) AS 'y';
+DELIMITER //
+CREATE FUNCTION `generate_yearly_next_techlog_id`() RETURNS varchar(250) DETERMINISTIC
+BEGIN
+    DECLARE count_for_year INT;
+    DECLARE next_id_number INT;
+    DECLARE next_id_string VARCHAR(250);
+
+    -- 1. Count the existing records for the current month
+    SELECT COUNT(*) INTO count_for_year
+    FROM service_logs
+    WHERE YEAR(created_at) = YEAR(NOW());
+
+    -- 2. Increment the count to get the next ID number
+    SET next_id_number = count_for_year + 1;
+
+    -- 3. Get the month and year as strings
+    SET @MonStr = LPAD(MONTH(NOW()), 2, '0');
+    SET @YearStr = SUBSTRING(YEAR(NOW()), 3, 2);
+    
+    -- 4. Concatenate and pad the number to create the final techlog ID
+    SET next_id_string = CONCAT('TL', @YearStr, @MonStr, LPAD(next_id_number, 5, '0'));
+
+    RETURN next_id_string;
+END//
+DELIMITER ;
 
 
-
-
+DELIMITER $$
+CREATE TRIGGER techlog_id_insertion_by_year
+BEFORE insert ON service_logs
+FOR EACH ROW
+BEGIN
+    IF (NEW.techlog_id = 'N/A') THEN
+        SET NEW.techlog_id = generate_yearly_next_techlog_id();
+    END IF;
+END$$
+DELIMITER ;
+-- //////////////////////////////////////////////////////////////////////////
 
 DELIMITER $$
 

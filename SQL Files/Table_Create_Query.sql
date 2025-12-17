@@ -205,6 +205,7 @@ CREATE TABLE produk_dps (
     serial_number VARCHAR(255) UNIQUE,
     nomor_invoice VARCHAR(255),
     sales_order VARCHAR(255),
+    produk_bhinneka TINYINT(4) NULL DEFAULT,
     id_warranty INT,
     id_alamat_servis INT,
     id_pelanggan_dps INT,

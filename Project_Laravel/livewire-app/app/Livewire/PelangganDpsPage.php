@@ -49,8 +49,8 @@ class PelangganDpsPage extends Component
         return [
             // Customer Validation
             'namaPelanggan' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'telepon' => 'required|string',
+            'email' => 'nullable|email|max:255',
+            'telepon' => 'nullable|string',
             'alamatPelanggan' => 'required|string|max:500',
 
             // Service Address Validation
